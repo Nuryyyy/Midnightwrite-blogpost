@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import CreateAccount from './component/landingpage/createaccount';
-import Login from './component/landingpage/login';
+import SignUp from './component/landingpage/signup';
+import SignIn from './component/landingpage/signin';
 
 function App() {
-  const [create, setCreate] = useState(false)
-  const [login, setLogin] = useState(false)
+  const [signup, setSignup] = useState(false)
+  const [signin, setSignin] = useState(false)
   
 
   return (
@@ -16,14 +16,16 @@ function App() {
 
       <div className='btn-option'>
         <button id='btnOption' className='click-btn'
-        onClick={() => setCreate(true)}>Create Account</button>
+        onClick={() => setSignup(true)}>Sign Up</button>
         <button id='btnOption' className='click-btn'
-        onClick={() => setLogin(true)}>Log In</button>
+        onClick={() => setSignin(true)}>Sign In</button>
       </div>
       </section>
-      <CreateAccount open={create} onClose={() => setCreate(false)}/>
+      <SignUp open={signup} onClose={() => setSignup(false)}/>
+      {/* <SignUp open={signup}/> */}
   
-      <Login open={login} onClose={() => setLogin(false)}/>
+      <SignIn open={signin} onClose={() => setSignin(false)}/>
+      {/* <SignIn open={signin}/> */}
 
     </div>
 

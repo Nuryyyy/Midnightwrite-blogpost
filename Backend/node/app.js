@@ -24,6 +24,7 @@ pool.connect((err) => {
 		})
 	}
 })
+
  //welcome message
 app.get('/',  (req, res)  =>  { 
     res.json(
@@ -70,6 +71,7 @@ app.post('/register', async (req, res) => {
         console.log(error.message)
         res.status(500).send(error.message)
     }
+
 
 })
 
@@ -131,3 +133,22 @@ app.get('/verify', auth, async (req, res) => {
         });
     }
 })
+
+
+app.get('/api', async (req, res) => {
+    try{
+    let list = await pool.query(`SELECT * FROM public.user_info`) 
+    
+    res.json(list.rows)
+    console.log(list.rows)
+    
+    } catch (error) {
+        console.error(err.message);
+        res.status(500).send({
+            msg: "Unauthenticated"
+        });
+    }
+}
+)
+
+// app.get('/api', (req, res) => { res.json(api); });
