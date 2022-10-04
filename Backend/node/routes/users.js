@@ -1,52 +1,26 @@
-import { connectDatabase } from  "./pool.js";
+import { connectDatabase } from "../pool.js";
 import bodyParser  from  "body-parser";
 import express  from  "express";
 import bcrypt  from  "bcryptjs"
 import { v4  as  uuidv4 } from  'uuid';
-import { generateJwt } from  "./jwt/jwtGenerator.js";
-import { auth } from  "./middleware/auth.js";
+import { generateJwt } from "../jwt/jwtGenerator.js"
+import { auth } from  "../middleware/auth.js";
 import cors from "cors";
-import { router } from "./routes/posts.js";
-// import { app } from "./routes/users.js";
+import { Router } from "express";
+// import { generateJwt } from  "./jwt/jwtGenerator.js";
 
-
-const pool = connectDatabase()
-const app = express()
-const PORT = 8000
-const Cors = cors()
-
-//import routers
-// const postRouter = router()
+const  pool = connectDatabase()
+const  app = express()
+const  PORT = 8000
+const  Cors = cors()
 
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended:  true }))
 app.use(Cors)
 
+const route = Router()
 
-//use routers
-app.use('/posts', router)
-// app.use('/users', route)
-
-//to connect with pool
-pool.connect((err) => {
-	if (err) {
-		console.log(err) 
-	}
-	else {
-		app.listen(PORT, () => {
-			console.log(`Server has started on http://localhost:${PORT}`)
-		})
-	}
-})
-
-//  welcome message
-app.get('/',  (req, res)  =>  { 
-    res.json(
-	    { info:  'Hello welcome to midnightwrite' }
-    )  
-})
-
-//create account for new user
+// create account for new user
 app.post('/register', async (req, res) => {
     try {
         //take the username and password from the req.body
@@ -152,7 +126,7 @@ app.get('/verify', auth, async (req, res) => {
 })
 
 
-app.get('/api', async (req, res) => {
+route.get('/api', async (req, res) => {
     try{
     let list = await pool.query(`SELECT * FROM public.user_info`) 
     
@@ -169,3 +143,20 @@ app.get('/api', async (req, res) => {
 )
 
 
+//trial
+
+// route.get('/', (req, res) => {
+//     res.json(
+// 	    { info:  'Hello welcome to midnightwrite user' }
+//     )
+//     console.log("/user is working")
+// })
+
+// route.get('/test', (req, res) => {
+//     res.json(
+// 	    { info:  'In test user' }
+//     )
+//     console.log("/test is working")
+// })
+
+export { app };

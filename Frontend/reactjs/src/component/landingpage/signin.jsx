@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 
 //{open, onClose}
 export default function SignIn({open, onClose}) {

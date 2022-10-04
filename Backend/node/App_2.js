@@ -6,26 +6,16 @@ import { v4  as  uuidv4 } from  'uuid';
 import { generateJwt } from  "./jwt/jwtGenerator.js";
 import { auth } from  "./middleware/auth.js";
 import cors from "cors";
-import { router } from "./routes/posts.js";
-// import { app } from "./routes/users.js";
 
-
-const pool = connectDatabase()
-const app = express()
-const PORT = 8000
-const Cors = cors()
-
-//import routers
-// const postRouter = router()
+const  pool = connectDatabase()
+const  app = express()
+const  PORT = 8000
+const  Cors = cors()
 
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended:  true }))
 app.use(Cors)
 
-
-//use routers
-app.use('/posts', router)
-// app.use('/users', route)
 
 //to connect with pool
 pool.connect((err) => {
@@ -39,7 +29,7 @@ pool.connect((err) => {
 	}
 })
 
-//  welcome message
+ //welcome message
 app.get('/',  (req, res)  =>  { 
     res.json(
 	    { info:  'Hello welcome to midnightwrite' }
@@ -128,6 +118,8 @@ app.post('/login', async (req, res) => {
             token
         })
 
+        res.redirect('/posts/')
+
 
     } catch (error) {
         console.error(error.message);
@@ -168,4 +160,5 @@ app.get('/api', async (req, res) => {
 }
 )
 
-
+// API FOR CREATE POST
+// API FOR CREATE POST
