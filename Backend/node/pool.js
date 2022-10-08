@@ -3,7 +3,7 @@ function  connectDatabase(){
 	const  pool = new  pg.Pool ({
 
 		user :  'postgres',
-		password :  '14*NuBdulla_96',
+		password :  '070496',
 		database :  'midnightwrite',
 		host :  'localhost'
 

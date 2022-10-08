@@ -51,8 +51,8 @@ app.post('/register', async (req, res) => {
     try {
         //take the username and password from the req.body
         const {
-            fname,
-            lname,
+            firstname,
+            lastname,
             username,
             email,
             password
@@ -75,7 +75,7 @@ app.post('/register', async (req, res) => {
         //Add the new user into the database
         //generate the uuid using the uuidv4() function
         
-        const newUser = await pool.query(`INSERT INTO user_info (user_id, fname, lname, username, email, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [uuidv4(), fname, lname, username, email, bcryptPassword])
+        const newUser = await pool.query(`INSERT INTO user_info (user_id, firstname, lastname, username, email, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [uuidv4(), firstname, lastname, username, email, bcryptPassword])
         
         //generate and return the JWT token
         const token = generateJwt(newUser.rows[0])
