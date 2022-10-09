@@ -6,7 +6,7 @@ import { v4  as  uuidv4 } from  'uuid';
 import { generateJwt } from  "./jwt/jwtGenerator.js";
 import { auth } from  "./middleware/auth.js";
 import cors from "cors";
-import { router } from "./routes/posts.js";
+import { postRouter } from "./routes/posts.js";
 // import { app } from "./routes/users.js";
 
 
@@ -24,7 +24,7 @@ app.use(Cors)
 
 
 //use routers
-app.use('/posts', router)
+app.use('/posts', postRouter)
 // app.use('/users', route)
 
 //to connect with pool
@@ -75,7 +75,7 @@ app.post('/register', async (req, res) => {
         //Add the new user into the database
         //generate the uuid using the uuidv4() function
         
-        const newUser = await pool.query(`INSERT INTO user_info (user_id, firstname, lastname, username, email, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [uuidv4(), firstname, lastname, username, email, bcryptPassword])
+        const newUser = await pool.query(`INSERT INTO user_info(user_id, firstname, lastname, username, email, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [uuidv4(), firstname, lastname, username, email, bcryptPassword])
         
         //generate and return the JWT token
         const token = generateJwt(newUser.rows[0])
@@ -167,5 +167,7 @@ app.get('/api', async (req, res) => {
     }
 }
 )
+
+
 
 
