@@ -14,10 +14,11 @@ router.get('/', (req, res) => {
     console.log("/posts is working")
 })
 
+//get
 router.get('/test', (trialPost) )
-
 router.get('/allpost', (getPost))
 
+//post
 router.post('/create', auth, (createPost))
 
 
