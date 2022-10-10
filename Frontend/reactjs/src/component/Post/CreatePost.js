@@ -1,7 +1,19 @@
 import React from 'react'
 
-export default function 
+export default function CreatePost
 () {
+
+  const postcreate = () => {
+    Axios.post('http://localhost:8000/posts/create',
+    {
+        title: title, 
+        description: description
+    }).then((response) => {
+        console.log(response)
+    })
+
+  }
+
   return (
     <div>
         <form action='' className='createpost'>
