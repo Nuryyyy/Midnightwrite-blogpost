@@ -1,16 +1,23 @@
 import React from 'react';
-import Register from './component/landingpage/Register';
-import Login from './component/landingpage/Login';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import NavBar from './component/Navbar';
+import LandingPage from './component/landingpage/LandingPage'
+import CreatePost from './component/Post/CreatePost'
 
-export default function App() {
+
+function App() {
   return (
-    <div className="App">
-        <section className='side-content'>
-        <h1>What's keeping you up?</h1>
-        <h2>Write it here.</h2>
-      </section>
-        <Register />
-        <Login />
-    </div>
-  )
+          <BrowserRouter>
+          <NavBar />
+              <Routes>
+                <Route path="/home" element={<LandingPage />} />
+                <Route path="/posts/create" element={<CreatePost />} />
+                {/* <Route path="/about" element={<About />} />
+                
+                <Route path="/account" element={<Account />} /> */}
+              </Routes>
+          </BrowserRouter>
+  );
 }
+
+export default App;

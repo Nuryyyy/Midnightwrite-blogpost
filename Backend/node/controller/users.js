@@ -76,14 +76,18 @@ export const login = async (req, res) => {
         if (user.rows.length <= 0) {
             // res.status(401).send("User does not exists") //[nodemon] app crashed - waiting for file changes before starting...
             // return res.status(401).json("User does not existsss")
+            console.log("failed login")
             return res.status(401).send({error: "User does not exists"})
         }
 
         //Check if the password matches using bcrypt
         const validPassword = await bcrypt.compare(password, user.rows[0].password)
         if (!validPassword) {
+            console.log("failed login")
             return res.status(401).send({error: "Password is incorrect."})
+            
         }
+        
 
         // if username and password is wrong
         // if ( user.rows.length <= 0 && !validPassword) {

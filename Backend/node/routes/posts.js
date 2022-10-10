@@ -15,8 +15,8 @@ router.get('/', (req, res) => {
 })
 
 //get
-router.get('/test', (trialPost) )
-router.get('/allpost', (getPost))
+router.get('/test', auth, (trialPost) )
+router.get('/allpost', auth, (getPost))
 
 //post
 router.post('/create', auth, (createPost))

@@ -12,6 +12,7 @@ export default function Login() {
         password: password
     }).then((response) => {
         console.log(response)
+        console.log("success")
     })
 
   }
