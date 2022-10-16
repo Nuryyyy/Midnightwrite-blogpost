@@ -5,6 +5,8 @@ dotenv.config()
 const  auth = (req, res, next) => {
 	//this will check if a token is existing in the Authorization Header
 	const  token = req.header("Authorization")
+	// const token = req.cookies["access-token"]
+	
 	if (!token) {
 		return  res.status(403).json({ err:  'Invalid token' });
 	}

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NavBar from './component/Navbar';
 import LandingPage from './component/landingpage/LandingPage'
 import CreatePost from './component/Post/CreatePost'
+import ViewAccount from './component/ViewAccount/ViewAccount';
 
 
 function App() {
@@ -12,9 +13,9 @@ function App() {
               <Routes>
                 <Route path="/home" element={<LandingPage />} />
                 <Route path="/posts/create" element={<CreatePost />} />
+                <Route path="/profile/:username" element={<ViewAccount />} />
                 {/* <Route path="/about" element={<About />} />
-                
-                <Route path="/account" element={<Account />} /> */}
+                <Route path="*" element={<ErrorPage />} /> */}
               </Routes>
           </BrowserRouter>
   );

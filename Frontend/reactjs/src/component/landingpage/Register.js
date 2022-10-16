@@ -1,44 +1,162 @@
+// import React, { useInsertionEffect } from 'react';
 import React from 'react';
-import {useState, useEffect } from 'react';
-import Axios from 'axios';
+import {useState, useEffect, useRef } from 'react';
+import axios from '../../api/axios';
+
+import { Link } from 'react-router-dom';
+
+const register_url = '/register' 
 
 export default function Register() {
     //user input, error reference
+  const userRef = useRef()
+  const errRef = useRef();
     
   const [firstname, setfirstname] = useState("")
-  const [lastname, setlastname] = useState("")
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [fnFocus, setFnFocus] = useState(false)
 
-  const Register = () => {
-    Axios.post('http://localhost:8000/register', 
-    {
-        firstname: firstname, 
-        lastname: lastname, 
-        username: username, 
-        email: email,
-        password: password
-    }).then((response) => {
-        console.log(response)
-    })
-}
+  const [lastname, setlastname] = useState("")
+  const [lnFocus, setLnFocus] = useState(false)
+
+  const [username, setUsername] = useState("")
+  const [userFocus, setUserFocus] = useState(false)
+
+  const [email, setEmail] = useState("")
+  const [emailFocus, setEmailFocus] = useState(false)
+
+  const [password, setPassword] = useState("")
+  const [pwFocus, setPwFocus] = useState(false)
+
+  //possible error and if success register
+  const [errMsg, setErrMsg] = useState("")
+  const [success, setSuccess] = useState(false)
+
+  useEffect(() => {
+    userRef.current.focus()
+  }, [])
+
+  // useInsertionEffect(() => {
+  //   setErrMsg('')
+  // })
+
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+    console.log("handlesumbit")
+
+    try {
+      const response = await axios.post(register_url,
+        JSON.stringify({
+          firstname: firstname, 
+          lastname: lastname, 
+          username: username, 
+          email: email,
+          password: password
+        }),
+        {
+          headers: {
+            'Content-Type': "application/json",
+            withCredentials: true
+          },
+          
+        })
+        console.log("in function response")
+        console.log(response.data)
+        console.log(response.token)
+        setSuccess(true)
+        //clear input fields
+    } catch (error) {
+      console.log(error)
+      errRef.current.focus();
+    } 
+
+
+  }
+
 
   return (
-    <div>
-        {/* <div>
-        <button onClick={onClose}>X</button>
-      </div> */}
-      <form action='' className='createaccount'>
-        {/* e is event */}
-          <input type='text' value={firstname} onChange={(e)=>setfirstname(e.target.value)} placeholder='First Name' />
-          <input type='text' value={lastname} onChange={(e)=>setlastname(e.target.value)} placeholder='Last Name' />
-          <input type='text' value={username} onChange={(e)=>setUsername(e.target.value)} placeholder='Username' />
-          <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="E-mail" />
-          <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Password"/> 
-          <button id="btnOption" className="click-btn" onClick={Register}>Sign Up</button>
+
+    <>
+    {success ? (
+      <div>
+        <h1> Registered!</h1>
+        <p>
+          <a href="#">Log In</a>
+        </p>
+      </div>
+    ) : (
+    <section>
+        <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
+
+      <form onSubmit={handleSubmit} className='createaccount'>
+        <label htmlFor="firstname">First Name:</label>
+          <input 
+          type='text' 
+          id="firstname" 
+          ref={userRef} 
+          autoComplete="off" 
+          value={firstname} 
+          onChange={(e)=>setfirstname(e.target.value)} 
+          required 
+          onFocus={() => setFnFocus(true)}
+          onBlur={() => setFnFocus(false)}
+          />
+
+        <br></br>
+        <label htmlFor="lastname">Last Name:</label>
+          <input 
+          type='text' 
+          id="lastname" 
+          ref={userRef} 
+          autoComplete="off" 
+          value={lastname} 
+          onChange={(e)=>setlastname(e.target.value)}
+          required 
+          onFocus={() => setLnFocus(true)}
+          onBlur={() => setLnFocus(false)}
+          />
+
+        <br></br>
+        <label htmlFor="username">Username:</label>
+          <input 
+          type='text' 
+          id="username" 
+          ref={userRef} 
+          autoComplete="off" 
+          value={username} 
+          onChange={(e)=>setUsername(e.target.value)} 
+          onFocus={() => setUserFocus(true)}
+          onBlur={() => setUserFocus(false)}
+          />
+
+          <br></br>
+          <label htmlFor="email">Email:</label>
+          <input 
+          type="text"
+          id="email" 
+          ref={userRef} 
+          autoComplete="off"  
+          value={email} 
+          onChange={(e)=>setEmail(e.target.value)} 
+          onFocus={() => setUserFocus(true)}
+          onBlur={() => setUserFocus(false)}
+          />
+
+          <br></br>
+          <label htmlFor="password">Password:</label>
+          <input 
+          type="password" 
+          id="password" 
+          value={password} 
+          onChange={(e)=>setPassword(e.target.value)} 
+          onFocus={() => setPwFocus(true)}
+          onBlur={() => setPwFocus(false)}
+          /> 
+
+          <button type="submit" id="btnOption" className="click-btn">Sign Up</button>
         </form>
        
-    </div>
+    </section>
+    )}
+    </>
   )
 }

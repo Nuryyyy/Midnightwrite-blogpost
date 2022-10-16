@@ -8,7 +8,7 @@ export default function NavBar() {
         <NavLink to="/home">Home</NavLink>
         <NavLink to="/posts/create">Create</NavLink>
         <NavLink to="/about">About</NavLink> 
-        <NavLink to="/account">View Account</NavLink>
+        <NavLink to="/profile/:username">View Account</NavLink>
     </div>
   )
 }

@@ -32,7 +32,6 @@ export const createPost = async (req, res) => {
     try {
  
         const {
-            // user_id, //how to not require the user to insert user_id when posting, instead it should automatically fill up the table since they are logged in already. 
             title,
             description
         } = req.body 
@@ -49,9 +48,8 @@ export const createPost = async (req, res) => {
         const newPost = await pool.query(`INSERT INTO createpost (post_id, user_id, title, description, datepost) VALUES ($1, $2, $3, $4, $5) RETURNING *`, [uuidv4(), user_id, title, description, date])
         // newPost.rows[0]
        
-
         if (newPost.rows[0]) {
-            return res.json("sucess posted")
+            return res.json("success posted")
           }
 
     } catch (error) {

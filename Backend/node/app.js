@@ -1,31 +1,33 @@
 import { connectDatabase } from  "./pool.js";
 import bodyParser  from  "body-parser";
 import express  from  "express";
-import bcrypt  from  "bcryptjs"
-import { v4  as  uuidv4 } from  'uuid';
-import { generateJwt } from  "./jwt/jwtGenerator.js";
+// import bcrypt  from  "bcryptjs"
+// import { v4  as  uuidv4 } from  'uuid';
+// import { generateJwt } from  "./jwt/jwtGenerator.js";
 import { auth } from  "./middleware/auth.js";
 import cors from "cors";
+import { corsOptions } from "./config/corsOptions.js";
 import { postRouter } from "./routes/posts.js";
 import { registerRouter } from "./routes/users.js";
+import { commentRouter } from "./routes/comment.js"; 
+    
+// import session from "express-session"
 
 
 const pool = connectDatabase()
 const app = express()
 const PORT = 8000
-const Cors = cors()
+// const Cors = cors()
 
 //import routers
 // const postRouter = router()
 
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended:  true }))
-app.use(Cors)
+// app.use(cors())
+app.use(cors(corsOptions))
 
-
-//use of routers
-app.use('/posts', postRouter)
-app.use('', registerRouter)
+//app.use(cookieParser())
 
 //to connect with pool
 pool.connect((err) => {
@@ -39,6 +41,15 @@ pool.connect((err) => {
 	}
 })
 
+
+//use of routers
+
+app.use('', registerRouter)
+
+app.use('/posts', postRouter)
+app.use('/post', commentRouter)
+
+
 //  welcome message
 app.get('/home',  (req, res)  =>  { 
     res.json(
@@ -48,13 +59,8 @@ app.get('/home',  (req, res)  =>  {
 
 
 
-// // provide the auth middleware
-// app.get('/verify', auth, async (req, res) => {
-//    
-// })
-
 //this shoud only be access by the admin, this will further be updated.
-app.get('/api', async (req, res) => {
+app.get('/api', auth, async (req, res) => {
     try{
     let list = await pool.query(`SELECT * FROM public.user_info`) 
     

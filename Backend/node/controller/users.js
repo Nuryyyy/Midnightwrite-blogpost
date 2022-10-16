@@ -2,11 +2,14 @@ import { connectDatabase } from "../pool.js";
 import bcrypt  from  "bcryptjs"
 import { v4  as  uuidv4 } from  'uuid';
 import { generateJwt } from "../jwt/jwtGenerator.js"
-import { auth } from  "../middleware/auth.js";
+
+// import cookieParser from "cookie-parser";
 // import cors from "cors";
-// import { generateJwt } from  "./jwt/jwtGenerator.js";
+
+
 
 const  pool = connectDatabase()
+// const cookies = cookieParser()
 
 
 
@@ -35,7 +38,6 @@ export const register = async (req, res) => {
         }
 
         //Setup Bcrypt for password hashing
-
         const saltRound = 10;
         const salt = await bcrypt.genSalt(saltRound);
 
@@ -43,7 +45,6 @@ export const register = async (req, res) => {
 
         //Add the new user into the database
         //generate the uuid using the uuidv4() function
-        
         const newUser = await pool.query(`INSERT INTO user_info(user_id, firstname, lastname, username, email, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [uuidv4(), firstname, lastname, username, email, bcryptPassword])
         
         //generate and return the JWT token
@@ -52,6 +53,8 @@ export const register = async (req, res) => {
         res.json({
             token
         })
+        console.log("registered")
+        
     } catch (error) {
 
         console.log(error.message)
@@ -87,19 +90,20 @@ export const login = async (req, res) => {
             return res.status(401).send({error: "Password is incorrect."})
             
         }
-        
-
-        // if username and password is wrong
-        // if ( user.rows.length <= 0 && !validPassword) {
-        //     return res.status(401).send({error: "Password or username does not match."})
-        // }
-
+    
         //generate and return the JWT
         const token = generateJwt(user.rows[0])
+        res.cookie("access-token", token, { httpOnly: true,
+            maxAge: 86400000 * 30
+        }) //24hrs * 7days 
+        //24hrs = 24*60*1000
+
         console.log("success login")
         res.json({
             token
         })
+        console.log(user.rows, "token:",token)
+        
 
 
     } catch (error) {
