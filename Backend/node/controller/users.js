@@ -2,6 +2,7 @@ import { connectDatabase } from "../pool.js";
 import bcrypt  from  "bcryptjs"
 import { v4  as  uuidv4 } from  'uuid';
 import { generateJwt } from "../jwt/jwtGenerator.js"
+import cookieParser from "cookie-parser";
 
 // import cookieParser from "cookie-parser";
 // import cors from "cors";
@@ -9,7 +10,7 @@ import { generateJwt } from "../jwt/jwtGenerator.js"
 
 
 const  pool = connectDatabase()
-// const cookies = cookieParser()
+const cookies = cookieParser()
 
 
 
@@ -93,10 +94,16 @@ export const login = async (req, res) => {
     
         //generate and return the JWT
         const token = generateJwt(user.rows[0])
-        res.cookie("access-token", token, { httpOnly: true,
-            maxAge: 86400000 * 30
-        }) //24hrs * 7days 
-        //24hrs = 24*60*1000
+        
+        // store token to cookie
+        res.cookie('token-cookie', token, {httpOnly: true, maxAge: 86400000 //day 
+        }
+        )
+        // 86400000 * 30 //month
+        // }) //24hrs * 7days 
+        //24hrs = 24*60*1000 = 
+        //1000ms = 1s
+
 
         console.log("success login")
         res.json({
@@ -104,7 +111,7 @@ export const login = async (req, res) => {
         })
         console.log(user.rows, "token:",token)
         
-
+        
 
     } catch (error) {
         console.error(error.message);
@@ -122,9 +129,10 @@ export const verifyuser = async (req, res) => {
                 //return the user object
                 res.json(req.user)
                 console.log("verified")
+                console.log(user.rows)
 
             } catch (error) {
-                console.error(err.message);
+                console.error(error.message);
                 res.status(500).send({
                     msg: "Unauthenticated"
                 });
