@@ -22,7 +22,7 @@ export const addComment = async (req, res) => {
         const user_id = req.user.user_id
         console.log("user_id", user_id)
         // const username = req.user.username
-        // console.log(username)
+        console.log("body:", body)
 
         const comment_date = new Date()
         console.log("Date:", comment_date)
@@ -36,7 +36,6 @@ export const addComment = async (req, res) => {
         if (comment.rows[0]) {
             return res.json("success posted")
           }
-          console.log(data)
 
     } catch (error) {
         console.error(error.message);

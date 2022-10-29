@@ -2,17 +2,12 @@ import { connectDatabase } from "../pool.js";
 import bcrypt  from  "bcryptjs"
 import { v4  as  uuidv4 } from  'uuid';
 import { generateJwt } from "../jwt/jwtGenerator.js"
-import cookieParser from "cookie-parser";
-
 // import cookieParser from "cookie-parser";
+
 // import cors from "cors";
 
-
-
 const  pool = connectDatabase()
-const cookies = cookieParser()
-
-
+// const cookies = cookieParser()
 
 export const trialRegister = (req,res) => {
     res.json("registration is working")
@@ -96,8 +91,9 @@ export const login = async (req, res) => {
         const token = generateJwt(user.rows[0])
         
         // store token to cookie
-        res.cookie('token-cookie', token, {httpOnly: true, maxAge: 86400000 //day 
-        }
+        res.cookie('token-cookie', token, {httpOnly: true, sameSite:'None', maxAge: 86400000 //day 
+        //secure: true
+            }
         )
         // 86400000 * 30 //month
         // }) //24hrs * 7days 
@@ -107,9 +103,11 @@ export const login = async (req, res) => {
 
         console.log("success login")
         res.json({
+            username,
+            password,
             token
         })
-        console.log(user.rows, "token:",token)
+        console.log(user.rows, "backend - token:",token)
         
         
 

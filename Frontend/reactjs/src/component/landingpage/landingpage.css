@@ -1,0 +1,76 @@
+
+
+#landingpage {
+    background-color: var(--c-light);
+    align-items: center;
+}
+
+.col-7 {
+    background-color: var(--c-brand);
+    color: var(--c-light);
+    text-align: center;
+    height: 100%;
+    font-family: 'tisasans_header';
+    background-image: url('../images/midnightwrite_stardust.svg') ;
+    background-repeat: no-repeat; 
+    background-size: cover; 
+    color: var(--c-light);
+
+    
+}
+
+.container-fluid{
+    height: 100vh;
+   
+
+}
+
+.row {
+    height: 100% ;
+   
+}
+
+.logo{
+    padding-top: 15%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 70%
+}
+
+#logoViolet{
+    display: block;
+    height: 70px;
+    
+    
+    
+}
+
+.figure{
+    align-items: center;
+    padding-left: 37%;
+    margin: 0;
+    
+}
+
+#right_content {
+   padding-top: 100px;
+}
+
+#content {
+    padding-top: 20%;
+    font-family: "tisasans_title";
+    color: var(--c-brand)
+}
+
+.btn {
+    background-color: var(--c-brand);
+    border-color: var(--c-brand);
+    padding: 10px;
+    margin: 5px;
+    color: var(--c-light);
+}
+
+.btn:hover {
+    background-color: lightgray;
+}

@@ -2,12 +2,21 @@
 import React from 'react';
 import {useState, useEffect, useRef } from 'react';
 import axios from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
+import './landingpage.css'
+import logo from '../images/logo_violet.png'
 
 const register_url = '/register' 
 
+//Requirements or validation for creating usernmame and pasword
+// const user_REGEX = /^[A-z][A-z0-9-_]{3,23}$/; //4-24char
+// const password_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
 export default function Register() {
+
+  const navigate = useNavigate()
     //user input, error reference
   const userRef = useRef()
   const errRef = useRef();
@@ -35,9 +44,9 @@ export default function Register() {
     userRef.current.focus()
   }, [])
 
-  // useInsertionEffect(() => {
-  //   setErrMsg('')
-  // })
+  useEffect(() => {
+    setErrMsg('');
+}, [firstname, lastname, username, email, password])
 
   const handleSubmit = async(e) => {
     e.preventDefault()
@@ -63,6 +72,7 @@ export default function Register() {
         console.log(response.data)
         console.log(response.token)
         setSuccess(true)
+        navigate("/posts/create")
         //clear input fields
     } catch (error) {
       console.log(error)
@@ -75,21 +85,38 @@ export default function Register() {
 
   return (
 
-    <>
-    {success ? (
-      <div>
-        <h1> Registered!</h1>
-        <p>
-          <a href="#">Log In</a>
-        </p>
-      </div>
-    ) : (
-    <section>
+    // <>
+    // {success ? (
+    //   <div>
+    //     <h1> Registered!</h1>
+    //     <p>
+    //       <a href="#">Log In</a>
+    //     </p>
+    //   </div>
+    // ) : (
+    <section >
         <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
+      
+      <div className="modal-dialog" role="document" >
+        <div className="modal-content">
+          <div className="modal-header text-center">
 
+        <figure class="figure center">
+          <img id="logoViolet" src={logo} alt="logo" class='rounded mx-auto d-block'></img>
+          <figcaption class="figure-caption ">
+          <h5 class="modal-title"  id="modal-title">Create Account</h5>
+        </figcaption>
+        </figure>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mx-3">
       <form onSubmit={handleSubmit} className='createaccount'>
-        <label htmlFor="firstname">First Name:</label>
+      <div class="md-form form-floating mb-3 ">
+      {/* <i class="fas fa-user prefix grey-text"></i> */}
           <input 
+          // className='form-control validate'
+          placeholder='Firstname'
+          className='form-control validate'
           type='text' 
           id="firstname" 
           ref={userRef} 
@@ -100,10 +127,15 @@ export default function Register() {
           onFocus={() => setFnFocus(true)}
           onBlur={() => setFnFocus(false)}
           />
-
-        <br></br>
-        <label htmlFor="lastname">Last Name:</label>
+          <label htmlFor="firstname" data-error="wrong" data-success="right" >First Name:</label>
+        </div>
+        
+        <div class="md-form form-floating mb-3">
+        {/* <i class="fas fa-user prefix grey-text"></i> */}
+       
           <input 
+          className='form-control validate'
+          placeholder='Lastname:'
           type='text' 
           id="lastname" 
           ref={userRef} 
@@ -114,10 +146,14 @@ export default function Register() {
           onFocus={() => setLnFocus(true)}
           onBlur={() => setLnFocus(false)}
           />
+           <label htmlFor="lastname" data-error="wrong" data-success="right">Last Name:</label>
+          </div>
 
-        <br></br>
-        <label htmlFor="username">Username:</label>
+        <div class="md-form form-floating mb-3">
+          {/* <i class="fas fa-user prefix grey-text"></i> */}
           <input 
+          className='form-control validate' 
+          placeholder='Username:'
           type='text' 
           id="username" 
           ref={userRef} 
@@ -127,23 +163,33 @@ export default function Register() {
           onFocus={() => setUserFocus(true)}
           onBlur={() => setUserFocus(false)}
           />
+          <label htmlFor="username" data-error="wrong" data-success="right">Username:</label>
+          </div>
 
-          <br></br>
-          <label htmlFor="email">Email:</label>
+          <div class="md-form form-floating mb-3">
+          {/* <i class="fas fa-envelope prefix grey-text"></i> */}
+         
           <input 
-          type="text"
+          className='form-control validate'
+          placeholder='Email:'
+          type="email"
           id="email" 
           ref={userRef} 
           autoComplete="off"  
           value={email} 
           onChange={(e)=>setEmail(e.target.value)} 
-          onFocus={() => setUserFocus(true)}
-          onBlur={() => setUserFocus(false)}
+          onFocus={() => setEmailFocus(true)}
+          onBlur={() => setEmailFocus(false)}
           />
+           <label htmlFor="email" data-error="wrong" data-success="right">Email:</label>
+          </div>
 
-          <br></br>
-          <label htmlFor="password">Password:</label>
+          <div class="md-form form-floating mb-3">
+          {/* <i class="fas fa-lock prefix grey-text"></i> */}
+         
           <input 
+          className='form-control validate'
+          placeholder='Password'
           type="password" 
           id="password" 
           value={password} 
@@ -151,12 +197,16 @@ export default function Register() {
           onFocus={() => setPwFocus(true)}
           onBlur={() => setPwFocus(false)}
           /> 
-
-          <button type="submit" id="btnOption" className="click-btn">Sign Up</button>
+           <label htmlFor="password" data-error="wrong" data-success="right">Password:</label>
+          </div>
+          <div class="modal-footer d-flex justify-content-end"></div>
+          <button type="submit" id="btnOption" className="btn btn-primary">Sign Up</button>
         </form>
-       
+        </div>
+        </div>
+        </div>
     </section>
-    )}
-    </>
+    // )}
+    // </>
   )
 }
