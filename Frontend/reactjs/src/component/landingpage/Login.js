@@ -45,6 +45,7 @@ import logo from '../images/logo_violet.png'
     e.preventDefault()
     console.log("handlesumbit")
     
+    
     try {
       const response = await axios.post(login_url,
         JSON.stringify({
@@ -67,7 +68,9 @@ import logo from '../images/logo_violet.png'
         //response?.data?.Token //response.data &&
         setAuth({username, password, Token})
         setSuccess(true)
-        navigate("/posts/create")
+        navigate("/posts/create") 
+        
+
         //clear input fields
     } catch (error) {
       console.log(error)
@@ -141,7 +144,7 @@ import logo from '../images/logo_violet.png'
       </div>
 
       <div class="modal-footer d-flex justify-content-end"></div>
-          <button data-target="#exampleModal"type="submit" id="btnOption" className="btn btn-primary">Sign In</button>
+          <button data-target="#login"type="submit" id="btnOption" className="btn btn-primary">Sign In</button>
         </form>
             <a href="">Forgot password?</a>
       </div>

@@ -1,15 +1,19 @@
 import { connectDatabase } from  "./pool.js";
 import bodyParser  from  "body-parser";
 import express  from  "express";
+import cookieParser from "cookie-parser";
 // import bcrypt  from  "bcryptjs"
 // import { v4  as  uuidv4 } from  'uuid';
 // import { generateJwt } from  "./jwt/jwtGenerator.js";
 import { auth } from  "./middleware/auth.js";
 import cors from "cors";
 import { corsOptions } from "./config/corsOptions.js";
+
+//import pagesrouter
 import { postRouter } from "./routes/posts.js";
 import { registerRouter } from "./routes/users.js";
 import { commentRouter } from "./routes/comment.js"; 
+import { AccountRouter } from "./routes/viewaccount.js";
     
 // import session from "express-session"
 
@@ -17,15 +21,13 @@ import { commentRouter } from "./routes/comment.js";
 const pool = connectDatabase()
 const app = express()
 const PORT = 8000
-// const Cors = cors()
 
-//import routers
-// const postRouter = router()
-
+//middleware
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended:  true }))
 // app.use(cors())
 app.use(cors(corsOptions))
+app.use(cookieParser())
 
 //app.use(cookieParser())
 
@@ -48,6 +50,8 @@ app.use('', registerRouter)
 
 app.use('/posts', postRouter)
 app.use('/post', commentRouter)
+app.use('', commentRouter)
+app.use('/profile',AccountRouter)
 
 
 //  welcome message

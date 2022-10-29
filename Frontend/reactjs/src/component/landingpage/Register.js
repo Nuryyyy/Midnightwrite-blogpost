@@ -51,7 +51,7 @@ export default function Register() {
   const handleSubmit = async(e) => {
     e.preventDefault()
     console.log("handlesumbit")
-
+    
     try {
       const response = await axios.post(register_url,
         JSON.stringify({

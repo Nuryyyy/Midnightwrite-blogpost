@@ -91,7 +91,7 @@ export const login = async (req, res) => {
         const token = generateJwt(user.rows[0])
         
         // store token to cookie
-        res.cookie('token-cookie', token, {httpOnly: true, sameSite:'None', maxAge: 86400000 //day 
+        res.cookie('token-cookie', token, {httpOnly: true, maxAge: 86400000 //day 
         //secure: true
             }
         )
