@@ -1,9 +1,16 @@
 import { Router } from "express";
 import { auth } from "../middleware/auth.js";
 import { register, login, verifyuser } from "../controller/users.js";
+import { verifyJWT } from "../middleware/verifyJWT.js";
+import { Logout } from "../controller/logout.js";
+ 
 
-const registerRouter = Router()
-let router = registerRouter
+const userSessionRouter = Router()
+let router = userSessionRouter
+
+// router.use(cookieParser())
+
+// router.use(cookieParser())
 
 router.get('', (req, res) => {
     res.json(
@@ -13,11 +20,16 @@ router.get('', (req, res) => {
 })
 
 //get
-router.get('/verify', auth, (verifyuser))
+router.get('/verify', verifyJWT, (verifyuser))
+router.get('/logout', (Logout))
 
 //post
 router.post('/register', (register))
 router.post('/login', (login))
 
 
-export { registerRouter };
+export { userSessionRouter };
+
+
+// router.route('/')   
+//     .get()

@@ -7,6 +7,6 @@ import { ViewAccount } from "../controller/viewaccount.js";
 const AccountRouter = Router()
 let router = AccountRouter
 
-router.get('/:username', ViewAccount)
+router.get('/:username', auth, ViewAccount)
 
 export {AccountRouter}

@@ -1,7 +1,8 @@
 
 import { Router } from "express";
 import { auth } from "../middleware/auth.js";
-import { trialPost,createPost, getPost } from "../controller/posts.js";
+import { verifyJWT } from "../middleware/verifyJWT.js";
+import { trialPost,createPost, getAllPost, getPost, editPost, deletePost } from "../controller/posts.js";
 const postRouter = Router()
 
 let router = postRouter
@@ -16,13 +17,19 @@ router.get('/', (req, res) => {
 
 //get
 router.get('/test', auth, (trialPost) )
-router.get('/allpost', auth, (getPost))
+router.get('/allpost', auth, (getAllPost))
+// router.get('/:post_id', (getPost))
 
 //post
 router.post('/create', auth, (createPost))
 
 
+//update
+router.put("/:post_id/edit", auth, (editPost))
 
+
+//delete
+router.delete('/:post_id', auth, (deletePost)) //:user_id/
 
 
 

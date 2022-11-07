@@ -1,33 +1,48 @@
 import { connectDatabase } from  "./pool.js";
 import bodyParser  from  "body-parser";
 import express  from  "express";
-// import bcrypt  from  "bcryptjs"
-// import { v4  as  uuidv4 } from  'uuid';
-// import { generateJwt } from  "./jwt/jwtGenerator.js";
+import cookieParser from "cookie-parser";
 import { auth } from  "./middleware/auth.js";
 import cors from "cors";
 import { corsOptions } from "./config/corsOptions.js";
-import { postRouter } from "./routes/posts.js";
-import { registerRouter } from "./routes/users.js";
-import { commentRouter } from "./routes/comment.js"; 
-    
-// import session from "express-session"
+// import bcrypt  from  "bcryptjs"
+// import { v4  as  uuidv4 } from  'uuid';
+// import { generateJwt } from  "./jwt/jwtGenerator.js";
+//import { errorHandle } from "./middleware/errorHandle.js";
 
+//import pagesrouter
+import { postRouter } from "./routes/posts.js";
+import { userSessionRouter } from "./routes/users.js";
+import { commentRouter } from "./routes/comment.js"; 
+import { AccountRouter } from "./routes/viewaccount.js";
+import { refreshLogin } from "./routes/refreshUsers.js";
+// import session from "express-session"
 
 const pool = connectDatabase()
 const app = express()
 const PORT = 8000
-// const Cors = cors()
 
-//import routers
-// const postRouter = router()
+//custome middleware logger
+app.use((req,res, next) =>{
+    console.log(`${res} ${req.path}`)
+    next()
+})
 
-app.use(express.json())
+//middleware
 app.use(bodyParser.urlencoded({ extended:  true }))
-// app.use(cors())
+app.use(express.json())
 app.use(cors(corsOptions))
+app.use(cookieParser())  //middleware for cookies
 
-//app.use(cookieParser())
+
+//use of routers
+app.use('', userSessionRouter)
+app.use('', refreshLogin)
+app.use('/posts', postRouter) //can also put auth here instead in route foler
+app.use('/post', commentRouter)
+app.use('', commentRouter)
+app.use('/profile',AccountRouter)
+
 
 //to connect with pool
 pool.connect((err) => {
@@ -41,17 +56,8 @@ pool.connect((err) => {
 	}
 })
 
-
-//use of routers
-
-app.use('', registerRouter)
-
-app.use('/posts', postRouter)
-app.use('/post', commentRouter)
-
-
 //  welcome message
-app.get('/home',  (req, res)  =>  { 
+app.get('/',  (req, res)  =>  { 
     res.json(
 	    { info:  'Hello welcome to midnightwrite' }
     )  
@@ -75,6 +81,12 @@ app.get('/api', auth, async (req, res) => {
     }
 }
 )
+
+//displays the error on the page
+app.use(function (err, req, res, next) {
+    console.error(err.stack)
+    res.status(500).send(err.message)
+})
 
 
 

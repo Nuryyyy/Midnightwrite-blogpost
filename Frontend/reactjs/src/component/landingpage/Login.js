@@ -1,15 +1,27 @@
+// import React, {useState, useRef, useEffect, useContext} from 'react';
 import React, {useState, useRef, useEffect, useContext} from 'react';
 import { AuthContext } from '../../context/AuthProvider';
-import axios from '../../api/axios';
-import { useNavigate } from 'react-router-dom';
-import CreatePost from '../Post/CreatePost';
-import { Link } from 'react-router-dom';
+// import useAuth from '../../hooks/useAuth'
+import { Link, useNavigate, useLocation, redirect } from 'react-router-dom';
 
+// import { useNavigate } from 'react-router-dom';
+import axios from '../../api/axios';
+
+import './landingpage.css'
+import logo from '../images/logo_violet.png'
 
   const login_url = '/login' 
   
   export default function Login() {
+
   const {setAuth} = useContext(AuthContext)
+  // const {setAuth} = useAuth()
+  const navigate = useNavigate()
+  // const location =  useLocation()
+  // const from = location.state.from.pathname || "/"
+  // const from = location.state?.from?.pathname || "/"
+  // const from = (location.state && location.state.from && location.state.from.pathname) || "/"
+
   const userRef = useRef()
   const errRef = useRef()
 
@@ -18,7 +30,7 @@ import { Link } from 'react-router-dom';
   const [errMsg, setErrMsg] = useState("")
   const [success, setSuccess] = useState(false)
 
-  const navigate = useNavigate
+
 
   useEffect(() => {
     userRef.current.focus()
@@ -31,36 +43,34 @@ import { Link } from 'react-router-dom';
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    
-
     console.log("handlesumbit")
     
- 
-    // setUsername('')
-    // setPassword()
-
+    
     try {
       const response = await axios.post(login_url,
         JSON.stringify({
-          username: username, 
-          password: password
+          username, 
+          password
         }),
         {
           headers: {
-            'Content-Type': "application/json",
-            // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            'Content-Type': "application/json"},
             // "Access-Control-Allow-Headers":"Authorization",
             withCredentials: true
-          }  
+          
         })
         console.log("in function response")
-        console.log(JSON.stringify(response.data))
-        const Token = response.data.token
-        setAuth({username, password, Token})
+        console.log(JSON.stringify(response?.data))
         setUsername('')
         setPassword('')
-
+        const Token = response?.data?.token 
+        // console.log("fe:", Token)
+        //response?.data?.Token //response.data &&
+        setAuth({username, password, Token})
         setSuccess(true)
+        navigate("/posts/create") 
+        
+
         //clear input fields
     } catch (error) {
       console.log(error)
@@ -72,27 +82,42 @@ import { Link } from 'react-router-dom';
   
   return (
     
-    <>
-    {success ? (
-      <div>
-        <h1> success login!</h1>
-       
-        {/* <p>
-          <a href="/posts/create">Log In</a>
-        </p> */}
-       {/* <nav>
-        <Link to="/posts/create" />
-       </nav> */}
+    // <>
+    // {success ?  (
+    //   <div>
+    //     <h1> success login!</h1>
+        
+    //     {/* <p>
+    //       <a href="/posts/create">Log In</a>
+    //     </p> */}
+    //   <Link to="/posts/create" />
+    //    {/* <redirect to="/somewhere/else" /> */}
 
-      </div>
-    ) : (
-    <div>
+    //   </div>
+    // ) : (
+    
      <section>
      <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
-     <h1>Sign in</h1>
+
+     <div className="modal-dialog" role="document" >
+        <div className="modal-content">
+        <div className="modal-header text-center">
+      <figure class="figure center">
+        <img id="logoViolet" src={logo} alt="logo" class='rounded mx-auto d-block'></img>
+        <figcaption class="figure-caption ">
+        <h5 class="modal-title"  id="modal-title">Create Account</h5>
+      </figcaption>
+      </figure>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body mx-3">
+
        <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-          <input type="text" 
+       <div class="md-form form-floating mb-3 ">
+          <input 
+          placeholder='Username:'
+          className='form-control validate'
+          type="text" 
           id="username"  
           ref={userRef}
           autoComplete="off"
@@ -100,22 +125,35 @@ import { Link } from 'react-router-dom';
           value={username}
           required
           />
+          <label htmlFor="username" data-error="wrong" data-success="right">Username:</label>
+      </div>
 
-        <label htmlFor="password">Password:</label>
-        <input type="password" 
+      <div class="md-form form-floating mb-3">
+        
+        <input 
+          placeholder='Password:'
+          className='form-control validate'
+          type="password" 
           id="password" 
           autoComplete="off"
           onChange = {(e) => setPassword(e.target.value)}
           value={password}
           required
           />
+          <label htmlFor="password" data-error="wrong" data-success="right">Password:</label>
+      </div>
 
-        <button type="submit" id="btnOption" className="click-btn">Sign In</button>
+      <div class="modal-footer d-flex justify-content-end"></div>
+          <button data-target="#login"type="submit" id="btnOption" className="btn btn-primary">Sign In</button>
         </form>
             <a href="">Forgot password?</a>
+      </div>
+      </div>
+      </div>
+      
     </section>
-    </div>
-    )} 
-    </>
+    
+    // )} 
+    // </>
   )
 }

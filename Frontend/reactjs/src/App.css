@@ -1,4 +1,121 @@
-.App {
+/* start of imported fonts */
+/* Font for header */
+@font-face { 
+  font-family: 'tisasans_header';
+  src: url('./bootstrap_design/fonts/header_TisaSansPro-BlackItalic.woff'); 
+  /* font-weight: normal;
+  font-style: normal; */
+}
+/* title font */
+@font-face {
+  font-family: 'tisasans_title';
+  src: url('./bootstrap_design/fonts/title_TisaSansPro-Bold.woff'); 
+  
+}
+
+/* body font */
+@font-face {
+  font-family: 'tisasans_body';
+  src: url('./bootstrap_design/fonts/body_TisaSansPro-Regular.woff'); 
+}
+/* end of imported fonts */
+
+:root {
+  --c-dark: #221F3B /* #050505 */;
+  --c-brand: #363062;
+  --c-brand-light: #827397;
+  --c-light: #F7F8FA;
+  --c-brand-rgb: (54, 48, 99);
+  --box-shadow: 0px 15px 25px rgba(0,0,0,0.08);
+  --transition: all 0.5s ease
+
+}
+
+body{
+  /* font-family: 'tisa'; */
+  line-height: 1.7;
+  /* color: black; */
+  font-family: 'tisasans_body';
+}
+
+h1, h2, h3, h4, h5, h6, 
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-weight: 600;
+}
+
+/* a {
+  text-decoration: none;
+  color
+} */
+
+/* a:hover {
+
+} */
+
+#navbar {
+  background-color: var(--c-brand);
+  color: #F7F8FA;
+  box-shadow: 5px 10px 18px #888888;
+}
+
+.nav-link {
+  color: #F7F8FA;
+
+}
+
+
+#logobar {
+  color: #F7F8FA;
+  font-size: 1.5em;
+  font-family: 'tisasans_title';
+ 
+}
+
+.section-padding {
+  padding-top: 140px;
+  padding-bottom: 140px;
+}
+
+.navbar-nav .nav-link.active {
+  color: var(--c-brand-light)
+}
+.navbar-nav .nav-link:hover {
+  color: var(--c-brand-light)
+}
+#btn {
+
+  border-radius: 0;
+  background-color: var(--c-light);
+  border-color: #F7F8FA;
+}
+
+#btn:hover {
+  background-color: white;
+}
+
+#btn:active {
+  background-color: var(--c-brand-rgb);
+  border-color: white;
+  border-radius: 0;
+ 
+}
+
+/* .btn-bd-primary {
+  --bs-btn-font-weight: 600;
+  --bs-btn-color: var(--bs-white);
+  --bs-btn-bg: var(--bd-violet);
+  --bs-btn-border-color: var(--bd-violet);
+  --bs-btn-border-radius: .5rem;
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #{shade-color($bd-violet, 10%)};
+  --bs-btn-hover-border-color: #{shade-color($bd-violet, 10%)};
+  --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+  --bs-btn-active-bg: #{shade-color($bd-violet, 20%)};
+  --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
+} */
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +152,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

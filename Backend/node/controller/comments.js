@@ -1,5 +1,5 @@
 import { connectDatabase } from "../pool.js"
-import { v5  as  uuidv5 } from  'uuid';
+import { v4  as  uuidv4 } from  'uuid';
 
 const  pool = connectDatabase()
 // pool.connect
@@ -13,22 +13,24 @@ export const addComment = async (req, res) => {
     try {
  
         const {
-           body
+           post_id,
+            body
         } = req.body 
 
-        const post_id = req.user.post_id
-        console.log(post_id)
+        // const post_id = req.user.post_id
+        console.log("post_id",post_id)
         const user_id = req.user.user_id
-        console.log(user_id)
-        const username = req.user.username
-        console.log(username)
+        console.log("user_id", user_id)
+        // const username = req.user.username
+        console.log("body:", body)
 
-        const date_comment = new Date()
+        const comment_date = new Date()
+        console.log("Date:", comment_date)
         // let user_id = user
         // const user = await pool.query(`SELECT * FROM public.createpost WHERE user_id = $1`, [user_id])
         // console.log(user)
         
-        const comment = await pool.query(`INSERT INTO postcomments (comment_id, post_id, user_id, date_comment, body) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [uuidv5(), post_id, user_id, username, date_comment, body])
+        const comment = await pool.query(`INSERT INTO post_comments (comment_id, post_id, user_id, body, comment_date) VALUES ($1, $2, $3, $4, $5) RETURNING *`, [uuidv4(), post_id, user_id, body, comment_date])
         // newPost.rows[0]
        
         if (comment.rows[0]) {
@@ -38,7 +40,7 @@ export const addComment = async (req, res) => {
     } catch (error) {
         console.error(error.message);
         res.status(500).send({
-            msg: "Sign in first"
+            msg: "Error"
         });
     }
 }

@@ -1,10 +1,12 @@
 import React, {useState, useRef, useEffect, useContext} from 'react';
 import { AuthContext } from '../../context/AuthProvider';
-import axios from '../../api/axios';
+// import axios from '../../api/axios';
+import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
+import TopBar from '../LayoutBar/TopBar';
 
 const createpost_url = '/posts/create'
 export default function CreatePost() { 
-
+  const axiosPrivate = useAxiosPrivate()
   const {setAuth} = useContext(AuthContext)
   const userRef = useRef()
   const errRef = useRef()
@@ -25,12 +27,12 @@ export default function CreatePost() {
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    console.log("sumbitiri")
+    console.log("handlesubmit")
     // setUsername('')
     // setPassword()
 
     try {
-      const response = await axios.post(createpost_url,
+      const response = await axiosPrivate.post(createpost_url,
         JSON.stringify({
           title: title, 
           description: description
@@ -39,16 +41,19 @@ export default function CreatePost() {
           headers: {
             'Content-Type': "application/json",
             // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-            // "Access-Control-Allow-Headers":"Authorization",
+            "Access-Control-Allow-Headers":"Authorization",
+           
             withCredentials: true
           }  
         })
         console.log("in function response")
         console.log(JSON.stringify(response.data))
         const Token = response.data.token
+        console.log(Token)
+    
         setAuth({title, description, Token})
-        setTitle('')
-        setDescription('')
+        setTitle("")
+        setDescription("")
         setSuccess(true)
         //clear input fields
     } catch (error) {
@@ -62,6 +67,7 @@ export default function CreatePost() {
 
 
   return (
+    
     <>
      {success ? (
       <div>
@@ -73,7 +79,9 @@ export default function CreatePost() {
       </div>
     ) : (
     <div>
+      <TopBar />
       <section>
+
         <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
         <h1>Create your post</h1>
         <form onSubmit={handleSubmit}>
