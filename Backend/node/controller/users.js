@@ -2,12 +2,11 @@ import { connectDatabase } from "../pool.js";
 import bcrypt  from  "bcryptjs"
 import { v4  as  uuidv4 } from  'uuid';
 import { generateJwt } from "../jwt/jwtGenerator.js"
+import { refreshToken } from "../jwt/refreshToken.js";
 // import cookieParser from "cookie-parser";
 
-// import cors from "cors";
+const pool = connectDatabase()
 
-const  pool = connectDatabase()
-// const cookies = cookieParser()
 
 export const trialRegister = (req,res) => {
     res.json("registration is working")
@@ -45,6 +44,7 @@ export const register = async (req, res) => {
         
         //generate and return the JWT token
         const token = generateJwt(newUser.rows[0])
+        //accessToken
 
         res.json({
             token
@@ -86,31 +86,35 @@ export const login = async (req, res) => {
             return res.status(401).send({error: "Password is incorrect."})
             
         }
-    
+
         //generate and return the JWT
-        const token = generateJwt(user.rows[0])
+        const accessToken = generateJwt(user.rows[0]) //accessToken
+        console.log("Access Token:", accessToken)
+        //token
+    
+        //refreshToken
+        // const currentUser = {...user, refreshToken}
+        const refresh_Token = refreshToken(user.rows[0])
+        console.log("Refreshtoken:", refresh_Token)
         
+        // const{ password_user , ...other} = user.rows[0]
+      
+
         // store token to cookie
-        res.cookie('token-cookie', token, {httpOnly: true, maxAge: 86400000 //day 
-        //secure: true
+        res.cookie('SetCookie', refresh_Token, {httpOnly: true, 
+            maxAge: 86400000 //day 
+            // ,secure: true,
+            // sameSite: 'None'
+        
+        //jwtcookie
             }
-        )
-        // 86400000 * 30 //month
-        // }) //24hrs * 7days 
-        //24hrs = 24*60*1000 = 
-        //1000ms = 1s
+        ).status(200)
+        
+        res.json({username, password, accessToken})
 
 
         console.log("success login")
-        res.json({
-            username,
-            password,
-            token
-        })
-        console.log(user.rows, "backend - token:",token)
         
-        
-
     } catch (error) {
         console.error(error.message);
         res.status(500).send({
@@ -119,6 +123,14 @@ export const login = async (req, res) => {
     }
 }
 
+// //update user info
+// export const updateUser = async (req, res) => {
+//     try {
+//         res.json("you can now update your account")
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
 
 //verify
 export const verifyuser = async (req, res) => {
@@ -136,4 +148,30 @@ export const verifyuser = async (req, res) => {
                 });
             }
 }
+
+
+
+// export updateAccount = async (req, res) => {
+//     try {
+//         const{
+//             username,
+//             profileImage
+//         } = req.body;
+
+//         const user = await pool.query(`SELECT * FROM public.user_info WHERE username = $1`, [username])
+//         const newUser = await pool.query(`INSERT INTO user_info(user_id, firstname, lastname, username, email, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [uuidv4(), firstname, lastname, username, email, bcryptPassword])
+//     } catch (error) {
+        
+//     }
+// }
+
+export const logout =  (req, res) => {
+    res.clearCookie('SetCookie', {
+    httpOnly: true,
+    sameSite: 'None', 
+    secure: true,
+    }
+    ).status(200).json("User logged out")
+}
+
 

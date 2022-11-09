@@ -9,23 +9,20 @@ import Popper from 'popper.js';
 
 import App from './App';
 import { AuthProvider } from './context/AuthProvider';
-// import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 // import TopBar from './component/LayoutBar/TopBar';
+// import { AuthContextProvider } from './context/authContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  <AuthProvider>
-    {/* <BrowserRouter>
-    <TopBar />
+    <BrowserRouter>
+    <AuthProvider>
       <Routes>
       <Route path="/*" element={<App />}/>
       </Routes>
-   
-    </BrowserRouter> */}
-    <App />
-  </AuthProvider>
+      </AuthProvider>
+  </BrowserRouter>
   </React.StrictMode>
 );
-

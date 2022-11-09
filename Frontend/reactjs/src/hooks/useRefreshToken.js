@@ -1,10 +1,9 @@
-import React from 'react'
+//call the refresh route to send the new requested accessToken to frontend
 import axios from '../api/axios'
 import useAuth from './useAuth'
 
-function useRefreshToken() {
-
-    const {setAuth} = useAuth()
+const useRefreshToken = () => {
+    const { setAuth } = useAuth()
 
     const refresh = async () => {
         const response = await axios.get('/refresh', {
@@ -12,12 +11,13 @@ function useRefreshToken() {
         })
         setAuth(prev => {
             console.log(JSON.stringify(prev))
-            console.log(response.data.token)
-            return{...prev, token: response.data.token}
+            console.log(response.data.accessToken)
+            return{...prev, accessToken: response.data.accessToken}
         })
-        return response.data.token
+        console.log('useRefreshToken:',response.data.accessToken)
+        return response.data.accessToken
+        
     }
-  
   return refresh
 }
 

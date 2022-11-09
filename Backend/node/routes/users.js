@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { auth } from "../middleware/auth.js";
-import { register, login, verifyuser } from "../controller/users.js";
+import { register, login, verifyuser, logout } from "../controller/users.js";
 import { verifyJWT } from "../middleware/verifyJWT.js";
 import { Logout } from "../controller/logout.js";
  
@@ -22,10 +22,13 @@ router.get('', (req, res) => {
 //get
 router.get('/verify', verifyJWT, (verifyuser))
 router.get('/logout', (Logout))
+// router.get('/logout', (logout))
+
 
 //post
 router.post('/register', (register))
 router.post('/login', (login))
+// router.post('/logout', (logout))
 
 
 export { userSessionRouter };
