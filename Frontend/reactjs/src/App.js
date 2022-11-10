@@ -28,7 +28,8 @@ function App() {
       {/* Public routes */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/landingpage" element={<LandingPage />} />
-    
+      {/* <Route path="/posts/new" element={<NewPost />} /> */}
+      {/* <Route path="/logout" element={<} */}
 
        {/* <TopBar /> */}
 

@@ -1,8 +1,17 @@
+// import React from 'react'
+import { useState, useEffect } from "react"
+import { useAxiosPrivate } from "../../hooks/useAxiosPrivate"
+import TopBar from "../LayoutBar/TopBar"
+import useLogout from "../../hooks/useLogout.js"
+import { useNavigate } from "react-router-dom"
 
-import React, { useState, useEffect } from 'react'
-import axios from '../../api/axios'
-import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
-import TopBar from '../LayoutBar/TopBar'
+const Users = () => {
+    const axiosPrivate = useAxiosPrivate();
+    const [usersData, setUsersData] = useState()
+    const logout = useLogout()
+    const navigate = useNavigate()
+
+    const capitalized = str => str.charAt(0).toUpperCase() + str.slice(1)
 
 function ViewAccount() {
   const [profile, setProfile] =useState()
@@ -31,23 +40,38 @@ function ViewAccount() {
       isMounted = false;
       controller.abort()
     }
-  },[])
+
+    },[])
+ 
+    const handleLogout = async() => {
+     await logout()
+     navigate('/landingpage')
+    }
+
   return (
     
     <article>
       <TopBar />
-    <div>ViewAccount Page is here</div>
-    {profile?.length
-      ? (
-        <ul>
-          {profile.map((item, index) => 
-          <li key={index}>
-            {item}
-          </li>)}
-        </ul>
-      ) : <p>no info</p>
-
-    }
+        <h2>Users List</h2>
+        {usersData?.length
+        ? ( 
+            
+                usersData.map( user => {
+                  return(
+                    <div className="userData" key={user} >
+                      Username: {capitalized(user?.username)} <br />
+                      Firstname: {user?.firstname}<br />
+                      Lastname: {user?.lastname}<br />
+                      Email: {user?.email}<br />
+                    </div>
+                  )
+                  
+                })
+           
+            
+        ) : <p>No users to display</p>
+        }
+        <button onClick={handleLogout}>Logout</button>
     </article>
   )
 }

@@ -2,6 +2,7 @@
 import { connectDatabase } from "../pool.js";
 import  jwt  from  "jsonwebtoken"
 import  dotenv  from  "dotenv"
+import { generateJwt } from "../jwt/jwtGenerator.js"
 dotenv.config();
 
 
@@ -70,10 +71,12 @@ const loginRefreshToken = async (req, res) => {
             const accessToken = jwt.sign(
                 { "username": user.username },
                 process.env.jwtSecret,
-                { expiresIn: '1m' }
+                { expiresIn: '1h' } //1h
             );
-            res.json({ accessToken })
-            console.log(user.username)
+            // const accessToken = generateJwt(user)
+            res.status(200).json({accessToken })
+            console.log("user:", user.username)
+            console.log("newaccesstoken:", accessToken)
         }
     );
 }

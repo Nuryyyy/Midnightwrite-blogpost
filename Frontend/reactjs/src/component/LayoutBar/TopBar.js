@@ -1,9 +1,17 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom'
 import './Topbar.css';
 import logo from '../images/logo_white.png'
+// import { useContext } from "react"
+// import { AuthContext } from "../../context/AuthProvider"
+// import  useAuth  from "../../hooks/useAuth"
 
 function TopBar() {
+
+  // const { currentUser } = useContext(AuthContext)
+  // const { currentUser } = useAuth()
+
+  // const { auth } = useContext(AuthContext);
+
     return (
         <nav id="navbar" className="navbar navbar-expand-lg sticky-top" > 
          <div className="container">
@@ -18,9 +26,9 @@ function TopBar() {
         </button>
             <div className="collapse navbar-collapse" id="nav">
                 <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <NavLink className="nav-link" to="/landingpage">LandingPage</NavLink>
-            </li>
+            </li> */}
             <li className="nav-item ">
               <NavLink className="nav-link" to="/home">Home</NavLink>
             </li>
@@ -31,8 +39,24 @@ function TopBar() {
               <NavLink className="nav-link" to="/about">About</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/profile/:username">Profile</NavLink>
+              <NavLink className="nav-link" to="/profile">Profile</NavLink> 
+              {/* {currentUser?.username} */}
             </li>
+
+            {/* newly added logout route */}
+            
+            {/* <li className="nav-item"> */}
+              {/* <span className="nav-link" onClick={logout}>Logout</span> :  */}
+              {/* <NavLink className="nav-link" onClick={logout}>Logout</NavLink> 
+             
+            </li> */}
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/users">Users</NavLink> 
+              {/* {currentUser?.username} */}
+            </li>
+            {/* <li className="nav-item">
+              <NavLink className="nav-link" to="/posts/new">NewPost</NavLink> 
+            </li> */}
           </ul>
         </div>
       </div>
