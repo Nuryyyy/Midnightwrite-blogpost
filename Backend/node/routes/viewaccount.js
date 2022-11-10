@@ -4,9 +4,10 @@ import { register, login, verifyuser } from "../controller/users.js";
 import { ViewAccount } from "../controller/viewaccount.js";
 
 
-const AccountRouter = Router()
-let router = AccountRouter
+const accountRouter = Router()
+let router = accountRouter
 
-router.get('/:username', auth, ViewAccount)
+// router.get('/:username', auth, ViewAccount)
+router.get('/profile', auth, ViewAccount)
 
-export {AccountRouter}
+export {accountRouter}

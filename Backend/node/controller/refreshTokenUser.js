@@ -58,8 +58,8 @@ const loginRefreshToken = async (req, res) => {
 // }
     const cookies = req.cookies;
     console.log("cookies:", cookies)
-    if (!cookies?.jwtcookie) return res.sendStatus(401).json("cookies toh");
-    const refreshToken = cookies.jwtcookie;
+    if (!cookies?.SetCookie) return res.sendStatus(401).json("cookies toh");
+    const refreshToken = cookies.SetCookie;
     console.log("refreshtoken:", refreshToken)
 
     // evaluate jwt 
@@ -69,12 +69,12 @@ const loginRefreshToken = async (req, res) => {
         (err, user) => {
             if (err) return res.sendStatus(403);
             const accessToken = jwt.sign(
-                { "username": user.username },
+                { user },
                 process.env.jwtSecret,
                 { expiresIn: '1h' } //1h
             );
             // const accessToken = generateJwt(user)
-            res.status(200).json({accessToken })
+            res.json({accessToken })
             console.log("user:", user.username)
             console.log("newaccesstoken:", accessToken)
         }

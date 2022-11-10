@@ -105,7 +105,14 @@ export const login = async (req, res) => {
         }
     
         //generate and return the JWT
-        const token = generateJwt(user.rows[0])
+        const accessToken = generateJwt(user.rows[0]) //accessToken
+        console.log("Access Token:", accessToken)
+        //token
+
+        //refreshToken
+        // const currentUser = {...user, refreshToken}
+        const refresh_Token = refreshToken(user.rows[0])
+        console.log("Refreshtoken:", refresh_Token)
         
         // store token to cookie
         res.cookie('SetCookie', refresh_Token, {httpOnly: true, 
@@ -119,14 +126,6 @@ export const login = async (req, res) => {
 
 
         console.log("success login")
-        res.json({
-            username,
-            password,
-            token
-        })
-        console.log(user.rows, "backend - token:",token)
-        
-        
 
     } catch (error) {
         console.error(error.message);

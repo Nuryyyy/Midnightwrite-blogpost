@@ -1,22 +1,18 @@
 // import React from 'react'
+// import React from 'react'
 import { useState, useEffect } from "react"
 import { useAxiosPrivate } from "../../hooks/useAxiosPrivate"
 import TopBar from "../LayoutBar/TopBar"
 import useLogout from "../../hooks/useLogout.js"
 import { useNavigate } from "react-router-dom"
 
-const Users = () => {
+const ViewAccount = () => {
     const axiosPrivate = useAxiosPrivate();
     const [usersData, setUsersData] = useState()
     const logout = useLogout()
     const navigate = useNavigate()
 
     const capitalized = str => str.charAt(0).toUpperCase() + str.slice(1)
-
-function ViewAccount() {
-  const [profile, setProfile] =useState()
-
-  const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
     let isMounted = true
@@ -29,7 +25,7 @@ function ViewAccount() {
         }
         )
         console.log(response)
-        isMounted && setProfile(response)
+        isMounted && setUsersData(response)
       } catch (error) {
         console.log(error)
       }

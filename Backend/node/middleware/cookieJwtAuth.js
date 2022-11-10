@@ -1,14 +1,26 @@
 import  jwt  from  "jsonwebtoken"
 
 const cookieJwtAuth = (req, res, next) => {
-    const token =  req.cookies.token
+    const token =  req.cookies.accessToken
+    // const token =  authHeader.split(' ')[1]
+    console.log("cookieTOken:", token)
+
+    
     try {
-        const user = jwt.verify(token, process.env.jwtSecret)
-        req.user = user
-        next()
+            jwt.verify(token, process.env.jwtSecret, (err, user) => {
+            if (err) return res.status(403).json("Token is not valid! cookieJwtAuth");
+            // req.user = user
+            req.user = user
+            next()
+        })
+        
     } catch (error) {
-        res.clearCookie("token")
-        return res.redirect("/")
+        console.log(error)
+        // res.clearCookie("token")
+        // return res.redirect("/")
         
     }
 }
+
+export {cookieJwtAuth}
+
