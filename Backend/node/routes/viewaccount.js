@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { auth } from "../middleware/auth.js";
 import { register, login, verifyuser } from "../controller/users.js";
-import { ViewAccount } from "../controller/viewaccount.js";
+import { viewAccount } from "../controller/viewaccount.js";
+import { verifyJWT } from "../middleware/verifyJWT.js";
 
 
 const accountRouter = Router()
 let router = accountRouter
 
 // router.get('/:username', auth, ViewAccount)
-router.get('/profile', auth, ViewAccount)
+router.get('/', verifyJWT, viewAccount)
 
 export {accountRouter}

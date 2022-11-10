@@ -1,17 +1,17 @@
 import React, {useState, useRef, useEffect, useContext} from 'react';
 import { AuthContext } from '../../context/AuthProvider';
-// import axios from '../../api/axios';
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
 import TopBar from '../LayoutBar/TopBar';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const createpost_url = '/posts/create'
 export default function CreatePost() { 
   const axiosPrivate = useAxiosPrivate()
-  const {setAuth} = useContext(AuthContext)
+  // const {setAuth} = useContext(AuthContext)
   const userRef = useRef()
   const errRef = useRef()
 
-
+  const navigate = useNavigate()
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [errMsg, setErrMsg] = useState("")
@@ -47,14 +47,14 @@ export default function CreatePost() {
           }  
         })
         console.log("in function response")
-        console.log(JSON.stringify(response.data))
-        const Token = response.data.token
-        console.log(Token)
-    
-        setAuth({title, description, Token})
+        // console.log(JSON.stringify(response.data))
+        // const Token = response.data.token
+        // console.log(Token)
+        // setAuth({title, description, Token})
         setTitle("")
         setDescription("")
         setSuccess(true)
+        navigate('/profile')
         //clear input fields
     } catch (error) {
       console.log(error)
@@ -69,32 +69,34 @@ export default function CreatePost() {
   return (
     
     <>
-     {success ? (
+     {/* {success ? (
+      <div>
       <h1>Success!</h1>
 
-    // <div class="modal fade" id="ignismyModal" role="dialog" tabindex="-1" aria-labelledby="Register" aria-hidden="true">
-    //     <div class="modal-dialog">
-    //         <div class="modal-content">
-    //             <div class="modal-header">
-    //                 <button type="button" class="close" data-dismiss="modal" aria-label=""><span>×</span></button>
-    //              </div>
+    <div class="modal fade" id="ignismyModal" role="dialog" tabindex="-1" aria-labelledby="Register" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label=""><span>×</span></button>
+                 </div>
       
-    //             <div class="modal-body">
+                <div class="modal-body">
                    
-    //     <div class="thank-you-pop">
-    //       <h1>Thank You!</h1>
-    //       <p>Your submission is received and we will contact you soon</p>
-    //       <h3 class="cupon-pop">Your Id: <span>12345</span></h3>
+        <div class="thank-you-pop">
+          <h1>Thank You!</h1>
+          <p>Your submission is received and we will contact you soon</p>
+          <h3 class="cupon-pop">Your Id: <span>12345</span></h3>
           
-    //      </div>
+         </div>
                      
-    //             </div>
+                </div>
       
-    //         </div>
-    //     </div>
-    // </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
-    ) : (
+    ) : ( */}
     <div>
       <TopBar />
       <section>
@@ -131,7 +133,7 @@ export default function CreatePost() {
 
       </section>
     </div>
-    )}
+    {/* )} */}
    </>
   )
 }

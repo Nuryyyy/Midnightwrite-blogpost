@@ -43,16 +43,8 @@ function TopBar() {
               {/* {currentUser?.username} */}
             </li>
 
-            {/* newly added logout route */}
-            
-            {/* <li className="nav-item"> */}
-              {/* <span className="nav-link" onClick={logout}>Logout</span> :  */}
-              {/* <NavLink className="nav-link" onClick={logout}>Logout</NavLink> 
-             
-            </li> */}
             <li className="nav-item">
               <NavLink className="nav-link" to="/users">Users</NavLink> 
-              {/* {currentUser?.username} */}
             </li>
             {/* <li className="nav-item">
               <NavLink className="nav-link" to="/posts/new">NewPost</NavLink> 

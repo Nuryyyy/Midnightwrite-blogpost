@@ -1,5 +1,3 @@
-// import React from 'react'
-// import React from 'react'
 import { useState, useEffect } from "react"
 import { useAxiosPrivate } from "../../hooks/useAxiosPrivate"
 import TopBar from "../LayoutBar/TopBar"
@@ -18,19 +16,19 @@ const ViewAccount = () => {
     let isMounted = true
     const controller = new AbortController()
 
-    const getProfile = async () => {
+    const getData = async () => {
       try {
-        const response = await axiosPrivate.get('/profile/:username', {
+        const response = await axiosPrivate.get('/profile', {
           signal: controller.signal
         }
         )
-        console.log(response)
-        isMounted && setUsersData(response)
+        console.log(response.data)
+        isMounted && setUsersData(response.data)
       } catch (error) {
         console.log(error)
       }
     }
-    getProfile()
+    getData()
 
     return () => {
       isMounted = false;
