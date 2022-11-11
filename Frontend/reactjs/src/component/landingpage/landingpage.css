@@ -74,3 +74,8 @@
 .btn:hover {
     background-color: lightgray;
 }
+
+.modal-backdrop {
+    /* bug fix - no overlay */    
+    display: none;    
+}

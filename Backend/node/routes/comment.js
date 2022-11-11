@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 router.get('trial', (trialComment))
 
 //post
-router.post('/comment', auth, (addComment))
+router.post('/comment', (addComment))
 
 
 
