@@ -29,7 +29,7 @@ export const register = async (req, res) => {
         //Check if the user is already existing
         const user = await pool.query(`SELECT * FROM public.user_info WHERE username = $1`, [username])
 
-        if (user.rows.length > 0) {
+        if (user.rows.length >= 0) {
             res.status(401).send("Username is already taken")
         }
 
