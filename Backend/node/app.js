@@ -2,7 +2,6 @@ import { connectDatabase } from  "./pool.js";
 import bodyParser  from  "body-parser";
 import express  from  "express";
 import cookieParser from "cookie-parser";
-import { auth } from  "./middleware/auth.js";
 import cors from "cors";
 import { corsOptions } from "./config/corsOptions.js";
 import { credentials } from "./middleware/credentials.js";
