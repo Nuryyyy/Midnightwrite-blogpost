@@ -1,12 +1,16 @@
 import { Router } from "express";
-import { auth } from "../middleware/auth.js";
 import { register, login, verifyuser } from "../controller/users.js";
-import { ViewAccount } from "../controller/viewaccount.js";
+import { deleteUser, updateUser, ViewAccount } from "../controller/viewaccount.js";
+import { verifyJWT } from "../middleware/verifyJWT.js";
 
 
-const AccountRouter = Router()
-let router = AccountRouter
+const accountRouter = Router()
+let router = accountRouter
 
-router.get('/:username', auth, ViewAccount)
+router.get('/', verifyJWT, ViewAccount)
 
-export {AccountRouter}
+router.put('/edit/:user_id', verifyJWT, updateUser)
+
+router.delete('/edit/:user_id',verifyJWT, deleteUser)
+
+export {accountRouter}

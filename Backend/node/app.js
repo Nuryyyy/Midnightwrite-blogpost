@@ -14,7 +14,7 @@ import { corsOptions } from "./config/corsOptions.js";
 import { postRouter } from "./routes/posts.js";
 import { userSessionRouter } from "./routes/users.js";
 import { commentRouter } from "./routes/comment.js"; 
-import { AccountRouter } from "./routes/viewaccount.js";
+import { accountRouter } from "./routes/viewaccount.js";
 import { refreshLogin } from "./routes/refreshUsers.js";
 // import session from "express-session"
 
@@ -41,7 +41,7 @@ app.use('', refreshLogin)
 app.use('/posts', postRouter) //can also put auth here instead in route foler
 app.use('/post', commentRouter)
 app.use('', commentRouter)
-app.use('/profile',AccountRouter)
+app.use('/profile', accountRouter)
 
 
 //to connect with pool
