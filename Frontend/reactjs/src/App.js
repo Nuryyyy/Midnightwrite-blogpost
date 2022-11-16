@@ -12,6 +12,7 @@ import ViewAccount from './component/ViewAccount/ViewAccount';
 import Home from './component/Home/Home'
 import RequireAuth from './context/RequireAuth';
 import { AuthProvider } from './context/AuthProvider';
+import Users from './component/ViewAccount/Users';
 
 
 //add footer.js
@@ -28,7 +29,8 @@ function App() {
       {/* Public routes */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/landingpage" element={<LandingPage />} />
-    
+      {/* <Route path="/posts/new" element={<NewPost />} /> */}
+      {/* <Route path="/logout" element={<} */}
 
        {/* <TopBar /> */}
 
@@ -37,7 +39,8 @@ function App() {
       <Route path="/about" element={<About />} />
       <Route path='/home' element={<Home />} />
       <Route path="/posts/create" element={<CreatePost />} />
-      <Route path="/profile/:username" element={<ViewAccount />} />
+      <Route path="/profile" element={<ViewAccount />} />
+      <Route path='/users' element={<Users />} />
       {/* </Route> */}
       
       {/* Error/missing page */}

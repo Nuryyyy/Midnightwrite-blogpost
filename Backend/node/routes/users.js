@@ -8,10 +8,6 @@ import { Logout } from "../controller/logout.js";
 const userSessionRouter = Router()
 let router = userSessionRouter
 
-// router.use(cookieParser())
-
-// router.use(cookieParser())
-
 router.get('', (req, res) => {
     res.json(
 	    { info:  'Hello welcome to midnightwrite registration'}

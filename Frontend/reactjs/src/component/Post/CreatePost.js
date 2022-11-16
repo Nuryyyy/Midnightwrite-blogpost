@@ -1,21 +1,25 @@
 import React, {useState, useRef, useEffect, useContext} from 'react';
-import { AuthContext } from '../../context/AuthProvider';
-// import axios from '../../api/axios';
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
 import TopBar from '../LayoutBar/TopBar';
+import { Navigate, useNavigate } from 'react-router-dom';
+import PostSuccess from '../Modal/PostSuccess';
 
 const createpost_url = '/posts/create'
 export default function CreatePost() { 
   const axiosPrivate = useAxiosPrivate()
-  const {setAuth} = useContext(AuthContext)
+  // const {setAuth} = useContext(AuthContext)
   const userRef = useRef()
   const errRef = useRef()
 
-
+  const navigate = useNavigate()
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [errMsg, setErrMsg] = useState("")
   const [success, setSuccess] = useState(false)
+
+  // const [show, setShow] = useState(false);
+  // const handleClose = () => setShow(false);
+
 
   useEffect(() => {
     userRef.current.focus()
@@ -28,8 +32,6 @@ export default function CreatePost() {
   const handleSubmit = async(e) => {
     e.preventDefault()
     console.log("handlesubmit")
-    // setUsername('')
-    // setPassword()
 
     try {
       const response = await axiosPrivate.post(createpost_url,
@@ -46,15 +48,14 @@ export default function CreatePost() {
             withCredentials: true
           }  
         })
-        console.log("in function response")
-        console.log(JSON.stringify(response.data))
-        const Token = response.data.token
-        console.log(Token)
-    
-        setAuth({title, description, Token})
+        console.log("successpost")
         setTitle("")
         setDescription("")
         setSuccess(true)
+        // setShow(true) 
+          
+        
+        // navigate('/profile')
         //clear input fields
     } catch (error) {
       console.log(error)
@@ -67,17 +68,7 @@ export default function CreatePost() {
 
 
   return (
-    
-    <>
-     {success ? (
-      <div>
-        <h1>Posted!</h1>
-        {/* <<p>
-          <a href="#">Log In</a>
-        </p>> */}
-        
-      </div>
-    ) : (
+   
     <div>
       <TopBar />
       <section>
@@ -106,15 +97,20 @@ export default function CreatePost() {
 
             {/* <label for='markdown'>markdown</label>
             <textarea name='markdown' nameClass='markdown'></textarea> */}
-            <a href='/' className='btnOption btn-secondary'>Cancel</a>
+            <a href='/posts/create' className='btnOption btn-secondary'>Cancel</a>
             <button type="submit">Submit</button>
-
+            
+            
+           
         </form>
-        
 
+
+        
       </section>
-    </div>
-    )}
-   </>
+
+    </div> 
+
+
+  
   )
 }

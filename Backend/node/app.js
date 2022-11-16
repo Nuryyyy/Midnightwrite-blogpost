@@ -13,7 +13,7 @@ import { userSessionRouter } from "./routes/users.js";
 import { commentRouter } from "./routes/comment.js"; 
 import { accountRouter } from "./routes/viewaccount.js";
 import { refreshLogin } from "./routes/refreshUsers.js";
-
+// import session from "express-session"
 
 const pool = connectDatabase()
 const app = express()
@@ -38,7 +38,7 @@ app.use('', refreshLogin)
 app.use('/posts', postRouter) //can also put auth here instead in route foler
 app.use('/post', commentRouter)
 app.use('', commentRouter)
-app.use('/profile', accountRouter)
+app.use('/profile',accountRouter)
 
 
 //to connect with pool

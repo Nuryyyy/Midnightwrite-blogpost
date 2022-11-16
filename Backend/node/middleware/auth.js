@@ -5,16 +5,18 @@ dotenv.config()
 const  auth = (req, res, next) => {
 	//this will check if a token is existing in the Authorization Header
 	const  authHeader = req.header('Authorization')
-	// const token = req.cookies.token
+	// const authHeader = req.cookies.accessToken
+	console.log("authheader:", authHeader) //bearer token
 	
 	if (!authHeader) {
-		return  res.status(403).json({ err:  'Invalid token' })
+		return  res.status(403).json({ err:  'auth: Invalid token' })
 		
 		
 	}
 	console.log("authheader:", authHeader) //bearer token
 	try {
 		const token = authHeader.split(' ')[1]
+		console.log("token:", token)
 		//this will take the token from the Authorization header then will use
 		//jwt.verify function to process it
 		// jwt.verify(token.slice(7), process.env.jwtSecret, (err, user) => {

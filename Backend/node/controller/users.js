@@ -2,7 +2,7 @@ import { connectDatabase } from "../pool.js";
 import bcrypt  from  "bcryptjs"
 import { v4  as  uuidv4 } from  'uuid';
 import { generateJwt } from "../jwt/jwtGenerator.js"
-// import cookieParser from "cookie-parser";
+import { refreshToken } from "../jwt/refreshToken.js";
 
 // import cors from "cors";
 
@@ -43,19 +43,36 @@ export const register = async (req, res) => {
         //generate the uuid using the uuidv4() function
         const newUser = await pool.query(`INSERT INTO user_info(user_id, firstname, lastname, username, email, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [uuidv4(), firstname, lastname, username, email, bcryptPassword])
         
-        //generate and return the JWT token
-        const token = generateJwt(newUser.rows[0])
+        //generate and return the JWT
+        const accessToken = generateJwt(newUser.rows[0]) //accessToken
+        console.log("Access Token:", accessToken)
+        //token
+    
+        //refreshToken
+        // const currentUser = {...user, refreshToken}
+        const refresh_Token = refreshToken(newUser.rows[0])
+        console.log("Refreshtoken:", refresh_Token)
+        
 
-        res.json({
-            token
-        })
-        console.log("registered")
+        // store token to cookie
+        res.cookie('SetCookie', refresh_Token, {httpOnly: true, 
+            maxAge: 86400000 //day 
+            // ,secure: true,
+            // sameSite: 'None'
+
+            }
+        ).status(200).json({username, password, accessToken})
+
+
+        console.log("successregister")
         
     } catch (error) {
-
-        console.log(error.message)
-        res.status(500).send(error.message)
+        console.error(error.message);
+        res.status(500).send({
+            msg: "Unauthenticated"
+        });
     }
+
 }
 
 
@@ -88,28 +105,27 @@ export const login = async (req, res) => {
         }
     
         //generate and return the JWT
-        const token = generateJwt(user.rows[0])
+        const accessToken = generateJwt(user.rows[0]) //accessToken
+        console.log("Access Token:", accessToken)
+        //token
+
+        //refreshToken
+        // const currentUser = {...user, refreshToken}
+        const refresh_Token = refreshToken(user.rows[0])
+        console.log("Refreshtoken:", refresh_Token)
         
         // store token to cookie
-        res.cookie('token-cookie', token, {httpOnly: true, maxAge: 86400000 //day 
-        //secure: true
+        res.cookie('SetCookie', refresh_Token, {httpOnly: true, 
+            maxAge: 86400000 //day 
+            // ,secure: true,
+            // sameSite: 'None'
             }
-        )
-        // 86400000 * 30 //month
-        // }) //24hrs * 7days 
-        //24hrs = 24*60*1000 = 
-        //1000ms = 1s
+        ).status(200).json({username, password, accessToken})
+        
+        // res.json({username, password, accessToken})
 
 
         console.log("success login")
-        res.json({
-            username,
-            password,
-            token
-        })
-        console.log(user.rows, "backend - token:",token)
-        
-        
 
     } catch (error) {
         console.error(error.message);
