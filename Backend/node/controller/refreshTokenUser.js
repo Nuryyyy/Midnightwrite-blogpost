@@ -2,6 +2,7 @@
 import { connectDatabase } from "../pool.js";
 import  jwt  from  "jsonwebtoken"
 import  dotenv  from  "dotenv"
+import { generateJwt } from "../jwt/jwtGenerator.js"
 dotenv.config();
 
 

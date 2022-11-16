@@ -10,5 +10,4 @@ let router = refreshLogin
 
 router.get('/refresh', (loginRefreshToken))
 
-
 export { refreshLogin };

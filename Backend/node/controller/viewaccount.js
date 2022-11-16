@@ -14,8 +14,6 @@ export const viewAccount = async (req, res) => {
         const user = await pool.query("SELECT * FROM public.user_info WHERE username = $1", [username]) 
         console.log(user.rows[0])
 
-        // const {password, user_id, ...other} = user.rows
-
         res.json(user.rows)
 
            
@@ -43,7 +41,9 @@ export const updateUser = async (req, res) => {
         console.log("usernameinput:", username)
         console.log("user_id", user_id)
         console.log("userid ni loggin in:", req.user.user_id)
+
         console.log(req.user.email)
+
 
         if (user_id != req.user.user_id) {
             res.status(401).send("You are not to make changes to this account")
@@ -56,7 +56,7 @@ export const updateUser = async (req, res) => {
             res.status(401).send("Username is already taken")
         }
         const userEmail = await pool.query(`SELECT * FROM public.user_info WHERE email = $1`, [email])
-       
+
         if (userEmail.rows.length > 0 && email != req.user.email) {
             res.status(401).send("Email already exist!")
         }
