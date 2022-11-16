@@ -46,34 +46,15 @@ export const createPost = async (req, res) => {
         } = req.body 
         
         const user_id = req.user.user_id
-        console.log(user_id)
-        console.log("username:", req.user.username)
-        // console.log("user_id:", user_id)
-        
-        
 
         const date = new Date()
         console.log("date:", date)
-        // let user_id = user
-        // const user = await pool.query(`SELECT * FROM public.createpost WHERE user_id = $1`, [user_id])
-        // console.log(user)
+    
         
         const newPost = await pool.query(`INSERT INTO createpost (post_id, user_id, title, description, datepost) VALUES ($1, $2, $3, $4, $5) RETURNING *`, [uuidv4(), user_id, title, description, date])
- 
-        // const accessToken = req.cookies
-        // if (newPost.rows[0]) {
-        //     // return res.json("success posted")
-        //     res.json({
-        //         title,
-        //         description,
-        //         accessToken //token 
-        //     })
-        //   }
         
         console.log(newPost.rows[0])
         res.status(200).json(
-            // title,
-            // description,
             newPost.rows[0]
         )
 
@@ -100,11 +81,8 @@ export const getPost = async (req, res) => {
         const username = user.rows[0].username
         console.log("username:", username )
         
-    // const user = await pool.query(`SELECT * FROM public.user_info WHERE username = $1`, [username])
         res.status(200).json(post.rows, "username:", username)
-        // res.send(`${JSON.stringify(post.rows)},  
-        // Username: ${username}`)
-       
+    
         
         } catch (error) {
             // console.error(err.message);
@@ -124,10 +102,19 @@ export const editPost = async (req, res) => {
         //allow only user to edit its own post. should not be allowed to edit post of others
         const {description} = req.body
         console.log("edited description:", description)
-        const edited = await pool.query(`UPDATE public.createpost SET description = $1 WHERE post_id = $2`, [description, post_id]) 
-        console.log(description)
-        res.status(200).json(description)
-        
+
+        const posts =  await pool.query(`SELECT * FROM public.createpost WHERE post_id = $1`, [post_id])
+        const userID = posts.rows[0].user_id
+        console.log(posts.rows[0])
+        console.log("userID:", userID)
+        if (user_id === userID) {
+            const edited = await pool.query(`UPDATE public.createpost SET description = $1 WHERE post_id = $2`, [description, post_id]) 
+            res.status(200).json(description)
+            console.log("Successfully edited")
+        } else {
+            res.send("You are not the owner of the post! You can't edit it!")
+        }
+
     } catch (error) {
         console.log(error)
         
@@ -137,20 +124,18 @@ export const editPost = async (req, res) => {
 export const deletePost =  async (req, res) => {
     try {
         const post_id = req.params.post_id
-        // const username = req.params.username
         const user_id = req.user.user_id
         console.log(`postid: ${post_id}
-        user_id: ${user_id}`)
+                    user_id: ${user_id}`)
         // username: ${username}`)
 
         //this will query the userid of the params post, if match to current user(owner) then allow delete post
         const posts =  await pool.query(`SELECT * FROM public.createpost WHERE post_id = $1`, [post_id])
         const userID = posts.rows[0].user_id
-        console.log(posts.rows[0])
         console.log("userID:", userID)
         if (user_id === userID) {
             const deleted = await pool.query(`DELETE FROM public.createpost WHERE post_id = $1`, [post_id])
-            res.status(200).json(deleted.rows[0])
+            res.status(200).json("Successfully deleted")
             console.log("deleted")
         } else {
             res.send("You are not the owner of the post! You can't delete it!")

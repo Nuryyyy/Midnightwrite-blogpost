@@ -5,18 +5,15 @@ import cookieParser from "cookie-parser";
 import { auth } from  "./middleware/auth.js";
 import cors from "cors";
 import { corsOptions } from "./config/corsOptions.js";
-// import bcrypt  from  "bcryptjs"
-// import { v4  as  uuidv4 } from  'uuid';
-// import { generateJwt } from  "./jwt/jwtGenerator.js";
 //import { errorHandle } from "./middleware/errorHandle.js";
 
 //import pagesrouter
 import { postRouter } from "./routes/posts.js";
 import { userSessionRouter } from "./routes/users.js";
 import { commentRouter } from "./routes/comment.js"; 
-import { AccountRouter } from "./routes/viewaccount.js";
+import { accountRouter } from "./routes/viewaccount.js";
 import { refreshLogin } from "./routes/refreshUsers.js";
-// import session from "express-session"
+
 
 const pool = connectDatabase()
 const app = express()
@@ -41,7 +38,7 @@ app.use('', refreshLogin)
 app.use('/posts', postRouter) //can also put auth here instead in route foler
 app.use('/post', commentRouter)
 app.use('', commentRouter)
-app.use('/profile',AccountRouter)
+app.use('/profile', accountRouter)
 
 
 //to connect with pool
