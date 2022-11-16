@@ -2,10 +2,9 @@ import { connectDatabase } from  "./pool.js";
 import bodyParser  from  "body-parser";
 import express  from  "express";
 import cookieParser from "cookie-parser";
+import { auth } from  "./middleware/auth.js";
 import cors from "cors";
 import { corsOptions } from "./config/corsOptions.js";
-import { credentials } from "./middleware/credentials.js";
-import { verifyJWT } from "./middleware/verifyJWT.js";
 //import { errorHandle } from "./middleware/errorHandle.js";
 
 //import pagesrouter
@@ -29,7 +28,6 @@ app.use((req,res, next) =>{
 //middleware
 app.use(bodyParser.urlencoded({ extended:  true }))
 app.use(express.json())
-app.use(credentials)
 app.use(cors(corsOptions))
 app.use(cookieParser())  //middleware for cookies
 
@@ -40,7 +38,7 @@ app.use('', refreshLogin)
 app.use('/posts', postRouter) //can also put auth here instead in route foler
 app.use('/post', commentRouter)
 app.use('', commentRouter)
-app.use('/profile', accountRouter)
+app.use('/profile',accountRouter)
 
 
 //to connect with pool
@@ -65,7 +63,7 @@ app.get('/',  (req, res)  =>  {
 
 
 //this shoud only be access by the admin, this will further be updated.
-app.get('/users', verifyJWT, async (req, res) => {
+app.get('/api', auth, async (req, res) => {
     try{
     let list = await pool.query(`SELECT * FROM public.user_info`) 
     
