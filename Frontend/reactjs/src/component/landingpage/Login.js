@@ -1,36 +1,30 @@
-// import React, {useState, useRef, useEffect, useContext} from 'react';
-import React, {useState, useRef, useEffect, useContext} from 'react';
-import { AuthContext } from '../../context/AuthProvider';
-// import useAuth from '../../hooks/useAuth'
-import { Link, useNavigate, useLocation, redirect } from 'react-router-dom';
-
-// import { useNavigate } from 'react-router-dom';
+import React, {useState, useRef, useEffect} from 'react';
+import useAuth from '../../hooks/useAuth';
+import { useNavigate, useLocation, redirect } from 'react-router-dom';
 import axios from '../../api/axios';
 
 import './landingpage.css'
 import logo from '../images/logo_violet.png'
 
-  const login_url = '/login' 
-  
-  export default function Login() {
+export default function Login() {
 
-  const {setAuth} = useContext(AuthContext)
-  // const {setAuth} = useAuth()
-  const navigate = useNavigate()
-  // const location =  useLocation()
-  // const from = location.state.from.pathname || "/"
-  // const from = location.state?.from?.pathname || "/"
-  // const from = (location.state && location.state.from && location.state.from.pathname) || "/"
+const { setAuth, setCurrentUser } = useAuth();
+const navigate = useNavigate()
+// const location =  useLocation()
+// const from = location.state?.from?.pathname || "/"
 
-  const userRef = useRef()
-  const errRef = useRef()
+const userRef = useRef()
+const errRef = useRef()
 
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [errMsg, setErrMsg] = useState("")
-  const [success, setSuccess] = useState(false)
+const [username, setUsername] = useState("")
+const [password, setPassword] = useState("")
+const [errMsg, setErrMsg] = useState("")
+const [success, setSuccess] = useState(false) 
 
+  //option 2 for err
+const [err, setErr] =  useState(null)
 
+const capitalized = str => str.charAt(0).toUpperCase() + str.slice(1)
 
   useEffect(() => {
     userRef.current.focus()
@@ -45,9 +39,9 @@ import logo from '../images/logo_violet.png'
     e.preventDefault()
     console.log("handlesumbit")
     
-    
     try {
-      const response = await axios.post(login_url,
+      // await login(username, password)
+      const response = await axios.post("/login",
         JSON.stringify({
           username, 
           password
@@ -55,52 +49,47 @@ import logo from '../images/logo_violet.png'
         {
           headers: {
             'Content-Type': "application/json"},
-            // "Access-Control-Allow-Headers":"Authorization",
             withCredentials: true
           
         })
-        console.log("in function response")
+        
         console.log(JSON.stringify(response?.data))
+        const accessToken = response?.data?.accessToken 
+        console.log("data.AccessToken:", accessToken)
+        setAuth({username, password, accessToken})
+        setCurrentUser(response.data?.username)
         setUsername('')
         setPassword('')
-        const Token = response?.data?.token 
-        // console.log("fe:", Token)
-        //response?.data?.Token //response.data &&
-        setAuth({username, password, Token})
         setSuccess(true)
-        navigate("/posts/create") 
+        navigate("/profile") 
         
 
-        //clear input fields
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+      if (!err?.response) {
+          // setErrMsg('No Server Response');
+          setErr('No Server Response');
+      } else if (err.response?.status === 401) {
+          // setErrMsg('Username Taken');
+          setErr('Wrong password or username');
+      } else {
+          // setErrMsg('Registration Failed')
+          setErr('Login Failed')
+      }
       errRef.current.focus();
-    } 
+  }
+    
 
   }
+ 
 
-  
+
   return (
-    
-    // <>
-    // {success ?  (
-    //   <div>
-    //     <h1> success login!</h1>
-        
-    //     {/* <p>
-    //       <a href="/posts/create">Log In</a>
-    //     </p> */}
-    //   <Link to="/posts/create" />
-    //    {/* <redirect to="/somewhere/else" /> */}
-
-    //   </div>
-    // ) : (
     
      <section>
      <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
 
      <div className="modal-dialog" role="document" >
-        <div className="modal-content">
+        <div className="modal-content" >
         <div className="modal-header text-center">
       <figure class="figure center">
         <img id="logoViolet" src={logo} alt="logo" class='rounded mx-auto d-block'></img>
@@ -122,7 +111,7 @@ import logo from '../images/logo_violet.png'
           ref={userRef}
           autoComplete="off"
           onChange = {(e) => setUsername(e.target.value)}
-          value={username}
+          value={capitalized(username)}
           required
           />
           <label htmlFor="username" data-error="wrong" data-success="right">Username:</label>
@@ -143,8 +132,9 @@ import logo from '../images/logo_violet.png'
           <label htmlFor="password" data-error="wrong" data-success="right">Password:</label>
       </div>
 
-      <div class="modal-footer d-flex justify-content-end"></div>
-          <button data-target="#login"type="submit" id="btnOption" className="btn btn-primary">Sign In</button>
+      <div class="modal-footer d-flex justify-content-end" ></div>
+          <button data-target="#login" type="submit" id="btnOption" className="btn btn-primary">Sign In</button>
+          {err && <p>{err}</p>}
         </form>
             <a href="">Forgot password?</a>
       </div>

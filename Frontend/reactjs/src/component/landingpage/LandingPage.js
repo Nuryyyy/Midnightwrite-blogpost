@@ -4,8 +4,6 @@ import Register from './Register';
 import Login from './Login';
 //import images
 import logo from '../images/logo_white.png'
-import stardust from '../images/Stardust.png'
-import CreatePost from '../Post/CreatePost';
 export default function LandingPage() {
   return (
     <section id="landingpage" className="">
@@ -41,14 +39,16 @@ export default function LandingPage() {
       </div>
 
       {/* Modal */}
-      <div class="modal fade" id="Register" tabindex="-1" aria-labelledby="Register" aria-hidden="true">
+      <div class="modal" id="Register" tabindex="-1" aria-labelledby="Register" aria-hidden="true" >
       <div><Register /></div>
-      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" ></button>
       </div>
-
-      <div class="modal fade" id="Login" tabindex="-1" aria-labelledby="Login" aria-hidden="true">
+            {/* modal fade */}
+      <div class="modal" id="Login" tabindex="-1" aria-labelledby="Login" aria-hidden="true" >
       <div><Login /></div>
-      <button type="button" class="btn-close" aria-label="Close"></button>
+      <button type="button" class="btn-close" aria-label="Close" data-backdrop="false"></button>
+      
+
       </div>
     </section>
   
@@ -57,4 +57,3 @@ export default function LandingPage() {
     
   )
 }
-

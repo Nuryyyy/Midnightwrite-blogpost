@@ -1,14 +1,12 @@
-// import React, { useInsertionEffect } from 'react';
-import React from 'react';
-import {useState, useEffect, useRef } from 'react';
 import axios from '../../api/axios';
+import {useState, useEffect, useRef } from 'react';
+import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
-import { Link } from 'react-router-dom';
+
 import './landingpage.css'
 import logo from '../images/logo_violet.png'
 
-const register_url = '/register' 
 
 //Requirements or validation for creating usernmame and pasword
 // const user_REGEX = /^[A-z][A-z0-9-_]{3,23}$/; //4-24char
@@ -16,7 +14,9 @@ const register_url = '/register'
 
 export default function Register() {
 
+  const { setAuth, setCurrentUser } = useAuth();
   const navigate = useNavigate()
+
     //user input, error reference
   const userRef = useRef()
   const errRef = useRef();
@@ -40,6 +40,12 @@ export default function Register() {
   const [errMsg, setErrMsg] = useState("")
   const [success, setSuccess] = useState(false)
 
+  //option 2 for err
+  // const [err, setErr] =  useState(null)
+
+  //capitalize user's input for firstname, lastname and username
+  const capitalized = str => str.charAt(0).toUpperCase() + str.slice(1)
+
   useEffect(() => {
     userRef.current.focus()
   }, [])
@@ -53,7 +59,7 @@ export default function Register() {
     console.log("handlesumbit")
     
     try {
-      const response = await axios.post(register_url,
+      const response = await axios.post('/register',
         JSON.stringify({
           firstname: firstname, 
           lastname: lastname, 
@@ -68,15 +74,18 @@ export default function Register() {
           },
           
         })
-        console.log("in function response")
-        console.log(response.data)
-        console.log(response.token)
+        console.log(JSON.stringify(response?.data))
+        const accessToken = response?.data?.accessToken 
+        console.log("data.AccessToken:", accessToken)
+        setAuth({username, password, accessToken})
+        setCurrentUser(response.data.username)
         setSuccess(true)
-        navigate("/posts/create")
+        navigate("/profile")
         //clear input fields
     } catch (error) {
       console.log(error)
       errRef.current.focus();
+      setErrMsg(error.response.data)
     } 
 
 
@@ -84,16 +93,6 @@ export default function Register() {
 
 
   return (
-
-    // <>
-    // {success ? (
-    //   <div>
-    //     <h1> Registered!</h1>
-    //     <p>
-    //       <a href="#">Log In</a>
-    //     </p>
-    //   </div>
-    // ) : (
     <section >
         <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
       
@@ -121,7 +120,7 @@ export default function Register() {
           id="firstname" 
           ref={userRef} 
           autoComplete="off" 
-          value={firstname} 
+          value={capitalized(firstname)} 
           onChange={(e)=>setfirstname(e.target.value)} 
           required 
           onFocus={() => setFnFocus(true)}
@@ -140,7 +139,7 @@ export default function Register() {
           id="lastname" 
           ref={userRef} 
           autoComplete="off" 
-          value={lastname} 
+          value={capitalized(lastname)} 
           onChange={(e)=>setlastname(e.target.value)}
           required 
           onFocus={() => setLnFocus(true)}
@@ -158,7 +157,7 @@ export default function Register() {
           id="username" 
           ref={userRef} 
           autoComplete="off" 
-          value={username} 
+          value={capitalized(username)} 
           onChange={(e)=>setUsername(e.target.value)} 
           onFocus={() => setUserFocus(true)}
           onBlur={() => setUserFocus(false)}
@@ -201,6 +200,7 @@ export default function Register() {
           </div>
           <div class="modal-footer d-flex justify-content-end"></div>
           <button type="submit" id="btnOption" className="btn btn-primary">Sign Up</button>
+          {errMsg && <p>{errMsg}</p>}
         </form>
         </div>
         </div>

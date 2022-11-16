@@ -11,7 +11,8 @@ import CreatePost from './component/Post/CreatePost'
 import ViewAccount from './component/ViewAccount/ViewAccount';
 import Home from './component/Home/Home'
 import RequireAuth from './context/RequireAuth';
-import { AuthProvider } from './context/AuthProvider';
+import PersistLogin from './component/PersistLogin/PersistLogin';
+import Users from './component/ViewAccount/Users';
 
 
 //add footer.js
@@ -28,20 +29,21 @@ function App() {
       {/* Public routes */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/landingpage" element={<LandingPage />} />
-    
+      {/* <Route path="/posts/new" element={<NewPost />} /> */}
 
        {/* <TopBar /> */}
 
       {/* Protected Routes */}
       {/* <Route element={<RequireAuth />}> */}
+      <Route element={<PersistLogin />}>
       <Route path="/about" element={<About />} />
       <Route path='/home' element={<Home />} />
       <Route path="/posts/create" element={<CreatePost />} />
-      <Route path="/profile/:username" element={<ViewAccount />} />
-      {/* </Route> */}
+      <Route path="/profile" element={<ViewAccount />} />
+      <Route path="/users" element={<Users />} />
+      </Route>
       
       {/* Error/missing page */}
-      
       <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>
