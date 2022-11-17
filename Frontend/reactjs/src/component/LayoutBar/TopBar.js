@@ -18,9 +18,6 @@ function TopBar() {
         </button>
             <div className="collapse navbar-collapse" id="nav">
                 <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/landingpage">LandingPage</NavLink>
-            </li>
             <li className="nav-item ">
               <NavLink className="nav-link" to="/home">Home</NavLink>
             </li>

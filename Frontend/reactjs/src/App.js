@@ -21,8 +21,6 @@ function App() {
    
     <Routes>
       <Route path='/' element={<Layout />}>
-      {/* <Route path='/' element={<LandingPage />}> */}
-      {/* Public routes */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/landingpage" element={<LandingPage />} />
     
