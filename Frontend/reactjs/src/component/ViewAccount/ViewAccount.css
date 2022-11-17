@@ -1,0 +1,23 @@
+.profile {
+    height: 150px;
+    }
+    
+    .ms-3 {
+        margin-top: 130px;
+    }
+    
+    .p-4 {
+        background-color: #f8f9fa;
+    }
+    
+    .rounded-top {
+        background-color: var(--c-brand)
+    }
+    .btn:hover {
+        background-color: lightgray;
+    }
+    
+    .container-fluid{
+        height: 100vh;
+    
+    }

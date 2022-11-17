@@ -31,8 +31,11 @@ function TopBar() {
               <NavLink className="nav-link" to="/about">About</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/profile/:username">Profile</NavLink>
+              <NavLink className="nav-link" to="/profile">Profile</NavLink>
             </li>
+            {/* <li className="nav-item">
+              <NavLink className="nav-link" to="/users">Users</NavLink> 
+            </li> */}
           </ul>
         </div>
       </div>

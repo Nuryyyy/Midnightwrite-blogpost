@@ -2,10 +2,9 @@ import React from 'react';
 import './landingpage.css'
 import Register from './Register';
 import Login from './Login';
-//import images
 import logo from '../images/logo_white.png'
-import stardust from '../images/Stardust.png'
-import CreatePost from '../Post/CreatePost';
+
+
 export default function LandingPage() {
   return (
     <section id="landingpage" className="">
@@ -28,15 +27,6 @@ export default function LandingPage() {
             Log in</button>
         </div>
         </div>
-          {/* <div id="side_content" className='col-12'>
-            <h1 className="text--uppercase fw-semibold display-1">Midnightwrite</h1>
-                     
-          </div>
-          <div>
-            <button className="btn-bd-primary" type="submit">Button</button>
-            <button className="btn btn-primary" type="submit">Button</button>
-            </div>  */}
-
         </div>
       </div>
 

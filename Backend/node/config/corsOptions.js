@@ -1,7 +1,7 @@
-const whitelist = ['https://www.midnightwrite.com', 'http://localhost:3000']
+import { allowedOrigins } from "./allowedOrigin.js"
 const corsOptions = {
     origin: (origin, callback) => {
-        if(whitelist.indexOf(origin) !== -1 || !origin) {
+        if(allowedOrigins.indexOf(origin) !== -1 || !origin) {
             callback(null, true)
         } else {
             callback(new Error('Not allowed by CORS'))

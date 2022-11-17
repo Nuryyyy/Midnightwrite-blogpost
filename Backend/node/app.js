@@ -4,7 +4,11 @@ import express  from  "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { corsOptions } from "./config/corsOptions.js";
+// import multer from "multer"; //for photo file
+import upload from "./middleware/upload.js";
 //import { errorHandle } from "./middleware/errorHandle.js";
+// import { credentials } from "./middleware/credentials.js";
+import { verifyJWT } from "./middleware/verifyJWT.js";
 
 //import pagesrouter
 import { postRouter } from "./routes/posts.js";
@@ -12,12 +16,12 @@ import { userSessionRouter } from "./routes/users.js";
 import { commentRouter } from "./routes/comment.js"; 
 import { accountRouter } from "./routes/viewaccount.js";
 import { refreshLogin } from "./routes/refreshUsers.js";
-import { verifyJWT } from "./middleware/verifyJWT.js";
 // import session from "express-session"
 
 const pool = connectDatabase()
 const app = express()
 const PORT = 8000
+// const upload = multer({dest: './upload'})
 
 //custome middleware logger
 app.use((req,res, next) =>{
@@ -30,8 +34,13 @@ app.use(bodyParser.urlencoded({ extended:  true }))
 app.use(express.json())
 app.use(cors(corsOptions))
 app.use(cookieParser())  //middleware for cookies
+// app.use(credentials)
+app.use("./upload", express.static("file"));
 
-
+app.post('/upload', upload.single("file"), function(req, res){
+    const file = req.file
+    res.status(200).jsom("file.filename")
+})
 //use of routers
 app.use('', userSessionRouter)
 app.use('', refreshLogin)

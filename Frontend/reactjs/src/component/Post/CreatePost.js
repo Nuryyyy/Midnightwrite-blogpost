@@ -1,15 +1,20 @@
-import React, {useState, useRef, useEffect, useContext} from 'react';
-import { AuthContext } from '../../context/AuthProvider';
+import React, {useState, useRef, useEffect} from 'react';
 // import axios from '../../api/axios';
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
 import TopBar from '../LayoutBar/TopBar';
+import { Navigate, useNavigate } from 'react-router-dom';
+// import PostSuccess from '../Modal/PostSuccess';
 
 const createpost_url = '/posts/create'
+
 export default function CreatePost() { 
+
   const axiosPrivate = useAxiosPrivate()
-  const {setAuth} = useContext(AuthContext)
+
   const userRef = useRef()
   const errRef = useRef()
+
+  const navigate = useNavigate()
 
 
   const [title, setTitle] = useState("")
@@ -28,8 +33,6 @@ export default function CreatePost() {
   const handleSubmit = async(e) => {
     e.preventDefault()
     console.log("handlesubmit")
-    // setUsername('')
-    // setPassword()
 
     try {
       const response = await axiosPrivate.post(createpost_url,
@@ -40,18 +43,13 @@ export default function CreatePost() {
         {
           headers: {
             'Content-Type': "application/json",
-            // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
             "Access-Control-Allow-Headers":"Authorization",
            
             withCredentials: true
           }  
         })
-        console.log("in function response")
+        console.log("successpost")
         console.log(JSON.stringify(response.data))
-        const Token = response.data.token
-        console.log(Token)
-    
-        setAuth({title, description, Token})
         setTitle("")
         setDescription("")
         setSuccess(true)
@@ -68,16 +66,6 @@ export default function CreatePost() {
 
   return (
     
-    <>
-     {success ? (
-      <div>
-        <h1>Posted!</h1>
-        {/* <<p>
-          <a href="#">Log In</a>
-        </p>> */}
-        
-      </div>
-    ) : (
     <div>
       <TopBar />
       <section>
@@ -114,7 +102,6 @@ export default function CreatePost() {
 
       </section>
     </div>
-    )}
-   </>
+ 
   )
 }

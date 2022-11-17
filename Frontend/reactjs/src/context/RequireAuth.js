@@ -9,9 +9,9 @@ const RequireAuth = () => {
     return (
     //    auth && auth.user
        auth?.user
-        ? <Outlet />
-        :<Navigate to='/landingpage' state={{from: location}} replace />
-       )
+       ? <Outlet /> //child component of require auth
+       :<Navigate to='/' state={{from: location}} replace />
+      )
 
 
 }

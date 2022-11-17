@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { auth } from "../middleware/auth.js";
 import { register, login, verifyuser } from "../controller/users.js";
 import { verifyJWT } from "../middleware/verifyJWT.js";
 import { Logout } from "../controller/logout.js";
@@ -29,7 +28,3 @@ router.post('/login', (login))
 
 
 export { userSessionRouter };
-
-
-// router.route('/')   
-//     .get()

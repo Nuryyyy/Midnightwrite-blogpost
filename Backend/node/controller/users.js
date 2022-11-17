@@ -64,7 +64,7 @@ export const register = async (req, res) => {
         ).status(200).json({username, password, accessToken})
 
 
-        console.log("successregister")
+        console.log("success register")
         
     } catch (error) {
         console.error(error.message);

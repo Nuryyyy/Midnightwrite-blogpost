@@ -1,8 +1,6 @@
 import './App.css'
 import React from 'react';
 import { BrowserRouter, Routes, Route  } from 'react-router-dom'
-// import NavBar from './component/NavigationBar/Navbar';
-import TopBar from './component/LayoutBar/TopBar';
 import Layout from './component/LayoutBar/Layout'
 import About from './component/About/About'
 import ErrorPage from './component/MissingErrorPage/ErrorPage';
@@ -10,12 +8,11 @@ import LandingPage from './component/landingpage/LandingPage'
 import CreatePost from './component/Post/CreatePost'
 import ViewAccount from './component/ViewAccount/ViewAccount';
 import Home from './component/Home/Home'
-import RequireAuth from './context/RequireAuth';
-import { AuthProvider } from './context/AuthProvider';
+import PersistLogin from './component/PersistLogin/PersistLogin';
+import Users from './component/ViewAccount/Users';
 
 
 //add footer.js
-//add error page
 
 function App() {
 
@@ -34,11 +31,12 @@ function App() {
 
       {/* Protected Routes */}
       {/* <Route element={<RequireAuth />}> */}
+      <Route element={<PersistLogin />}>
       <Route path="/about" element={<About />} />
       <Route path='/home' element={<Home />} />
       <Route path="/posts/create" element={<CreatePost />} />
-      <Route path="/profile/:username" element={<ViewAccount />} />
-      {/* </Route> */}
+      <Route path="/profile" element={<ViewAccount />} />
+      </Route>
       
       {/* Error/missing page */}
       

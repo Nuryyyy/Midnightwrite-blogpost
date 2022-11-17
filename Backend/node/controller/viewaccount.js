@@ -16,7 +16,6 @@ export const viewAccount = async (req, res) => {
 
         res.json(user.rows)
 
-           
 
     }  catch (error) {
         console.error(error.message);
@@ -34,7 +33,8 @@ export const updateUser = async (req, res) => {
             lastname,
             username,
             email,
-            password
+            password,
+            image
         } = req.body
 
         const user_id  = req.params.user_id
@@ -66,7 +66,7 @@ export const updateUser = async (req, res) => {
 
         const bcryptPassword = await bcrypt.hash(password, salt)
 
-        const updatedUser = await pool.query("UPDATE public.user_info SET firstname = $1, lastname = $2, username = $3, email = $4, password = $5 WHERE user_id = $6", [firstname, lastname, username, email, bcryptPassword, user_id]) 
+        const updatedUser = await pool.query("UPDATE public.user_info SET firstname = $1, lastname = $2, username = $3, email = $4, password = $5, image = $6 WHERE user_id = $7", [firstname, lastname, username, email, bcryptPassword, user_id, image]) 
 
 
           res.status(200).json("Update Success");
