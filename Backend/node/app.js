@@ -2,20 +2,17 @@ import { connectDatabase } from  "./pool.js";
 import bodyParser  from  "body-parser";
 import express  from  "express";
 import cookieParser from "cookie-parser";
-import { auth } from  "./middleware/auth.js";
 import cors from "cors";
 import { corsOptions } from "./config/corsOptions.js";
-// import bcrypt  from  "bcryptjs"
-// import { v4  as  uuidv4 } from  'uuid';
-// import { generateJwt } from  "./jwt/jwtGenerator.js";
 //import { errorHandle } from "./middleware/errorHandle.js";
 
 //import pagesrouter
 import { postRouter } from "./routes/posts.js";
 import { userSessionRouter } from "./routes/users.js";
 import { commentRouter } from "./routes/comment.js"; 
-import { AccountRouter } from "./routes/viewaccount.js";
+import { accountRouter } from "./routes/viewaccount.js";
 import { refreshLogin } from "./routes/refreshUsers.js";
+import { verifyJWT } from "./middleware/verifyJWT.js";
 // import session from "express-session"
 
 const pool = connectDatabase()
@@ -41,7 +38,7 @@ app.use('', refreshLogin)
 app.use('/posts', postRouter) //can also put auth here instead in route foler
 app.use('/post', commentRouter)
 app.use('', commentRouter)
-app.use('/profile',AccountRouter)
+app.use('/profile',accountRouter)
 
 
 //to connect with pool
@@ -66,7 +63,7 @@ app.get('/',  (req, res)  =>  {
 
 
 //this shoud only be access by the admin, this will further be updated.
-app.get('/api', auth, async (req, res) => {
+app.get('/api', verifyJWT, async (req, res) => {
     try{
     let list = await pool.query(`SELECT * FROM public.user_info`) 
     
@@ -87,7 +84,3 @@ app.use(function (err, req, res, next) {
     console.error(err.stack)
     res.status(500).send(err.message)
 })
-
-
-
-

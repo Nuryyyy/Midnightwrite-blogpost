@@ -1,21 +1,11 @@
+
 import { Router } from "express";
 import { loginRefreshToken } from "../controller/refreshTokenUser.js";
-
-// import cookieParser from "cookie-parser";
- 
+import { verifyJWT } from "../middleware/verifyJWT.js";
 
 const refreshLogin = Router()
 let router = refreshLogin
 
-// router.use(cookieParser())
-
-
-
 router.get('/refresh', (loginRefreshToken))
 
-
 export { refreshLogin };
-
-
-// router.route('/')   
-//     .get()

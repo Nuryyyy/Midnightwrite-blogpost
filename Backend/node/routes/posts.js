@@ -1,6 +1,4 @@
-
 import { Router } from "express";
-import { auth } from "../middleware/auth.js";
 import { verifyJWT } from "../middleware/verifyJWT.js";
 import { trialPost,createPost, getAllPost, getPost, editPost, deletePost } from "../controller/posts.js";
 const postRouter = Router()
@@ -16,20 +14,20 @@ router.get('/', (req, res) => {
 })
 
 //get
-router.get('/test', auth, (trialPost) )
-router.get('/allpost', auth, (getAllPost))
+router.get('/test', verifyJWT, (trialPost) )
+router.get('/allpost', verifyJWT, (getAllPost))
 // router.get('/:post_id', (getPost))
 
 //post
-router.post('/create', auth, (createPost))
+router.post('/create', verifyJWT, (createPost))
 
 
 //update
-router.put("/:post_id/edit", auth, (editPost))
+router.put("/:post_id/edit", verifyJWT, (editPost))
 
 
 //delete
-router.delete('/:post_id', auth, (deletePost)) //:user_id/
+router.delete('/:post_id', verifyJWT, (deletePost)) //:user_id/
 
 
 
