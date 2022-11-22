@@ -6,21 +6,24 @@ import useAuth from "../../hooks/useAuth";
 const PersistLogin = () => {
     const[isLoading, setLoading] = useState(true)
     const refresh = useRefreshToken()
-    const { auth } = useAuth()
+    const { auth, persist } = useAuth()
 
     useEffect(() => {
+        let isMounted = true
         const verifyRefreshToken = async () => {
             try {
                 await refresh()
             } catch(err){
                 console.log(err)
             } finally {
-                setLoading(false)
+                isMounted && setLoading(false)
             }
 
         }
 
         !auth?.accessToken ? verifyRefreshToken() : setLoading(false)
+
+        return() => isMounted = false
     }, [])
 
     useEffect(() => [
@@ -30,7 +33,10 @@ const PersistLogin = () => {
 
         return(
             <>
-            {isLoading
+
+            {!persist
+                ?<Outlet /> // if false proceed to next
+               : isLoading
             ? <p>Loading</p>
             : <Outlet />
             }
