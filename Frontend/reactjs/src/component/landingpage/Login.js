@@ -1,19 +1,19 @@
-// import { AuthContext } from '../../context/AuthProvider';
-// import useAuth from '../../hooks/useAuth'
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import useAuth from '../../hooks/useAuth';
-import { useNavigate, useLocation, redirect } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import axios from '../../api/axios';
-
+import { AuthContext } from '../../context/AuthProvider';
 import './landingpage.css'
 import logo from '../images/logo_violet.png'
 
   const login_url = '/login' 
   
   export default function Login() {
+    
 
-    const { setAuth, setCurrentUser } = useAuth();
+    const { setAuth, setCurrentUser, setUserID ,persist, setPersist } = useAuth();
     const navigate = useNavigate()
+    const { currentUser } = useContext(AuthContext)
   // const location =  useLocation()
   // const from = location.state.from.pathname || "/"
   // const from = location.state?.from?.pathname || "/"
@@ -59,13 +59,14 @@ import logo from '../images/logo_violet.png'
         })
         console.log(JSON.stringify(response?.data))
         const accessToken = response?.data?.accessToken 
-        console.log("data.AccessToken:", accessToken)
         setAuth({username, password, accessToken})
-        setCurrentUser(response.data.username)
+        setCurrentUser(response?.data?.username)
+        setUserID(response?.data?.user_id)
         setUsername('')
         setPassword('')
-        setSuccess(true)
-        navigate("/profile") 
+        setSuccess(true);
+        // navigate("/home") 
+
         
 
         //clear input fields
@@ -85,9 +86,24 @@ import logo from '../images/logo_violet.png'
 
   }
 
+  const togglePersist = () => {
+    setPersist(prev => !prev)
+  }
   
-  return (
+  useEffect(() => {
+    localStorage.setItem("persist", persist)
+  },[persist])
 
+
+  return (
+    <>
+   { success ? (
+    <Navigate to={`/profile/${currentUser}`} />
+    
+   ) 
+   : (
+
+   
      <section>
      <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
 
@@ -140,12 +156,24 @@ import logo from '../images/logo_violet.png'
           <button data-target="#login" type="submit" id="btnOption" className="btn btn-primary">Sign In</button>
           {err && <p>{err}</p>}
         </form>
+        <div className='persistCheck'>
+          <input
+          type="checkbox"
+          id="persist"
+          onChange={togglePersist}
+          checked={persist}
+          />
+          <label htmlFor="persist">Trust this device!</label>
+        </div>
             <a href="">Forgot password?</a>
       </div>
       </div>
       </div>
       
+      
     </section>
+    )}
+    </>
     
   )
 }

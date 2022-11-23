@@ -7,9 +7,10 @@ const accountRouter = Router()
 let router = accountRouter
 
 router.get('/', verifyJWT, viewAccount)
+router.get('/:username', verifyJWT, viewAccount)
 
-router.put('/edit/:user_id', verifyJWT, updateUser)
+router.put('/:user_id/update', verifyJWT, updateUser)
 
-router.delete('/edit/:user_id',verifyJWT, deleteUser)
+router.delete('/:user_id/delete',verifyJWT, deleteUser)
 
 export {accountRouter}

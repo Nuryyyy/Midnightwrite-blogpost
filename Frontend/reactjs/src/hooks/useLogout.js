@@ -2,7 +2,8 @@ import axios from "../api/axios";
 import useAuth from "./useAuth";
 
 const useLogout = () => {
-    const {setAuth, setCurrentUser} = useAuth()
+    const {setAuth, setCurrentUser, setUserID} = useAuth()
+
 
     const logout = async () =>{
         setAuth({})
@@ -11,6 +12,7 @@ const useLogout = () => {
                 withCredentials: true
             })
             setCurrentUser(null)
+            setUserID(null)
         } catch (error) {
             console.log(error)
 

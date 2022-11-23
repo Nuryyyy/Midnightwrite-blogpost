@@ -7,14 +7,16 @@ const AuthContext = createContext({})
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] =  useState({})
     const [currentUser, setCurrentUser] =  useState(JSON.parse(localStorage.getItem("user") || null))
-    // const [persist, setPersist] = useState(JSON.parse(localStorage.getItem("persist")) || false);
+    const [userID, setUserID] =  useState(JSON.parse(localStorage.getItem("userID" ) || null))
+    const [persist, setPersist] = useState(JSON.parse(localStorage.getItem("persist")) || false); //trust device or not when logging in 
 
     useEffect(() =>{
         localStorage.setItem("user", JSON.stringify(currentUser))
-    }, [currentUser])
+        localStorage.setItem("userID", JSON.stringify(userID))
+    }, [currentUser, userID])
 
     return (
-         <AuthContext.Provider value= {{ auth, setAuth, currentUser, setCurrentUser}}> 
+         <AuthContext.Provider value= {{ auth, setAuth, currentUser, setCurrentUser, userID, setUserID, persist, setPersist}}> 
             {children}
         </AuthContext.Provider>
     )

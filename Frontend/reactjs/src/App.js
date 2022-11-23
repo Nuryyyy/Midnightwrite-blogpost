@@ -9,7 +9,9 @@ import CreatePost from './component/Post/CreatePost'
 import ViewAccount from './component/ViewAccount/ViewAccount';
 import Home from './component/Home/Home'
 import PersistLogin from './component/PersistLogin/PersistLogin';
+import UpdateAccount from './component/ViewAccount/UpdateAccount';
 import Users from './component/ViewAccount/Users';
+import { AuthContext } from './context/AuthProvider';
 
 
 //add footer.js
@@ -32,7 +34,8 @@ function App() {
       <Route path="/about" element={<About />} />
       <Route path='/home' element={<Home />} />
       <Route path="/posts/create" element={<CreatePost />} />
-      <Route path="/profile" element={<ViewAccount />} />
+      <Route path="/profile/:username" element={<ViewAccount />} />
+      <Route path="/profile/:user_id/update" element={<UpdateAccount />} />
       </Route>
       
       {/* Error/missing page */}

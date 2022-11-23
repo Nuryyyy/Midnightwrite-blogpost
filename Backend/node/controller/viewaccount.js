@@ -8,13 +8,14 @@ export const viewAccount = async (req, res) => {
 
     try{ 
        
-        // const username = req.params.username
-        const username = req.user.username
+        const username = req.params.username
+        // const username = req.user.username
         console.log(username)
         const user = await pool.query("SELECT * FROM public.user_info WHERE username = $1", [username]) 
         console.log(user.rows[0])
 
-        res.json(user.rows)
+        const {password,...others} = user.rows[0]
+        res.status(200).json(others)
 
 
     }  catch (error) {
@@ -46,10 +47,9 @@ export const updateUser = async (req, res) => {
 
 
         if (user_id != req.user.user_id) {
-            res.status(401).send("You are not to make changes to this account")
+            res.status(401).send("You are not allowed to make changes to this account")
         }
         else{
-
         const userName = await pool.query(`SELECT * FROM public.user_info WHERE username = $1`, [username])
         console.log("username:", req.user.username)
         if (userName.rows.length > 0 && username != req.user.username ) {
@@ -63,13 +63,12 @@ export const updateUser = async (req, res) => {
 
         const saltRound = 10;
         const salt = await bcrypt.genSalt(saltRound);
-
         const bcryptPassword = await bcrypt.hash(password, salt)
 
-        const updatedUser = await pool.query("UPDATE public.user_info SET firstname = $1, lastname = $2, username = $3, email = $4, password = $5, image = $6 WHERE user_id = $7", [firstname, lastname, username, email, bcryptPassword, user_id, image]) 
+        const updatedUser = await pool.query("UPDATE public.user_info SET firstname = $1, lastname = $2, username = $3, email = $4, password = $5, image = $6 WHERE user_id = $7", [firstname, lastname, username, email, bcryptPassword, image, user_id]) 
+        const user = await pool.query(`SELECT * FROM public.user_info WHERE user_id = $1`, [user_id])
 
-
-          res.status(200).json("Update Success");
+          res.status(200).json(user.rows[0]);
     }
     } catch (error) {
         console.log(error)

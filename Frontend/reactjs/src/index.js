@@ -17,13 +17,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
   <AuthProvider>
-    {/* <BrowserRouter>
-    <TopBar />
-      <Routes>
-      <Route path="/*" element={<App />}/>
-      </Routes>
-   
-    </BrowserRouter> */}
     <App />
   </AuthProvider>
   </React.StrictMode>

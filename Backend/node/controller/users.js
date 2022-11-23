@@ -53,6 +53,9 @@ export const register = async (req, res) => {
         const refresh_Token = refreshToken(newUser.rows[0])
         console.log("Refreshtoken:", refresh_Token)
         
+        // const userID = await pool.query(`SELECT * FROM public.user_info WHERE user_id = $1`, [user_id])
+        const user_id = newUser.rows[0].user_id
+        console.log("userid:", user_id)
 
         // store token to cookie
         res.cookie('SetCookie', refresh_Token, {httpOnly: true, 
@@ -61,7 +64,7 @@ export const register = async (req, res) => {
             // sameSite: 'None'
 
             }
-        ).status(200).json({username, password, accessToken})
+        ).status(200).json({username, user_id, password, accessToken})
 
 
         console.log("success register")
@@ -110,13 +113,15 @@ export const login = async (req, res) => {
         const refresh_Token = refreshToken(user.rows[0])
         console.log("Refreshtoken:", refresh_Token)
         
+        const user_id = user.rows[0].user_id
+
         // store token to cookie
         res.cookie('SetCookie', refresh_Token, {httpOnly: true, 
             maxAge: 86400000 //day 
             // ,secure: true,
             // sameSite: 'None'
             }
-        ).status(200).json({username, password, accessToken})
+        ).status(200).json({username, user_id, password, accessToken})
         
         console.log("success login")
 

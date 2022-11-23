@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom'
 import './Topbar.css';
 import logo from '../images/logo_white.png'
+import { AuthContext } from '../../context/AuthProvider';
 
 function TopBar() {
+    const { currentUser } = useContext(AuthContext)
+    // console.log("navbar:", currentUser)
     return (
         <nav id="navbar" className="navbar navbar-expand-lg sticky-top" > 
          <div className="container">
@@ -28,10 +31,10 @@ function TopBar() {
               <NavLink className="nav-link" to="/about">About</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/profile">Profile</NavLink>
+              <NavLink className="nav-link" to={`/profile/${currentUser}`}>Profile</NavLink>
             </li>
             {/* <li className="nav-item">
-              <NavLink className="nav-link" to="/users">Users</NavLink> 
+              <NavLink className="nav-link" to="/profile">{currentUser?.username}</NavLink> 
             </li> */}
           </ul>
         </div>

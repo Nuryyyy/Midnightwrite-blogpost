@@ -1,26 +1,26 @@
 // import React, { useInsertionEffect } from 'react';
 import React from 'react';
 import {useState, useEffect, useRef, useContext } from 'react';
-import axios from '../../api/axios';
-import useAuth from '../../hooks/useAuth';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useAxiosPrivate } from "../../hooks/useAxiosPrivate"
+import { useNavigate, Link, useLocation, Navigate } from "react-router-dom"
+import TopBar from "../LayoutBar/TopBar"
 import { AuthContext } from '../../context/AuthProvider';
 
-import { Link } from 'react-router-dom';
-import './landingpage.css'
-import logo from '../images/logo_violet.png'
 
-const register_url = '/register' 
 
 //Requirements or validation for creating usernmame and pasword
 // const user_REGEX = /^[A-z][A-z0-9-_]{3,23}$/; //4-24char
 // const password_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-export default function Register() {
+export default function UpdateAccount() {
 
-  const { setAuth, setCurrentUser, setUserID ,persist, setPersist } = useAuth();
   const navigate = useNavigate()
+  const axiosPrivate = useAxiosPrivate();
   const { currentUser } = useContext(AuthContext)
+  const location = useLocation()
+  const [file, setFile] = useState(null);
+  const userID = location.pathname.split("/")[2]
+  // console.log("userID:", userID)
 
     //user input, error reference
   const userRef = useRef()
@@ -40,6 +40,8 @@ export default function Register() {
 
   const [password, setPassword] = useState("")
   const [pwFocus, setPwFocus] = useState(false)
+ 
+  const [image, setImage] = useState("")
 
   //possible error and if success register
   const [errMsg, setErrMsg] = useState("")
@@ -57,20 +59,37 @@ export default function Register() {
 
   useEffect(() => {
     setErrMsg('');
-}, [firstname, lastname, username, email, password])
+}, [firstname, lastname, username, email, password, image])
+
+
+const upload = async () => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    const res = await axiosPrivate.post("/upload", formData);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+  // const handleSubmit = async(e) => {
+  //   e.preventDefault()
+  //   console.log("handlesumbit")
 
   const handleSubmit = async(e) => {
     e.preventDefault()
     console.log("handlesumbit")
-    
+    const imgUrl = await upload()
     try {
-      const response = await axios.post(register_url,
+      const response = await axiosPrivate.put(`/profile/${userID}/update`,
         JSON.stringify({
           firstname: firstname, 
           lastname: lastname, 
           username: username, 
           email: email,
-          password: password
+          password: password,
+          // image: file ? imgUrl : ""
         }),
         {
           headers: {
@@ -79,14 +98,9 @@ export default function Register() {
             withCredentials: true
         })
         console.log(JSON.stringify(response?.data))
-        const accessToken = response?.data?.accessToken 
-        console.log("data.AccessToken:", accessToken)
-        setAuth({username, password, accessToken})
-        setCurrentUser(response.data.username)
-        setUserID(response?.data?.user_id)
-        setUsername('')
-        setPassword('')
+        console.log("Updated!")
         setSuccess(true)
+
         //clear input fields
     } catch (error) {
       console.log(error)
@@ -97,13 +111,12 @@ export default function Register() {
 
   }
 
-  const togglePersist = () => {
-    setPersist(prev => !prev)
-  }
-  
-  useEffect(() => {
-    localStorage.setItem("persist", persist)
-  },[persist])
+  const handleCancel = () => {
+    // <Navigate to='/about' />
+    navigate(`/profile/${currentUser}`)
+   }
+ 
+
 
   return (
     <>
@@ -112,7 +125,8 @@ export default function Register() {
      
     ) 
     : (
-
+    <article>
+      <TopBar />
     <section >
         <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
       
@@ -121,9 +135,9 @@ export default function Register() {
           <div className="modal-header text-center">
 
         <figure class="figure center">
-          <img id="logoViolet" src={logo} alt="logo" class='rounded mx-auto d-block'></img>
+          {/* <img id="logoViolet" src={logo} alt="logo" class='rounded mx-auto d-block'></img> */}
           <figcaption class="figure-caption ">
-          <h5 class="modal-title"  id="modal-title">Create Account</h5>
+          <h5 class="modal-title"  id="modal-title">Update Account</h5>
         </figcaption>
         </figure>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -219,23 +233,16 @@ export default function Register() {
            <label htmlFor="password" data-error="wrong" data-success="right">Password:</label>
           </div>
           <div class="modal-footer d-flex justify-content-end"></div>
-          <button type="submit" id="btnOption" className="btn btn-primary">Sign Up</button>
+          <button type="submit" id="btnOption" className="btn btn-primary">Update</button>
+          <button onClick={handleCancel} type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark">Cancel</button>
           {errMsg && <p>{errMsg}</p>}
         </form>
-        <div className='persistCheck'>
-          <input
-          type="checkbox"
-          id="persist"
-          onChange={togglePersist}
-          checked={persist}
-          />
-          <label htmlFor="persist">Trust this device!</label>
-        </div>
         </div>
         </div>
         </div>
     </section>
-
+    
+    </article>
     )}
     </>
 
