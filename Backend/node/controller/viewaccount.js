@@ -79,6 +79,7 @@ export const deleteUser = async (req, res) => {
     try {
 
         const user_id  = req.params.user_id
+        console.log(user_id)
 
         if (user_id != req.user.user_id) {
             res.status(401).send("You are not allowed to delete this account")

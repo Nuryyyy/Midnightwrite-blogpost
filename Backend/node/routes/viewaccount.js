@@ -11,6 +11,6 @@ router.get('/:username', verifyJWT, viewAccount)
 
 router.put('/:user_id/update', verifyJWT, updateUser)
 
-router.delete('/:user_id/delete',verifyJWT, deleteUser)
+router.delete('/:user_id/delete', verifyJWT, deleteUser)
 
 export {accountRouter}
