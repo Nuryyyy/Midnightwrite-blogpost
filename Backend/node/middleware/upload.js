@@ -1,16 +1,19 @@
 import multer from "multer"; //for photo file
+import path from "path"
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, '../upload')
+    destination: (req, file, cb) => {
+      cb(null, '../../Frontend/reactjs/public/upload')
     },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + file.originalname);
+    filename: (req, file, cb)  => {
+      console.log(file)
+        cb(null, Date.now() + path.extname(file.originalname))
     }
   })
 
-const upload = multer({ storage: storage,  limits: {fileSize: 1024 * 1024 * 3
-} })
+const upload = multer({ storage: storage,  
+                        limits: {fileSize: 1024 * 1024 * 3} 
+                      })
 
 
 export default upload

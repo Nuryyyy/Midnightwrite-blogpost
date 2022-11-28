@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { deleteUser, updateUser,viewAccount } from "../controller/viewaccount.js";
+import { deleteUser, updateUser,viewAccount, uploadImage, getImage } from "../controller/viewaccount.js";
 import { verifyJWT } from "../middleware/verifyJWT.js";
+import upload from "../middleware/upload.js";
 
 
 const accountRouter = Router()
@@ -8,8 +9,10 @@ let router = accountRouter
 
 router.get('/', verifyJWT, viewAccount)
 router.get('/:username', verifyJWT, viewAccount)
+router.get('/image', verifyJWT, getImage)
 
 router.put('/:user_id/update', verifyJWT, updateUser)
+router.put('/upload', verifyJWT, upload.single("image"), uploadImage)
 
 router.delete('/:user_id/delete', verifyJWT, deleteUser)
 

@@ -25,6 +25,7 @@ router.get('/logout', (Logout))
 //post
 router.post('/register', (register))
 router.post('/login', (login))
+router.post('/upload')
 
 
 export { userSessionRouter };

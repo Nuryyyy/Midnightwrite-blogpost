@@ -4,11 +4,10 @@ import express  from  "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { corsOptions } from "./config/corsOptions.js";
-// import multer from "multer"; //for photo file
-import upload from "./middleware/upload.js";
 //import { errorHandle } from "./middleware/errorHandle.js";
 // import { credentials } from "./middleware/credentials.js";
 import { verifyJWT } from "./middleware/verifyJWT.js";
+import upload from "./middleware/upload.js";
 
 //import pagesrouter
 import { postRouter } from "./routes/posts.js";
@@ -21,7 +20,7 @@ import { refreshLogin } from "./routes/refreshUsers.js";
 const pool = connectDatabase()
 const app = express()
 const PORT = 8000
-// const upload = multer({dest: './upload'})
+// const uploadimage = multer({dest: './upload'})
 
 //custome middleware logger
 app.use((req,res, next) =>{
@@ -35,12 +34,8 @@ app.use(express.json())
 app.use(cors(corsOptions))
 app.use(cookieParser())  //middleware for cookies
 // app.use(credentials)
-app.use("./upload", express.static("file"));
+app.use("/upload", express.static("../../Frontend/reactjs/public/upload")); //requestfile
 
-app.post('/upload', upload.single("file"), function(req, res){
-    const file = req.file
-    res.status(200).json("file.filename")
-})
 //use of routers
 app.use('', userSessionRouter)
 app.use('', refreshLogin)
@@ -88,8 +83,26 @@ app.get('/api', verifyJWT, async (req, res) => {
 }
 )
 
+// app.post('/upload', upload.single("image"), (req, res) => {
+//     const image = req.file
+//     res.status(200).json(image.filename)
+// })
+
 //displays the error on the page
 app.use(function (err, req, res, next) {
     console.error(err.stack)
     res.status(500).send(err.message)
 })
+
+//route to upload photo
+app.post("/upload", (req, res, next) => {
+    upload.single('image')(req, res, function (error) {
+      if (error) {
+        console.log(`upload.single error: ${error}`);
+        return res.sendStatus(500);
+      }
+    const image = req.file
+    console.log("imagefilename:",image.filename)
+    res.status(200).json(image.filename)
+    })
+  });

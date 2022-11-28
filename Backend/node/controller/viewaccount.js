@@ -35,7 +35,6 @@ export const updateUser = async (req, res) => {
             username,
             email,
             password,
-            image
         } = req.body
 
         const user_id  = req.params.user_id
@@ -65,7 +64,7 @@ export const updateUser = async (req, res) => {
         const salt = await bcrypt.genSalt(saltRound);
         const bcryptPassword = await bcrypt.hash(password, salt)
 
-        const updatedUser = await pool.query("UPDATE public.user_info SET firstname = $1, lastname = $2, username = $3, email = $4, password = $5, image = $6 WHERE user_id = $7", [firstname, lastname, username, email, bcryptPassword, image, user_id]) 
+        const updatedUser = await pool.query("UPDATE public.user_info SET firstname = $1, lastname = $2, username = $3, email = $4, password = $5 WHERE user_id = $6", [firstname, lastname, username, email, bcryptPassword, user_id]) 
         const user = await pool.query(`SELECT * FROM public.user_info WHERE user_id = $1`, [user_id])
 
           res.status(200).json(user.rows[0]);
@@ -93,3 +92,30 @@ export const deleteUser = async (req, res) => {
 
     }
 }
+
+export const uploadImage = async (req, res) => {
+
+    try {
+        const image  = req.body //image.filename
+        const username = req.user.username
+        console.log(username)
+        // const imageFilename =  image.filename
+        const imageUpload = await pool.query("UPDATE public.user_info SET image = $1 WHERE username = $2", [image, username])
+        res.status(200).json("upload Image")
+    } catch (error) {
+        console.log(error) 
+    }
+}
+
+export const getImage = async (req, res) => {
+    try {
+        const imageID = req.user.image
+        console.log("Imageid:", imageID)
+        const image = await pool.query("SELECT FROM public.user_info WHERE image = $1", [imageID])
+        console.log("fetch")
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
