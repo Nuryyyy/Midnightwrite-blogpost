@@ -6,7 +6,7 @@ import { useNavigate, Link, useLocation, Navigate } from "react-router-dom"
 import TopBar from "../LayoutBar/TopBar"
 import { AuthContext } from '../../context/AuthProvider';
 
-
+import axios from '../../api/axios';
 
 //Requirements or validation for creating usernmame and pasword
 // const user_REGEX = /^[A-z][A-z0-9-_]{3,23}$/; //4-24char
@@ -18,10 +18,8 @@ export default function UpdateAccount() {
   const axiosPrivate = useAxiosPrivate();
   const { currentUser } = useContext(AuthContext)
   const location = useLocation()
-  const [file, setFile] = useState(null);
   const userID = location.pathname.split("/")[2]
-  // console.log("userID:", userID)
-
+  
     //user input, error reference
   const userRef = useRef()
   const errRef = useRef();
@@ -41,7 +39,6 @@ export default function UpdateAccount() {
   const [password, setPassword] = useState("")
   const [pwFocus, setPwFocus] = useState(false)
  
-  const [image, setImage] = useState("")
 
   //possible error and if success register
   const [errMsg, setErrMsg] = useState("")
@@ -59,28 +56,13 @@ export default function UpdateAccount() {
 
   useEffect(() => {
     setErrMsg('');
-}, [firstname, lastname, username, email, password, image])
+}, [firstname, lastname, username, email, password])
 
 
-const upload = async () => {
-  try {
-    const formData = new FormData();
-    formData.append("file", file);
-    const res = await axiosPrivate.post("/upload", formData);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-  // const handleSubmit = async(e) => {
-  //   e.preventDefault()
-  //   console.log("handlesumbit")
 
   const handleSubmit = async(e) => {
     e.preventDefault()
     console.log("handlesumbit")
-    const imgUrl = await upload()
     try {
       const response = await axiosPrivate.put(`/profile/${userID}/update`,
         JSON.stringify({
@@ -89,7 +71,6 @@ const upload = async () => {
           username: username, 
           email: email,
           password: password,
-          // image: file ? imgUrl : ""
         }),
         {
           headers: {
@@ -140,12 +121,15 @@ const upload = async () => {
           <h5 class="modal-title"  id="modal-title">Update Account</h5>
         </figcaption>
         </figure>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            {/* <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
           </div>
+
           <div class="modal-body mx-3">
       <form onSubmit={handleSubmit} className='createaccount'>
       <div class="md-form form-floating mb-3 ">
       {/* <i class="fas fa-user prefix grey-text"></i> */}
+
+          
           <input 
           // className='form-control validate'
           placeholder='Firstname'
