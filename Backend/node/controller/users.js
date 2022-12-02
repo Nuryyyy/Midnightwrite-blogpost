@@ -23,7 +23,8 @@ export const register = async (req, res) => {
             lastname,
             username,
             email,
-            password
+            password,
+            image 
         } = req.body
 
         //Check if the user is already existing
@@ -41,7 +42,7 @@ export const register = async (req, res) => {
 
         //Add the new user into the database
         //generate the uuid using the uuidv4() function
-        const newUser = await pool.query(`INSERT INTO user_info(user_id, firstname, lastname, username, email, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [uuidv4(), firstname, lastname, username, email, bcryptPassword])
+        const newUser = await pool.query(`INSERT INTO user_info(user_id, firstname, lastname, username, email, password, image) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`, [uuidv4(), firstname, lastname, username, email, bcryptPassword, image])
         
         //generate and return the JWT
         const accessToken = generateJwt(newUser.rows[0]) //accessToken

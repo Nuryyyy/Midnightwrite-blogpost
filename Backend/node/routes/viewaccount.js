@@ -12,7 +12,7 @@ router.get('/:username', verifyJWT, viewAccount)
 router.get('/image', verifyJWT, getImage)
 
 router.put('/:user_id/update', verifyJWT, updateUser)
-router.put('/upload', verifyJWT, upload.single("image"), uploadImage)
+router.put('/upload', verifyJWT, uploadImage)
 
 router.delete('/:user_id/delete', verifyJWT, deleteUser)
 

@@ -3,6 +3,6 @@ import  dotenv  from  "dotenv"
 dotenv.config();
 
 const  generateJwt = (user) => {
-	return  jwt.sign(user, process.env.jwtSecret, { expiresIn:  '15s' })
+	return  jwt.sign(user, process.env.jwtSecret, { expiresIn:  '30m' })
 }
 export { generateJwt }

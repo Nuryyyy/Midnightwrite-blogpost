@@ -92,16 +92,14 @@ export const deleteUser = async (req, res) => {
 
     }
 }
-
+ //to update my database
 export const uploadImage = async (req, res) => {
 
     try {
-        const image  = req.body //image.filename
-        const username = req.user.username
-        console.log(username)
-        // const imageFilename =  image.filename
+        const {image}  = req.body//image.filename
         const imageUpload = await pool.query("UPDATE public.user_info SET image = $1 WHERE username = $2", [image, username])
-        res.status(200).json("upload Image")
+        const user =  await pool.query(`SELECT * FROM public.user_info WHERE username = $1`, [username])
+        res.status(200).json(image[0])
     } catch (error) {
         console.log(error) 
     }

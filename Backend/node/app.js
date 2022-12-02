@@ -1,6 +1,6 @@
 import { connectDatabase } from  "./pool.js";
 import bodyParser  from  "body-parser";
-import express  from  "express";
+import express, { request }  from  "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { corsOptions } from "./config/corsOptions.js";
@@ -103,6 +103,8 @@ app.post("/upload", (req, res, next) => {
       }
     const image = req.file
     console.log("imagefilename:",image.filename)
+    // console.log("reqfile:", req.file)
     res.status(200).json(image.filename)
     })
   });
+
