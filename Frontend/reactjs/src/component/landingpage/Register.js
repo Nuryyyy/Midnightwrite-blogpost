@@ -41,6 +41,8 @@ export default function Register() {
   const [password, setPassword] = useState("")
   const [pwFocus, setPwFocus] = useState(false)
 
+  const [image, setImage] = useState("")
+
   //possible error and if success register
   const [errMsg, setErrMsg] = useState("")
   const [success, setSuccess] = useState(false)
@@ -70,7 +72,8 @@ export default function Register() {
           lastname: lastname, 
           username: username, 
           email: email,
-          password: password
+          password: password,
+          image : "default.jpg"
         }),
         {
           headers: {

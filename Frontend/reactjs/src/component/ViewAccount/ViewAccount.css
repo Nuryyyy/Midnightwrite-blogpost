@@ -21,3 +21,20 @@
         height: 100vh;
     
     }
+
+img {
+    object-fit: cover;  
+
+}
+
+/* .profileImage {
+    width: 200px;
+    height: 200px;
+    border: 50%;
+    padding: 20px;
+}
+
+.header {
+    height: 300px;
+    background-color: var(--c-brand)
+} */

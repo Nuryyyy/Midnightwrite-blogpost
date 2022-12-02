@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] =  useState(JSON.parse(localStorage.getItem("user") || null))
     const [userID, setUserID] =  useState(JSON.parse(localStorage.getItem("userID" ) || null))
     const [persist, setPersist] = useState(JSON.parse(localStorage.getItem("persist")) || false); //trust device or not when logging in 
-
+    
     useEffect(() =>{
         localStorage.setItem("user", JSON.stringify(currentUser))
         localStorage.setItem("userID", JSON.stringify(userID))

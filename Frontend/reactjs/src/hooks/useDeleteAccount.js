@@ -9,11 +9,9 @@ const useDeleteAccount = () => {
 
     const {setAuth, setCurrentUser, setUserID} = useAuth()
     const axiosPrivate = useAxiosPrivate();
-    // const userID = location.pathname.split("/")[2]
-    // console.log("deleteID:", userID)
+
 
     const { userID } = useContext(AuthContext)
-    console.log("deleteID:", userID)
     const deleteAccount = async () =>{
 
     setAuth({})

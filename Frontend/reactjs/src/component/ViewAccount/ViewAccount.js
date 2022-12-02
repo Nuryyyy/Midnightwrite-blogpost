@@ -8,22 +8,25 @@ import './ViewAccount.css'
 import { AuthContext } from "../../context/AuthProvider"
 import useDeleteAccount from "../../hooks/useDeleteAccount"
 import axios from "../../api/axios"
+// import useAuth from "../../hooks/useAuth"
 
 function ViewAccount() {
   const axiosPrivate = useAxiosPrivate();
   const [usersData, setUsersData] = useState({})
   const [file, setFile] = useState(null) //({})
-  const { userID } = useContext(AuthContext)
+  const { userID, photo } = useContext(AuthContext)
+  // const { setPhoto } = useAuth()
   const logout = useLogout()
   const deleteUser = useDeleteAccount()
   const navigate = useNavigate()
 
- 
+
+  const PF = "http://localhost:8000/upload/"
+
   const location = useLocation()
   const userName = location.pathname.split("/")[2]
   console.log("username:", userName)
  
-  // console.log("userID:",userID)
 
   const capitalized = str => str.charAt(0).toUpperCase() + str.slice(1)
 
@@ -55,10 +58,8 @@ function ViewAccount() {
     try {
       const formData = new FormData();
       formData.append("image", file);
-      const res = await axios.post("/upload", formData, {
-        "Content-Type": "multipart/form-data"
-      })
-      console.log(res.data)
+      const res = await axios.post("/upload", formData)
+      console.log("resdata:", res)
       return res.data;
     } catch (err) {
       console.log(err);
@@ -89,8 +90,9 @@ function ViewAccount() {
     try {
       const response = await axiosPrivate.put("/profile/upload" , 
       JSON.stringify({
-        image : file ? imgUrl : "" }), {
-          withCredentials: true})
+        image: imgUrl }), {
+          withCredentials: true}) 
+        // setPhoto(response.data)
     } catch (error) {
       console.log(error)
     }
@@ -107,18 +109,20 @@ function ViewAccount() {
             <div class="col col-lg-9 col-xl-7">
               <div class="card">
                 <div class="rounded-top text-white d-flex flex-row" >
-                  <div class="ms-4 mt-5 d-flex flex-column" >
-                    <img className="profile" src="https://i.pinimg.com/236x/a9/76/8a/a9768ac11bc85dc66f90eb6f1ad968e6.jpg" 
+                  <div class="ms-4 mt-5 d-flex flex-column" className="profileImage" >
+                    {file 
+                    ?<img className="profile" src={URL.createObjectURL(file)} 
                       alt="Yor Forger" class="img-fluid img-thumbnail mt-4 mb-2"/>
-                        <button onClick={updateAccount} type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark">Update Account</button>
-                        
+                    :<img className="profile" src={PF + usersData.image}
+                    alt="Yor Forger" class="img-fluid img-thumbnail mt-4 mb-2"/>}
+                        <button onClick={updateAccount} type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark">Update Account</button>    
                   </div>
                 
                   <div class="ms-3" >
                     <h5>{usersData?.username}</h5>
                   </div>
                 </div>
-                <div class="p-4 text-black" s>
+                <div class="p-4 text-black" >
                 </div>
                 <div class="card-body p-4 text-black">
                   <div class="mb-5">
@@ -142,7 +146,7 @@ function ViewAccount() {
                     <label className="file" htmlFor="file">
                       Upload Image
                     </label>
-                  <button className="file" htmlFor="file" onClick={uploadPhoto} type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark">Add photo</button>
+                  <button className="file" htmlFor="file" onClick={uploadPhoto} type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark">Save photo</button>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mb-4">
                     <p class="lead fw-normal mb-0">Recent posts</p>
