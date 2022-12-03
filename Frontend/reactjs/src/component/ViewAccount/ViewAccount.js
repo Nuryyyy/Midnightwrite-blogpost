@@ -4,17 +4,18 @@ import { useAxiosPrivate } from "../../hooks/useAxiosPrivate"
 import TopBar from "../LayoutBar/TopBar"
 import useLogout from "../../hooks/useLogout.js"
 import { useNavigate, Link, useLocation } from "react-router-dom"
-import './ViewAccount.css'
+
 import { AuthContext } from "../../context/AuthProvider"
 import useDeleteAccount from "../../hooks/useDeleteAccount"
 import axios from "../../api/axios"
-// import useAuth from "../../hooks/useAuth"
+import './ViewAccount.css'
+
 
 function ViewAccount() {
   const axiosPrivate = useAxiosPrivate();
   const [usersData, setUsersData] = useState({})
   const [file, setFile] = useState(null) //({})
-  const { userID, photo } = useContext(AuthContext)
+  const { userID } = useContext(AuthContext)
   // const { setPhoto } = useAuth()
   const logout = useLogout()
   const deleteUser = useDeleteAccount()
@@ -59,7 +60,7 @@ function ViewAccount() {
       const formData = new FormData();
       formData.append("image", file);
       const res = await axios.post("/upload", formData)
-      console.log("resdata:", res)
+      console.log("resdata:", res.data)
       return res.data;
     } catch (err) {
       console.log(err);

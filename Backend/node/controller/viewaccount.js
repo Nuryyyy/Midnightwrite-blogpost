@@ -24,7 +24,6 @@ export const viewAccount = async (req, res) => {
 
 }
 
-
 //update user info
 export const updateUser = async (req, res) => {
     try {
@@ -97,6 +96,8 @@ export const uploadImage = async (req, res) => {
 
     try {
         const {image}  = req.body//image.filename
+        console.log("backendimage:", image)
+        const username = req.user.username
         const imageUpload = await pool.query("UPDATE public.user_info SET image = $1 WHERE username = $2", [image, username])
         const user =  await pool.query(`SELECT * FROM public.user_info WHERE username = $1`, [username])
         res.status(200).json(image[0])
