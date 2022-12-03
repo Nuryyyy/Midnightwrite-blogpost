@@ -10,6 +10,7 @@ import ViewAccount from './component/ViewAccount/ViewAccount';
 import Home from './component/Home/Home'
 import PersistLogin from './component/PersistLogin/PersistLogin';
 import UpdateAccount from './component/ViewAccount/UpdateAccount';
+import SinglePost from './component/Post/SinglePost'
 import Users from './component/ViewAccount/Users';
 import { AuthContext } from './context/AuthProvider';
 
@@ -36,6 +37,7 @@ function App() {
       <Route path="/posts/create" element={<CreatePost />} />
       <Route path="/profile/:username" element={<ViewAccount />} />
       <Route path="/profile/:user_id/update" element={<UpdateAccount />} />
+      <Route path="/post/:post_id" element={<SinglePost />} />
       </Route>
       
       {/* Error/missing page */}

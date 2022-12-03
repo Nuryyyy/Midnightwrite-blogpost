@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 //get
 router.get('/test', verifyJWT, (trialPost) )
 router.get('/allpost', verifyJWT, (getAllPost))
-// router.get('/:post_id', (getPost))
+router.get('/:post_id', (getPost))
 
 //post
 router.post('/create', verifyJWT, (createPost))

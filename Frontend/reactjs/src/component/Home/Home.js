@@ -1,23 +1,30 @@
-import React from 'react'
-import Feed from './Feed'
+import React, { useEffect, useState } from 'react'
 import TopBar from '../LayoutBar/TopBar'
+import AllPost from '../Post/AllPost'
+import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
 
-function Home({posts}) {
+function Home() {
+  const [posts, setPosts] = useState([])
+  const axiosPrivate = useAxiosPrivate()
+
+  useEffect(() => {
+    const getPosts  = async () => {
+      
+        const response = await axiosPrivate.get("/post/allpost", {withCredentials: true})
+        console.log("allposts:", response.data)
+        setPosts(response.data)
+        
+    }
+    getPosts()
+  },[])
   return (
-    
-    <div className='home'>
-      <TopBar />
-      THIS IS HOMEPAGE
-      {/* {[posts].length > 0 ? (
-        <Feed posts={posts} />
-      ):(
-        <p>This is the feed</p>
-      )
-
-      } */}
-   
-      </div>
-      )}
-
+    <>
+    <TopBar/>
+    <div className='Home'>
+      <AllPost posts={posts} />
+    </div>
+    </>
+  )
+}
 
 export default Home

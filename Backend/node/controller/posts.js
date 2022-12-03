@@ -39,16 +39,18 @@ export const createPost = async (req, res) => {
  
         const {
             title,
-            description
+            description,
+            image
         } = req.body 
         
         const user_id = req.user.user_id
+        const username = req.user.username
 
         const date = new Date()
         console.log("date:", date)
     
         
-        const newPost = await pool.query(`INSERT INTO createpost (post_id, user_id, title, description, datepost) VALUES ($1, $2, $3, $4, $5) RETURNING *`, [uuidv4(), user_id, title, description, date])
+        const newPost = await pool.query(`INSERT INTO createpost (post_id, user_id, title, description, datepost, image, username) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`, [uuidv4(), user_id, title, description, date, image, username])
         
         console.log(newPost.rows[0])
         res.status(200).json(
@@ -72,13 +74,13 @@ export const getPost = async (req, res) => {
         
         const post = await pool.query(`SELECT * FROM public.createpost WHERE post_id = $1`, [post_id]) 
         console.log(post.rows)
-        const user_id = post.rows[0].user_id
-        console.log(user_id)
-        const user =  await pool.query(`SELECT * FROM public.user_info WHERE user_id = $1`, [user_id])
-        const username = user.rows[0].username
-        console.log("username:", username )
+        // const user_id = post.rows[0].user_id
+        // console.log(user_id)
+        // const user =  await pool.query(`SELECT * FROM public.user_info WHERE user_id = $1`, [user_id])
+        // const username = user.rows[0].username
+        // console.log("username:", username )
         
-        res.status(200).json(post.rows, "username:", username)
+        res.status(200).json(post.rows)
     
         
         } catch (error) {
@@ -96,17 +98,22 @@ export const editPost = async (req, res) => {
         console.log(`postid: ${post_id}
         user_id: ${user_id}`)
 
+        const date = new Date()
+        console.log("date:", date)
+
         //allow only user to edit its own post. should not be allowed to edit post of others
-        const {description} = req.body
+        const {title, description} = req.body
+        console.log("edited title:", title)
         console.log("edited description:", description)
+        
 
         const posts =  await pool.query(`SELECT * FROM public.createpost WHERE post_id = $1`, [post_id])
         const userID = posts.rows[0].user_id
         console.log(posts.rows[0])
         console.log("userID:", userID)
         if (user_id === userID) {
-            const edited = await pool.query(`UPDATE public.createpost SET description = $1 WHERE post_id = $2`, [description, post_id]) 
-            res.status(200).json(description)
+            const edited = await pool.query(`UPDATE public.createpost SET title = $1, description = $2, datepost = $3 WHERE post_id = $4`, [title, description, date, post_id]) 
+            res.status(200).json({title,description,datepost})
             console.log("Successfully edited")
         } else {
             res.send("You are not the owner of the post! You can't edit it!")

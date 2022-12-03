@@ -39,8 +39,8 @@ app.use("/upload", express.static("../../Frontend/reactjs/public/upload")); //re
 //use of routers
 app.use('', userSessionRouter)
 app.use('', refreshLogin)
-app.use('/posts', postRouter) //can also put auth here instead in route foler
-app.use('/post', commentRouter)
+app.use('/post', postRouter) //can also put auth here instead in route foler
+app.use('/comment', commentRouter)
 app.use('', commentRouter)
 app.use('/profile',accountRouter)
 

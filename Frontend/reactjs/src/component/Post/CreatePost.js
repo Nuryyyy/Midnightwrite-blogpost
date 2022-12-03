@@ -1,11 +1,12 @@
 import React, {useState, useRef, useEffect} from 'react';
 // import axios from '../../api/axios';
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
+import axios from '../../api/axios';
 import TopBar from '../LayoutBar/TopBar';
 import { Navigate, useNavigate } from 'react-router-dom';
-// import PostSuccess from '../Modal/PostSuccess';
+// import useUploadImage from '../../hooks/useUploadImage';
 
-const createpost_url = '/posts/create'
+const createpost_url = '/post/create'
 
 export default function CreatePost() { 
 
@@ -19,8 +20,11 @@ export default function CreatePost() {
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
+  const [image, setImage] = useState("")
+  const [file, setFile] = useState(null)
   const [errMsg, setErrMsg] = useState("")
   const [success, setSuccess] = useState(false)
+  // const  upload = useUploadImage()
 
   useEffect(() => {
     userRef.current.focus()
@@ -30,23 +34,34 @@ export default function CreatePost() {
     setErrMsg('')
   }, [title, description])
 
+  
+  const upload= async () => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      const res = await axios.post("/upload", formData)
+      console.log("resdata:", res.data)
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   const handleSubmit = async(e) => {
     e.preventDefault()
     console.log("handlesubmit")
-
+    const imgURL = await upload()
+    console.log("imgURL:", imgURL)
     try {
       const response = await axiosPrivate.post(createpost_url,
         JSON.stringify({
           title: title, 
-          description: description
+          description: description,
+          image: file? imgURL : ""
         }),
         {
-          headers: {
-            'Content-Type': "application/json",
-            "Access-Control-Allow-Headers":"Authorization",
-           
             withCredentials: true
-          }  
         })
         console.log("successpost")
         console.log(JSON.stringify(response.data))
@@ -72,7 +87,20 @@ export default function CreatePost() {
 
         <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
         <h1>Create your post</h1>
-        <form onSubmit={handleSubmit}>
+        {file && (
+        <img className="writeImg" src={URL.createObjectURL(file)} alt="" />
+      )}
+          <form onSubmit={handleSubmit}>
+          <label htmlFor="file"> 
+            Add image
+          </label>
+          <input
+            type="file"
+            id="file"
+            style={{ display: "none" }}
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+          <br></br>
             <label htmlFor="title">Title</label>
             <input 
             required 
