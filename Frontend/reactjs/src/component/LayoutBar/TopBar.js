@@ -10,7 +10,7 @@ function TopBar() {
     return (
         <nav id="navbar" className="navbar navbar-expand-lg sticky-top" > 
          <div className="container">
-          <a id="logobar" className="navbar-brand" href="/">
+          <a id="logobar" className="navbar-brand" href="/home">
          <img src={logo} alt="Logo" width="40" height="40" class="d-inline-block align-text-top" />
               {/* <NavLink className="navbar-brand nav-tabs" to="/" end>MidnightWrite</NavLink> */}
           Midnightwrite
