@@ -17,12 +17,8 @@ export const getAllPost = async (req, res) => {
         res.status(200).json(
             lists.rows
             );
-        console.log(lists.rows)
-  
-        
-        console.log("User:", req.user.username)
-        console.log("token:", )
-   
+        // console.log(lists.rows)
+        console.log("data send")
         
         
         } catch (error) {
@@ -113,7 +109,7 @@ export const editPost = async (req, res) => {
         console.log("userID:", userID)
         if (user_id === userID) {
             const edited = await pool.query(`UPDATE public.createpost SET title = $1, description = $2, datepost = $3 WHERE post_id = $4`, [title, description, date, post_id]) 
-            res.status(200).json({title,description,datepost})
+            res.status(200).json({title,description,date})
             console.log("Successfully edited")
         } else {
             res.send("You are not the owner of the post! You can't edit it!")
@@ -129,9 +125,6 @@ export const deletePost =  async (req, res) => {
     try {
         const post_id = req.params.post_id
         const user_id = req.user.user_id
-        console.log(`postid: ${post_id}
-                    user_id: ${user_id}`)
-        // username: ${username}`)
 
         //this will query the userid of the params post, if match to current user(owner) then allow delete post
         const posts =  await pool.query(`SELECT * FROM public.createpost WHERE post_id = $1`, [post_id])
@@ -142,7 +135,7 @@ export const deletePost =  async (req, res) => {
             res.status(200).json("Successfully deleted")
             console.log("deleted")
         } else {
-            res.send("You are not the owner of the post! You can't delete it!")
+            res.status(401).json("You are not the owner of the post! You can delete only your post!")
         }
 
     } catch (error) {
