@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom"
 import { AuthContext } from "../../context/AuthProvider"
 import { useState, useContext, useEffect } from "react"
 import TopBar from "../LayoutBar/TopBar"
+import './Posts.css'
 
 
 function SinglePost() {
@@ -10,12 +11,12 @@ function SinglePost() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [post, setPost] = useState({});
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser, userID } = useContext(AuthContext)
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("")
   const [updateMode, setUpdateMode] = useState(false);
-  const PF = "http://localhost:8000/upload";
+  const PF = "http://localhost:8000/upload/";
   const [ username, setUsername ] = useState("")
   const [ userid, setUserid ] = useState("")
  
@@ -26,12 +27,6 @@ function SinglePost() {
       setPost(res.data[0]);
       setTitle(res.data[0].title);
       setDescription(res.data[0].description);
-      // setDate(res.data[0].datepost)
-      // console.log("datepost:", res.data[0].datepost)
-      
-
-      // return res.data.user_id
-      
 
     };
     
@@ -42,7 +37,7 @@ function SinglePost() {
   const handleDelete = async () => {
     try {
       await axiosPrivate.delete(`/post/${post.post_id}`, {
-        data: { username: currentUser.username },
+        data: { user_id: userID },
       });
       window.location.replace("/home");
     } catch (err) {}
@@ -68,8 +63,8 @@ function SinglePost() {
     
     <div className="singlePost">
       <div className="singlePostWrapper">
-        {post.photo && (
-          <img src={PF + post.photo} alt="" className="singlePostImg" />
+        {post.image && (
+          <img src={PF + post.image} alt="" className="singlePostImg" />
         )}
         {updateMode ? (
           <input
@@ -81,18 +76,18 @@ function SinglePost() {
           />
         ) : (
           <h1 className="singlePostTitle">
-            {title}
+            {post.title}
             {post.username === currentUser && (
               
               <div className="singlePostEdit">
                 <i
                   className="singlePostIcon far fa-edit"
                   onClick={() => setUpdateMode(true)}
-                ></i>
+                >edit</i>
                 <i
                   className="singlePostIcon far fa-trash-alt"
                   onClick={handleDelete}
-                ></i>
+                >delete</i>
               </div>
             )}
           </h1>
@@ -115,7 +110,7 @@ function SinglePost() {
             onChange={(e) => setDescription(e.target.value)}
           />
         ) : (
-          <p className="singlePostDesc">{description}</p>
+          <p className="singlePostDesc">{post.description}</p>
         )}
         {updateMode && (
           <button className="singlePostButton" onClick={handleUpdate}>

@@ -6,7 +6,7 @@ const Post = ({post}) => {
   const PF = "http://localhost:8000/upload/";
   return (
     <div className="post">
-    {post.photo && <img className="postImg" src={PF + post.photo} alt="" />}
+    {post.image && <img className="postImg" src={PF + post.image} alt="" />}
     <div className="postInfo">
       {/* <div className="postCats">
         {post.categories.map((c) => (
