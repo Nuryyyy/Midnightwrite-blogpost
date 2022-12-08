@@ -1,0 +1,19 @@
+.modalimage {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.header {
+    background-color: var(--c-brand);  
+    color: white;
+}
+
+.modalCenter{
+    position: absolute;
+    float: left;
+    left: 30%;
+    right: 30%;
+    top: 20%;
+    transform: translate(-50%, -50%);
+  }
