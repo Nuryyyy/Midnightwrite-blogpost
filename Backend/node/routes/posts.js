@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { verifyJWT } from "../middleware/verifyJWT.js";
-import { trialPost,createPost, getAllPost, getPost, editPost, deletePost } from "../controller/posts.js";
+import { trialPost,createPost, getAllPost, getPost, editPost, deletePost, getAllPostofUser } from "../controller/posts.js";
 const postRouter = Router()
 
 let router = postRouter
@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
 router.get('/test', verifyJWT, (trialPost) )
 router.get('/allpost', verifyJWT, (getAllPost))
 router.get('/:post_id', (getPost))
+router.get('/allpost/:username', verifyJWT, (getAllPostofUser))
 
 //post
 router.post('/create', verifyJWT, (createPost))

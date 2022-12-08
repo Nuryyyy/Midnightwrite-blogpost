@@ -5,8 +5,9 @@ function AllPost({posts}) {
   // const 
   return (
     <div className='allpost'>
-      {posts.map((p ,i) => (
-       
+      {posts && posts
+      .sort((a,b) => a.datepost < b.datepost ? 1 : -1)
+      .map((p ,i) => (
         <Post post={p} key={i}/>
       ))}
     </div>

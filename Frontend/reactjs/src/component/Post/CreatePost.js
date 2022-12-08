@@ -21,6 +21,7 @@ export default function CreatePost() {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [image, setImage] = useState("")
+  const [postID, setPostID] = useState("")
   const [file, setFile] = useState(null)
   const [errMsg, setErrMsg] = useState("")
   const [success, setSuccess] = useState(false)
@@ -52,7 +53,6 @@ export default function CreatePost() {
     e.preventDefault()
     console.log("handlesubmit")
     const imgURL = await upload()
-    console.log("imgURL:", imgURL)
     try {
       const response = await axiosPrivate.post(createpost_url,
         JSON.stringify({
@@ -65,10 +65,13 @@ export default function CreatePost() {
         })
         console.log("successpost")
         console.log(JSON.stringify(response.data))
+        setPostID(response.data.post_id)
+        console.log("postid:", response.data.post_id)
         setTitle("")
         setDescription("")
+        setImage(null)
         setSuccess(true)
-        //clear input fields
+        // window.location.replace("/post/" + response.data[0].post_id);
     } catch (error) {
       console.log(error)
       errRef.current.focus();
@@ -77,10 +80,14 @@ export default function CreatePost() {
   }
 
 
-
-
+  
   return (
+    <>
     
+    { success ? ( 
+      <Navigate to={`/post/${postID}`} />
+
+    ):(
     <div>
       <TopBar />
       <section>
@@ -122,7 +129,7 @@ export default function CreatePost() {
 
             {/* <label for='markdown'>markdown</label>
             <textarea name='markdown' nameClass='markdown'></textarea> */}
-            <a href='/' className='btnOption btn-secondary'>Cancel</a>
+            <a href='/home' className='btnOption btn-secondary'>Cancel</a>
             <button type="submit">Submit</button>
 
         </form>
@@ -130,6 +137,8 @@ export default function CreatePost() {
 
       </section>
     </div>
+    )}
+    </>
  
   )
 }

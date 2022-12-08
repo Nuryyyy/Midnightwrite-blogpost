@@ -8,11 +8,6 @@ const Post = ({post}) => {
     <div className="post">
     {post.image && <img className="postImg" src={PF + post.image} alt="" />}
     <div className="postInfo">
-      {/* <div className="postCats">
-        {post.categories.map((c) => (
-          <span className="postCat">{c.name}</span>
-        ))}
-      </div> */}
       <Link to={`/post/${post.post_id}`} className="link">
         <span className="postTitle">{post.title}</span>
       </Link>
