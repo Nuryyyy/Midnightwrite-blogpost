@@ -75,7 +75,7 @@
     background-color: lightgray;
 }
 
-.modal-backdrop {
-    /* bug fix - no overlay */    
+/* .modal-backdrop {
+    bug fix - no overlay    
     display: none;    
-}
+} */

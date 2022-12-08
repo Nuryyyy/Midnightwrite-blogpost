@@ -98,7 +98,7 @@ import logo from '../images/logo_violet.png'
   return (
     <>
    { success ? (
-    <Navigate to={`/profile/${currentUser}`} />
+    window.location.replace(`/profile/${currentUser}`)
     
    ) 
    : (
