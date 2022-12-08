@@ -34,7 +34,6 @@ const uploadPhoto = async (e) => {
     JSON.stringify({
       image: imgUrl }), {
         withCredentials: true}) 
-      // setPhoto(response.data)
       window.location.reload() 
   } catch (error) {
     console.log(error)
@@ -49,14 +48,13 @@ const uploadPhoto = async (e) => {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-bodyrow d-flex justify-content-center align-items-center m-2">
-            {/* <div className='flex-shrink-0 ms-3'> */}
+         
                     {file 
                     ?<img src={URL.createObjectURL(file)} 
                       alt="Profile" className="profile img-fluid img-thumbnail  "/>
                     :<img src={PF + "default.jpg"}
                     alt="Profile" className="profile img-fluid img-thumbnail "/>}
-                        {/* <button onClick={updateAccount} type="button" className="btn btn-outline-dark" data-mdb-ripple-color="dark">Edit Profile</button>     */}
-                  {/* </div> */}
+                        
                 <input
                 style={{ display: "none" }}
                 type="file"
@@ -68,10 +66,9 @@ const uploadPhoto = async (e) => {
                     Upload Image
                   </label>
                   </div>
-                  <div class="modal-footer">
+                  <div className="modal-footer">
                   <button type="button" htmlFor="file" onClick={uploadPhoto} className="file btn btn-primary m-0">Save changes</button>
                   </div>
-                {/* <button htmlFor="file" onClick={uploadPhoto} type="button" className="file btn btn-outline-dark" data-mdb-ripple-color="dark">Save photo</button> */}
             </div>
            
             </div>
