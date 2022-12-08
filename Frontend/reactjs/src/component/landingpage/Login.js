@@ -110,18 +110,18 @@ import logo from '../images/logo_violet.png'
      <div className="modal-dialog" role="document" >
         <div className="modal-content">
         <div className="modal-header text-center">
-      <figure class="figure center">
-        <img id="logoViolet" src={logo} alt="logo" class='rounded mx-auto d-block'></img>
-        <figcaption class="figure-caption ">
-        <h5 class="modal-title"  id="modal-title">Create Account</h5>
+      <figure className="figure center">
+        <img id="logoViolet" src={logo} alt="logo" className='rounded mx-auto d-block'></img>
+        <figcaption className="figure-caption ">
+        <h5 className="modal-title"  id="modal-title">Create Account</h5>
       </figcaption>
       </figure>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body mx-3">
+      <div className="modal-body mx-3">
 
        <form onSubmit={handleSubmit}>
-       <div class="md-form form-floating mb-3 ">
+       <div className="md-form form-floating mb-3 ">
           <input 
           placeholder='Username:'
           className='form-control validate'
@@ -137,7 +137,7 @@ import logo from '../images/logo_violet.png'
           <label htmlFor="username" data-error="wrong" data-success="right">Username:</label>
       </div>
 
-      <div class="md-form form-floating mb-3">
+      <div className="md-form form-floating mb-3">
         
         <input 
           placeholder='Password:'
@@ -152,7 +152,7 @@ import logo from '../images/logo_violet.png'
           <label htmlFor="password" data-error="wrong" data-success="right">Password:</label>
       </div>
 
-      <div class="modal-footer d-flex justify-content-end" ></div>
+      <div className="modal-footer d-flex justify-content-end" ></div>
           <button data-target="#login" type="submit" id="btnOption" className="btn btn-primary">Sign In</button>
           {err && <p>{err}</p>}
         </form>
