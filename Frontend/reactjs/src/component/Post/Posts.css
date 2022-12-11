@@ -99,7 +99,7 @@
   }
 
   /* Post.js */
-  .post {
+  /* .post {
     width: 385px;
     margin: 0px 25px 40px 25px;
   }
@@ -144,7 +144,7 @@
   }
   
   .postDesc {
-    font-family: "Varela Round", sans-serif;
+    
     font-size: 14px;
     color: #444;
     line-height: 24px;
@@ -155,3 +155,117 @@
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
   }
+
+  .posts{
+    flex: 9;
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.postsSee{
+  flex: 9;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 15px;
+}
+  /* .seeall {
+  
+    width: 250px;
+    margin: 2px;
+    display: flex;
+    flex-direction: column;
+  }
+  } */
+
+  /* .postbox {
+    width: 385px;
+    margin: 0px 25px 40px 25px;
+    display: flex;
+    flex-direction: row;
+  }
+ .postimage {
+  width: 385px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 7px;
+ } */ */
+
+
+ /* Createpost */
+ .write {
+  padding-top: 50px;
+}
+
+.writeImg {
+  margin-left: 150px;
+  width: 70vw;
+  height: 250px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.writeForm {
+  position: relative;
+}
+
+.writeFormGroup {
+  margin-left: 150px;
+  display: flex;
+  align-items: center;
+}
+
+.writeIcon {
+  width: 25px;
+  height: 25px;
+  font-size: 20px;
+  border: 1px solid;
+  border-radius: 50%;
+  color: #827397;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.writeInput {
+  font-size: 30px;
+  border: none;
+  padding: 20px;
+  width: 70vw;
+  font-family: 'tisasans_title';
+}
+
+.writeInput::placeholder {
+  color: rgb(189, 185, 185);
+  font-weight: 400;
+}
+
+.writeInput:focus {
+  outline-style: none;
+}
+
+.writeText {
+  width: 70vw;
+  height: 100vh;
+  font-family: 'tisasans_body';
+  font-size: 20px;
+}
+
+.writeSubmit {
+  position: absolute;
+  top: 20px;
+  right: 50px;
+  color: white;
+  background-color: #363062;
+  padding: 8px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+
+/* end of createpost */

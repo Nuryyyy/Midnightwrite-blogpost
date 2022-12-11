@@ -1,4 +1,4 @@
-.profile {
+/* .profile {
     height: 150px;
     }
     
@@ -20,21 +20,52 @@
     .container-fluid{
         height: 100vh;
     
-    }
+    } */
 
 img {
     object-fit: cover;  
 
 }
 
-/* .profileImage {
-    width: 200px;
-    height: 200px;
-    border: 50%;
-    padding: 20px;
+p {
+    font-size: 1em;
 }
 
+
 .header {
-    height: 300px;
-    background-color: var(--c-brand)
+    
+    background-color: var(--c-brand);  
+    font-size: large;
+    letter-spacing: 1px;
+
+    /* height:250px; */
+}
+
+.card {
+    border-radius: 15px;
+    background-color: var(--c-light);
+}
+
+.profile {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    /* background-size: cover; */
+    /* z-index: 1; */
+    /* max-width: 100%; */
+    /* height: auto; */
+}
+
+.btn {
+    /* updateprofile */
+    z-index: 1;
+}
+
+/* .detail {
+    margin-top: 180px;
 } */
+
+.profileImage {
+    width: 150px;
+}
+

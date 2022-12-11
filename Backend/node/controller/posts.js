@@ -12,13 +12,7 @@ export const trialPost = (req, res) =>{
 export const getAllPost = async (req, res) => {
     try{
         let lists = await pool.query(`SELECT * FROM public.createpost`) 
-        // console.log(lists.rows.map(x  => {
-        //     const data = x.datepost
-        // return (
-        //     data.sort((a,b) => a > b ? 1 : -1)
-            
-        // )
-        // }))
+
         res.status(200).json(
             lists.rows
             );
@@ -41,13 +35,14 @@ export const createPost = async (req, res) => {
         const {
             title,
             description,
-            image
+            image,
+            date
         } = req.body 
         
         const user_id = req.user.user_id
         const username = req.user.username
 
-        const date = new Date()
+        // const date = new Date()
         console.log("date:", date)
     
         
@@ -94,14 +89,12 @@ export const getPost = async (req, res) => {
 
 export const getAllPostofUser = async (req, res) => {
     try {
-        console.log("dirtp")
         const username = req.params.username
         console.log(username)
 
         const user = await pool.query(`SELECT * FROM public.user_info WHERE username = $1`, [username])
 
-        const user_id = user.rows[0].user_id
-        console.log("postuser usierid:", user_id)
+        const user_id = user.rows[0]?.user_id
 
         const posts = await pool.query(`SELECT * FROM public.createpost WHERE user_id = $1`, [user_id])
         res.status(200).json(posts.rows) 
@@ -124,8 +117,6 @@ export const editPost = async (req, res) => {
 
         //allow only user to edit its own post. should not be allowed to edit post of others
         const {title, description} = req.body
-        console.log("edited title:", title)
-        console.log("edited description:", description)
         
 
         const posts =  await pool.query(`SELECT * FROM public.createpost WHERE post_id = $1`, [post_id])

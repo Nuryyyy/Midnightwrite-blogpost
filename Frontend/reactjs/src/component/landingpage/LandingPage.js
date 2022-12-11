@@ -14,7 +14,7 @@ export default function LandingPage() {
         <div className="col-7 ">
        
         <img className="logo" src={logo} alt="Logo" ></img>
-        <h1 className="text-uppercase fw-semibold display-1 text-center">Midnightwrite</h1>
+        <h1 className="text-title text-uppercase fw-semibold display-1 text-center text-white">Midnightwrite</h1>
         </div>
         <div className="col-5" id="content"> 
         <div className="text-center">

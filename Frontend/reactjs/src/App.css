@@ -31,28 +31,218 @@
 
 }
 
+/* GLOBAL */
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1{
+  font-size: 6.5vw;
+  font-family: 'tisasans_header';
+}
+
+h3{
+  font-family: 'tisasans_title';
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+h4{
+  font-family: 'tisasans_title';
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+h6{
+  font-family: 'tisasans_title';
+  font-size: 2rem;
+  font-weight: 700;
+  color:pink;
+}
+
+p{
+  font-family: 'tisasans_body';
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+button{
+  background-color: red;
+  border-style: none;
+  padding: 0.7rem 1.3rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #F7F8FA;
+  
+}
+
+hr{
+  background-color: #221F3B;
+  color: #221F3B;
+  height: 0.07rem;
+}
+
+
+/* body section */
 body{
-  /* font-family: 'tisa'; */
-  line-height: 1.7;
-  /* color: black; */
   font-family: 'tisasans_body';
 }
 
-h1, h2, h3, h4, h5, h6, 
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  font-weight: 600;
+header .intro {
+  position: relative;
 }
 
-/* a {
-  text-decoration: none;
-  color
-} */
+header .intro .head{
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 50%);
 
-/* a:hover {
+}
 
-} */
+header .intro .head h1 {
+  font-family: "tisasans_title";
+  color: #221F3B;
+  font-weight:800px;
+}
+
+header .intro .head h6 {
+  /* font-family: "tisasans_title"; */
+  color: #221F3B;
+  letter-spacing: 0.1rem;
+}
+
+header .navbar .navbar-nav .nav-link::after{
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #F7F8FA;
+  transition: width 0.3s;
+  
+}
+
+
+header .navbar .navbar-nav .nav-link:hover::after{
+  width: 60%;
+  height: 2px;
+  background: #827397;
+  transition: width 0.3s;
+  border-bottom: 2px solid #F7F8FA ;
+  
+  
+  
+}
+
+header .navbar .navbar-nav i {
+  font-size: 1.2rem;
+  color: #F7F8FA;
+  cursor: pointer;
+}
+
+.nav-link {
+  color: #F7F8FA;
+
+}
+
+header .navbar .navbar-nav .nav-link.active {
+  color: var(--c-brand-light);
+ 
+  
+}
+
+#logobar {
+  color: #F7F8FA;
+  font-size: 1.5em;
+  font-family: 'tisasans_title';
+ 
+}
 
 #navbar {
+  background-color: var(--c-brand);
+  color: #F7F8FA;
+  box-shadow: 5px 10px 18px #888888;
+
+}
+
+/* end of topbar section */
+
+/* start of feed/home section */
+
+.featured .row .one{
+  height: 300px;
+  
+}
+
+.featured .row .one img{
+  width:100%;
+  height: 100%;
+  background-size: cover;
+  box-sizing: border-box;
+  object-fit: cover;
+
+
+}
+
+.featured .row .one .text{
+  background: rgba(77,76,125,0.4);
+  width: 100%;
+  height: 100%;
+  position:relative;
+  bottom: 150px;
+  /* letter-spacing: 0.1rem;
+  line-height: 2px; */
+
+}
+
+.featured .row .one .text p{
+  letter-spacing: 0.2rem;
+  line-height: 2px;
+  /* color */
+}
+.featured .row .one .text a{
+  text-decoration: none;
+  border-style: none;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.featured .row .one .text a::after{
+  content: "";
+  display: block;
+  width: 30%;
+  height: 2px;
+  background: #E9D5DA;
+ 
+  
+}
+
+/* homepage */
+
+
+
+.blog .row .post a{
+  font-size: 0.9rem;
+  color:#827397;
+  font-weight: bold;
+  text-decoration: none;
+  border-style: none;
+}
+
+.blog .row .post img{
+  background-size: cover;
+  box-sizing: border-box;
+  object-fit: cover;
+  height: 300px;
+}
+
+
+/* different */
+/* #navbar {
   background-color: var(--c-brand);
   color: #F7F8FA;
   box-shadow: 5px 10px 18px #888888;
@@ -64,12 +254,6 @@ h1, h2, h3, h4, h5, h6,
 }
 
 
-#logobar {
-  color: #F7F8FA;
-  font-size: 1.5em;
-  font-family: 'tisasans_title';
- 
-}
 
 .section-padding {
   padding-top: 140px;
@@ -98,7 +282,8 @@ h1, h2, h3, h4, h5, h6,
   border-color: white;
   border-radius: 0;
  
-}
+} */
+
 
 /* .btn-bd-primary {
   --bs-btn-font-weight: 600;

@@ -11,6 +11,7 @@ import Home from './component/Home/Home'
 import PersistLogin from './component/PersistLogin/PersistLogin';
 import UpdateAccount from './component/ViewAccount/UpdateAccount';
 import SinglePost from './component/Post/SinglePost'
+import AllPostsByUser from './component/Post/AllPostsByUser';
 import Users from './component/ViewAccount/Users';
 import { AuthContext } from './context/AuthProvider';
 
@@ -24,7 +25,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Layout />}>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/landingpage" element={<LandingPage />} />
+      <Route path="/midnightwrite" element={<LandingPage />} />
     
 
        {/* <TopBar /> */}
@@ -38,6 +39,7 @@ function App() {
       <Route path="/profile/:username" element={<ViewAccount />} />
       <Route path="/profile/:user_id/update" element={<UpdateAccount />} />
       <Route path="/post/:post_id" element={<SinglePost />} />
+      <Route path="/post/allpost/:username" element={<AllPostsByUser />} />
       </Route>
       
       {/* Error/missing page */}

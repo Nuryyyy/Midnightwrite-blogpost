@@ -16,7 +16,7 @@ export default function UpdateAccount() {
 
   const navigate = useNavigate()
   const axiosPrivate = useAxiosPrivate();
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser, setCurrentUser } = useContext(AuthContext)
   const location = useLocation()
   const userID = location.pathname.split("/")[2]
   
@@ -38,6 +38,8 @@ export default function UpdateAccount() {
 
   const [password, setPassword] = useState("")
   const [pwFocus, setPwFocus] = useState(false)
+
+  const [description, setDescription] = useState("")
  
 
   //possible error and if success register
@@ -56,13 +58,27 @@ export default function UpdateAccount() {
 
   useEffect(() => {
     setErrMsg('');
-}, [firstname, lastname, username, email, password])
+}, [firstname, lastname, username, email, password, description])
+
+useEffect(() => {
+  const profile = async () => {
+    const res = await axiosPrivate.get(`/profile/${currentUser}`)
+    console.log("profile:", res.data)
+    setfirstname(res.data.firstname)
+    setlastname(res.data.lastname)
+    setEmail(res.data.email)
+    setDescription(res.data?.aboutme)
+  }
+  profile()
+},[currentUser])
+
 
 
 
   const handleSubmit = async(e) => {
     e.preventDefault()
     console.log("handlesumbit")
+    // const dataProfile = await getProfile()
     try {
       const response = await axiosPrivate.put(`/profile/${userID}/update`,
         JSON.stringify({
@@ -71,6 +87,7 @@ export default function UpdateAccount() {
           username: username, 
           email: email,
           password: password,
+          aboutme : description
         }),
         {
           headers: {
@@ -80,6 +97,7 @@ export default function UpdateAccount() {
         })
         console.log(JSON.stringify(response?.data))
         console.log("Updated!")
+        setCurrentUser(response.data.username)
         setSuccess(true)
 
         //clear input fields
@@ -115,23 +133,23 @@ export default function UpdateAccount() {
         <div className="modal-content">
           <div className="modal-header text-center">
 
-        <figure class="figure center">
-          {/* <img id="logoViolet" src={logo} alt="logo" class='rounded mx-auto d-block'></img> */}
-          <figcaption class="figure-caption ">
-          <h5 class="modal-title"  id="modal-title">Update Account</h5>
+        <figure className="figure center">
+          {/* <img id="logoViolet" src={logo} alt="logo" className='rounded mx-auto d-block'></img> */}
+          <figcaption className="figure-caption ">
+          <h5 className="modal-title"  id="modal-title">Update Account</h5>
         </figcaption>
         </figure>
-            {/* <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
+            {/* <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
           </div>
 
-          <div class="modal-body mx-3">
-      <form onSubmit={handleSubmit} className='createaccount'>
-      <div class="md-form form-floating mb-3 ">
+          <div className="modal-body mx-3">
+          
+          <form onSubmit={handleSubmit} className='createaccount'>
+          <div className="md-form form-floating mb-3 ">
       {/* <i class="fas fa-user prefix grey-text"></i> */}
 
           
           <input 
-          // className='form-control validate'
           placeholder='Firstname'
           className='form-control validate'
           type='text' 
@@ -140,15 +158,15 @@ export default function UpdateAccount() {
           autoComplete="off" 
           value={capitalized(firstname)}
           onChange={(e)=>setfirstname(e.target.value)} 
-          required 
+          // required 
           onFocus={() => setFnFocus(true)}
           onBlur={() => setFnFocus(false)}
+          autoFocus={true}
           />
           <label htmlFor="firstname" data-error="wrong" data-success="right" >First Name:</label>
         </div>
         
-        <div class="md-form form-floating mb-3">
-        {/* <i class="fas fa-user prefix grey-text"></i> */}
+        <div className="md-form form-floating mb-3">
        
           <input 
           className='form-control validate'
@@ -159,15 +177,33 @@ export default function UpdateAccount() {
           autoComplete="off" 
           value={capitalized(lastname)}  
           onChange={(e)=>setlastname(e.target.value)}
-          required 
+          // required 
           onFocus={() => setLnFocus(true)}
           onBlur={() => setLnFocus(false)}
           />
            <label htmlFor="lastname" data-error="wrong" data-success="right">Last Name:</label>
           </div>
 
-        <div class="md-form form-floating mb-3">
-          {/* <i class="fas fa-user prefix grey-text"></i> */}
+          <div className="form-floating mb-3">
+          <textarea
+          className="form-control validate" 
+          style={{height : "100px"}}
+          placeholder='About me:' 
+          type='text' 
+          id="aboutme" 
+          rows="3"
+          ref={userRef} 
+          autoComplete="off"
+          value={(description)}
+          onChange={(e)=>setDescription(e.target.value)}
+          onFocus={() => setUserFocus(true)}
+          onBlur={() => setUserFocus(false)}
+          />
+          <label htmlFor="aboutme" classname="form-label" data-error="wrong" data-success="right">About me:</label>
+          </div>
+
+        <div className="md-form form-floating mb-3">
+          {/* <i className="fas fa-user prefix grey-text"></i> */}
           <input 
           className='form-control validate' 
           placeholder='Username:'
@@ -183,8 +219,8 @@ export default function UpdateAccount() {
           <label htmlFor="username" data-error="wrong" data-success="right">Username:</label>
           </div>
 
-          <div class="md-form form-floating mb-3">
-          {/* <i class="fas fa-envelope prefix grey-text"></i> */}
+          <div className="md-form form-floating mb-3">
+          {/* <i className="fas fa-envelope prefix grey-text"></i> */}
          
           <input 
           className='form-control validate'
@@ -201,8 +237,8 @@ export default function UpdateAccount() {
            <label htmlFor="email" data-error="wrong" data-success="right">Email:</label>
           </div>
 
-          <div class="md-form form-floating mb-3">
-          {/* <i class="fas fa-lock prefix grey-text"></i> */}
+          <div className="md-form form-floating mb-3">
+          {/* <i className="fas fa-lock prefix grey-text"></i> */}
          
           <input 
           className='form-control validate'
@@ -214,11 +250,12 @@ export default function UpdateAccount() {
           onFocus={() => setPwFocus(true)}
           onBlur={() => setPwFocus(false)}
           /> 
+          
            <label htmlFor="password" data-error="wrong" data-success="right">Password:</label>
           </div>
-          <div class="modal-footer d-flex justify-content-end"></div>
+          <div className="modal-footer d-flex justify-content-end"></div>
           <button type="submit" id="btnOption" className="btn btn-primary">Update</button>
-          <button onClick={handleCancel} type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark">Cancel</button>
+          <button onClick={handleCancel} type="button" className="btn btn-outline-dark" data-mdb-ripple-color="dark">Cancel</button>
           {errMsg && <p>{errMsg}</p>}
         </form>
         </div>

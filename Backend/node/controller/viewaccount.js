@@ -34,6 +34,7 @@ export const updateUser = async (req, res) => {
             username,
             email,
             password,
+            aboutme
         } = req.body
 
         const user_id  = req.params.user_id
@@ -62,8 +63,7 @@ export const updateUser = async (req, res) => {
         const saltRound = 10;
         const salt = await bcrypt.genSalt(saltRound);
         const bcryptPassword = await bcrypt.hash(password, salt)
-
-        const updatedUser = await pool.query("UPDATE public.user_info SET firstname = $1, lastname = $2, username = $3, email = $4, password = $5 WHERE user_id = $6", [firstname, lastname, username, email, bcryptPassword, user_id]) 
+        const updatedUser = await pool.query("UPDATE public.user_info SET firstname = $1, lastname = $2, username = $3, email = $4, password = $5, aboutme = $6 WHERE user_id = $7", [firstname, lastname, username, email, bcryptPassword, aboutme, user_id]) 
         const user = await pool.query(`SELECT * FROM public.user_info WHERE user_id = $1`, [user_id])
 
           res.status(200).json(user.rows[0]);
@@ -73,27 +73,21 @@ export const updateUser = async (req, res) => {
     }
 }
 
-export const deleteUser = async (req, res) => {
+export const putDescription = async (req, res) => {
     try {
+        const {aboutme} = req.body
+        const username = req.user.username
 
-        const user_id  = req.params.user_id
-        console.log(user_id)
-
-        if (user_id != req.user.user_id) {
-            res.status(401).send("You are not allowed to delete this account")
-        }
-        else {
-        const user = await pool.query(`DELETE FROM user_info WHERE user_id= $1`, [user_id])
-        res.status(200).json("User deleted")
-        }
+        const updateAboutme = await pool.query(`UPDATE user_info set aboutme = $1 where username = $2`, [aboutme, username])
+        res.json(200).json("about me added")
     } catch (error) {
         console.log(error)
-
     }
 }
+
+
  //to update my database
 export const uploadImage = async (req, res) => {
-
     try {
         const {image}  = req.body//image.filename
         console.log("backendimage:", image)
@@ -118,3 +112,21 @@ export const getImage = async (req, res) => {
 }
 
 
+export const deleteUser = async (req, res) => {
+    try {
+
+        const user_id  = req.params.user_id
+        console.log(user_id)
+
+        if (user_id != req.user.user_id) {
+            res.status(401).send("You are not allowed to delete this account")
+        }
+        else {
+        const user = await pool.query(`DELETE FROM user_info WHERE user_id= $1`, [user_id])
+        res.status(200).json("User deleted")
+        }
+    } catch (error) {
+        console.log(error)
+
+    }
+}

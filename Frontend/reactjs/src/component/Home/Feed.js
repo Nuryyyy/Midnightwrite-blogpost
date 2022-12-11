@@ -1,11 +1,11 @@
 import React from 'react'
-import Post from '../Post/Post'
+import SinglePost from '../Post/SinglePost'
 
 const Feed = ({posts}) => {
   return (
     <>
     {[posts].map((post) => (
-        <Post key={post.id} post={post} />
+        <SinglePost key={post.id} post={post} />
     ))}
     </>
   )

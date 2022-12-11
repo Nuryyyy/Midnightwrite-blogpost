@@ -79,3 +79,7 @@
     bug fix - no overlay    
     display: none;    
 } */
+
+.text-title{
+    color: var(--c-light);
+}

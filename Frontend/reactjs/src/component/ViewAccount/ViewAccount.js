@@ -1,32 +1,35 @@
-
+import ReactDOM from 'react-dom'
 import { useState, useEffect, useContext } from "react"
 import { useAxiosPrivate } from "../../hooks/useAxiosPrivate"
 import TopBar from "../LayoutBar/TopBar"
 import useLogout from "../../hooks/useLogout.js"
 import { useNavigate, Link, useLocation } from "react-router-dom"
-
 import { AuthContext } from "../../context/AuthProvider"
 import useDeleteAccount from "../../hooks/useDeleteAccount"
-import axios from "../../api/axios"
 import './ViewAccount.css'
+import UseUploadImage from '../../hooks/useUploadImage.js'
+import AboutMe from '../Modal/AboutMe'
 
+import SeeAllPost from '../Post/SeeAllPost'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCamera, faCameraRetro, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import {faMessage} from '@fortawesome/free-regular-svg-icons'
+
+// import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 function ViewAccount() {
   const axiosPrivate = useAxiosPrivate();
   const [usersData, setUsersData] = useState({})
-  const [file, setFile] = useState(null) //({})
-  const { userID } = useContext(AuthContext)
+  const { userID, currentUser } = useContext(AuthContext)
   // const { setPhoto } = useAuth()
   const logout = useLogout()
   const deleteUser = useDeleteAccount()
   const navigate = useNavigate()
 
-
   const PF = "http://localhost:8000/upload/"
 
   const location = useLocation()
   const userName = location.pathname.split("/")[2]
-  console.log("username:", userName)
  
 
   const capitalized = str => str.charAt(0).toUpperCase() + str.slice(1)
@@ -55,17 +58,6 @@ function ViewAccount() {
     }
   },[userName])
 
-  const upload= async () => {
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
-      const res = await axios.post("/upload", formData)
-      console.log("resdata:", res.data)
-      return res.data;
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   //logout for user
   const handleLogout = async() => {
@@ -84,83 +76,96 @@ function ViewAccount() {
     navigate(`/profile/${userID}/update`)
    }
 
-
-   const uploadPhoto = async (e) => {
-    e.preventDefault()
-    const imgUrl = await upload()
-    try {
-      const response = await axiosPrivate.put("/profile/upload" , 
-      JSON.stringify({
-        image: imgUrl }), {
-          withCredentials: true}) 
-        // setPhoto(response.data)
-    } catch (error) {
-      console.log(error)
-    }
-   }
+  
 
   return (
     
     <article>
       <TopBar />
 
-        <section>
-        <div class="container-fluid py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-lg-9 col-xl-7">
-              <div class="card">
-                <div class="rounded-top text-white d-flex flex-row" >
-                  <div class="ms-4 mt-5 d-flex flex-column" className="profileImage" >
-                    {file 
-                    ?<img className="profile" src={URL.createObjectURL(file)} 
-                      alt="Yor Forger" class="img-fluid img-thumbnail mt-4 mb-2"/>
-                    :<img className="profile" src={PF + usersData.image}
-                    alt="Yor Forger" class="img-fluid img-thumbnail mt-4 mb-2"/>}
-                        <button onClick={updateAccount} type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark">Update Account</button>    
+      <section className="vh-100 gradient-custom-2">
+        <div className="container-fluid py-5 h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col col-md-9 col-lg-7 col-xl-7 ">
+              <div className="main card">
+                <div className="header rounded-top text-white d-flex flex-row align-items-center p-md-2 p-lg-4 p-xl-4 m" > 
+                  <div className='flex-shrink-0 ms-5 mt-3 mb-3 ps-lg-3 ps-md-2' >
+                    {usersData.image ? (
+                  <img src={PF + usersData.image} alt="profile" className="profile img-fluid img-thumbnail "/>) :
+                  ( <img src={PF + "default.jpg"} alt="profile" className="profile img-fluid img-thumbnail "/>)}
                   </div>
+                  
+                  <div className="detail flex-grow-1 ms-5" >
+                    <h3 className="mb-2">{usersData?.firstname} {usersData?.lastname}</h3>
+                    <p className="mb-2 pb-1 text-muted">{usersData?.username}</p>
+                    <div className="d-flex pt-1">
+                    { currentUser === usersData.username ? 
+                    <div>
+                    <FontAwesomeIcon icon={faCamera} size='lg' className='icon' data-bs-toggle="modal" data-bs-target="#uploadimage"/>
+                    <FontAwesomeIcon icon={faPenToSquare} className='icon ms-2' size='lg'onClick={updateAccount}/>
+                    </div>
+                    :
+                    <div>
+                    <p className="font-italic">
+                    <FontAwesomeIcon className='me-2' icon={faMessage} size='lg' style={{verticalAlign: 'middle'}} data-bs-toggle="modal" data-bs-target="#message"/>
+                    {usersData.email}</p>
+                    </div>}             
+                  </div>
+                  </div> 
+                  </div>
+                   
+                {/* modal call */}
+                <div className="modal fade" id="uploadimage" tabindex="-1" aria-labelledby="uploadimage" aria-hidden="true">
+                <div><UseUploadImage /> </div>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#description">
+            EDIT</button> */}
+
+
+                <div className="modal fade" id="description" tabindex="-1" aria-labelledby="description" aria-hidden="true">
+                <div><AboutMe /> </div>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+
                 
-                  <div class="ms-3" >
-                    <h5>{usersData?.username}</h5>
-                  </div>
-                </div>
-                <div class="p-4 text-black" >
-                </div>
-                <div class="card-body p-4 text-black">
-                  <div class="mb-5">
-                    <p class="lead fw-normal mb-1">About</p>
-                    <div class="p-4">
-                      <p class="font-italic mb-1">Firstname: {usersData?.firstname}</p>
-                      <p class="font-italic mb-1">Lastname: {usersData?.lastname}</p>
-                      <p class="font-italic mb-0">Email: {usersData?.email}</p>
+                <div className="card-body p-4 text-black">
+                  <div className="mb-5">
+                    <h3 className="lead fw-normal mb-1">About me</h3>
+                    <div className="p-4">
+                      
+                        { usersData.aboutme ? (
+                           <p className="font-italic p3">{usersData?.aboutme}</p>
+                        ) :(
+                          <div>
+                           
+                          <a data-bs-target="#description" data-bs-toggle="modal" id="description" className='font-italic mb-1'
+                            href="#description">Tell us more about you</a>
+                          
+                          </div>
+              
+                          )
+
+                        }
+                     
                     </div>
-                    <button onClick={handleLogout} type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark">Logout</button>
-                    <button onClick={handleDelete} type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark">Delete Account</button>
+                    
+                    {currentUser === usersData.username ? 
+                      <div>
+                      <button onClick={handleLogout} type="button" className="btn btn-outline-dark" data-mdb-ripple-color="dark">Logout</button>
+                      {/* <button onClick={handleDelete} type="button" className="btn btn-outline-dark" data-mdb-ripple-color="dark">Delete Account</button>  */}
+                      </div> : <></>  
+                    }
+                    
                   </div>
-                  <div>
-                  <input
-                  style={{ display: "none" }}
-                  type="file"
-                  id="file"
-                  // name=""
-                  onChange={(e) => setFile(e.target.files[0])}
-                 />
-                    <label className="file" htmlFor="file">
-                      Upload Image
-                    </label>
-                  <button className="file" htmlFor="file" onClick={uploadPhoto} type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark">Save photo</button>
+           
+                  <div className="d-flex justify-content-between align-items-center mb-4">
+                    <p className="lead fw-normal mb-0">Recent posts</p>
+                    <p className="mb-0"><Link to={`/post/allpost/${usersData.username}`} className="link">Show all</Link></p>
                   </div>
-                  <div class="d-flex justify-content-between align-items-center mb-4">
-                    <p class="lead fw-normal mb-0">Recent posts</p>
-                    <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p>
-                  </div>
-                  <div class="row g-2">
-                    <div class="col mb-2">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp" alt="1" class="w-100 rounded-3"/>
-                    </div>
-                    <div class="col mb-2">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp" alt="2" class="w-100 rounded-3" />
-                    </div>
-                  </div>
+                  <SeeAllPost username={usersData.username}/>
                 </div>
               </div>
             </div>
@@ -168,7 +173,11 @@ function ViewAccount() {
         </div>
       </section>
     </article>
+
+    //
+    
   )
 }
 
 export default ViewAccount
+

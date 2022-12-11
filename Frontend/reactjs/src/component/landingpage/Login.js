@@ -98,7 +98,8 @@ import logo from '../images/logo_violet.png'
   return (
     <>
    { success ? (
-    window.location.replace(`/profile/${currentUser}`)
+    window.location.replace('/home')
+    //`/profile/${currentUser}`
     
    ) 
    : (

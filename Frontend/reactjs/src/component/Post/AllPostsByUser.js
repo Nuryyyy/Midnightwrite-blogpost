@@ -17,7 +17,7 @@ const AllPostsByUser = () => {
         const getAllPost =  async () => {
             const response = await axiosPrivate.get(`/post/allpost/${username}`,
             {withCredentials: true })
-            console.log("userposts", response.data)
+            // console.log("userposts", response.data)
             setPosts(response.data)
         }
 
