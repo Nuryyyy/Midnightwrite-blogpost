@@ -31,12 +31,12 @@ export default function LandingPage() {
       </div>
 
       {/* Modal */}
-      <div className="modal fade" id="Register" tabindex="-1" aria-labelledby="Register" aria-hidden="true">
+      <div className="modal fade" id="Register" tabIndex="-1" aria-labelledby="Register" aria-hidden="true">
       <div><Register /></div>
       <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <div className="modal fade" id="Login" tabindex="-1" aria-labelledby="Login" aria-hidden="true">
+      <div className="modal fade" id="Login" tabIndex="-1" aria-labelledby="Login" aria-hidden="true">
       <div><Login /></div>
       <button type="button" className="btn-close" aria-label="Close"></button>
       </div>

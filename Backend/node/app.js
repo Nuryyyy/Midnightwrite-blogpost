@@ -41,7 +41,6 @@ app.use('', userSessionRouter)
 app.use('', refreshLogin)
 app.use('/post', postRouter) //can also put auth here instead in route foler
 app.use('/comment', commentRouter)
-app.use('', commentRouter)
 app.use('/profile',accountRouter)
 
 
