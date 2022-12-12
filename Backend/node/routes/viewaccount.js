@@ -9,12 +9,15 @@ let router = accountRouter
 
 router.get('/', verifyJWT, viewAccount)
 router.get('/:username', verifyJWT, viewAccount)
+router.get('/:user_id', verifyJWT, viewAccount)
 router.get('/image', verifyJWT, getImage)
+// router.get('/user_id', verifyJWT, getUserID)
+
 
 router.put('/:user_id/update', verifyJWT, updateUser)
 router.put('/upload', verifyJWT, uploadImage)
 router.put('/aboutme', verifyJWT, putDescription)
 
-router.delete('/:user_id/delete', verifyJWT, deleteUser)
+// router.delete('/:user_id/delete', verifyJWT, deleteUser)
 
 export {accountRouter}

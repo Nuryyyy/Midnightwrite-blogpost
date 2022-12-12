@@ -9,13 +9,13 @@ export const viewAccount = async (req, res) => {
     try{ 
        
         const username = req.params.username
-        // const username = req.user.username
-        console.log(username)
-        const user = await pool.query("SELECT * FROM public.user_info WHERE username = $1", [username]) 
-        console.log(user.rows[0])
-
+        
+        const user = await pool.query("SELECT * FROM public.user_info WHERE username = $1", [username ]) 
+        
         const {password,...others} = user.rows[0]
+
         res.status(200).json(others)
+        // console.log(userID.rows[0])
 
 
     }  catch (error) {
@@ -130,3 +130,14 @@ export const deleteUser = async (req, res) => {
 
     }
 }
+
+// export const getUserID = async (req, res) => {
+//     try {
+//         const user_id = req.user.user_id
+//         const userID =  await pool.query(`SELECT * FROM public.user_info WHERE user_id = $1`, [user_id])
+
+//         res.status(200).json("hi")
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }

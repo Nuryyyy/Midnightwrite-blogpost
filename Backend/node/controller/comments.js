@@ -14,23 +14,21 @@ export const addComment = async (req, res) => {
  
         const {
            post_id,
-            body
+            body,
+            username,
+            image
         } = req.body 
 
-        // const post_id = req.user.post_id
-        console.log("post_id",post_id)
+        // const image = req.user.image
+        console.log("imageb:", image)
         const user_id = req.user.user_id
-        console.log("user_id", user_id)
-        // const username = req.user.username
-        console.log("body:", body)
+    
 
         const comment_date = new Date()
         console.log("Date:", comment_date)
-        // let user_id = user
-        // const user = await pool.query(`SELECT * FROM public.createpost WHERE user_id = $1`, [user_id])
-        // console.log(user)
+      
         
-        const comment = await pool.query(`INSERT INTO post_comments (comment_id, post_id, user_id, body, comment_date) VALUES ($1, $2, $3, $4, $5) RETURNING *`, [uuidv4(), post_id, user_id, body, comment_date])
+        const comment = await pool.query(`INSERT INTO post_comments (comment_id, post_id, user_id, body, comment_date, username, image) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`, [uuidv4(), post_id, user_id, body, comment_date, username, image])
         // newPost.rows[0]
        
         if (comment.rows[0]) {
@@ -45,20 +43,22 @@ export const addComment = async (req, res) => {
     }
 }
 
-// export const getPost = async (req, res) => {
-//     try{
-//         let lists = await pool.query(`SELECT * FROM public.createpost`) 
+export const getComment = async (req, res) => {
+    try{
+        const post_id = req.params.post_id
         
-//         res.json(lists.rows)
-//         console.log(lists.rows)
+        const comment = await pool.query(`SELECT * FROM public.post_comments WHERE post_id = $1`,[post_id]) 
+        
+        res.status(200).json(comment.rows)
+        console.log(comment.rows)
 
-//         // res.send("getPost is working")
+        // res.send("getPost is working")
         
         
-//         } catch (error) {
-//             // console.error(err.message);
-//             res.status(500).send({
-//                 msg: "Unauthenticated"
-//             });
-//         }
-// }
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send({
+                msg: "Unauthenticated"
+            });
+        }
+}

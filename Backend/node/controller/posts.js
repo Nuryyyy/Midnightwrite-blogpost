@@ -36,13 +36,13 @@ export const createPost = async (req, res) => {
             title,
             description,
             image,
-            date
+            // date
         } = req.body 
         
         const user_id = req.user.user_id
         const username = req.user.username
 
-        // const date = new Date()
+        const date = new Date()
         console.log("date:", date)
     
         

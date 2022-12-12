@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { auth } from "../middleware/auth.js";
-import { addComment, trialComment } from "../controller/comments.js";
+import { addComment, getComment, trialComment } from "../controller/comments.js";
+import { verifyJWT } from "../middleware/verifyJWT.js";
 const commentRouter = Router()
 
 let router = commentRouter
@@ -14,10 +15,10 @@ router.get('/', (req, res) => {
 })
 
 //get
-router.get('/trial', (trialComment))
+router.get('/:post_id', verifyJWT, (getComment))
 
 //post
-router.post('/comment', auth, (addComment))
+router.post('', verifyJWT, (addComment))
 
 
 
