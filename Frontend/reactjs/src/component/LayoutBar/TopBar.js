@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 // import './Topbar.css';
 import logo from '../images/logo_white.png'
 import { AuthContext } from '../../context/AuthProvider';
+import SearchBar from '../Search/SearchBar';
 
 function TopBar() {
     const { currentUser } = useContext(AuthContext)
@@ -19,16 +20,16 @@ function TopBar() {
             <span class="navbar-toggler-icon"></span>
         </button>
             <div className="collapse navbar-collapse" id="nav">
-            <ul class="navbar-nav me-auto mb-2 col-md-1 col-2 col-1 mb-lg-0">
+            <ul className="navbar-nav me-auto mb-2 col-md-1 col-2 col-1 mb-lg-0">
             <li className="nav-item ">
               <NavLink className="nav-link " aria-current="page" to="/home">Home</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/posts/create">Create</NavLink>
+              <NavLink className="nav-link" to="/posts/create">Write</NavLink>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <NavLink className="nav-link" to="/about">About</NavLink>
-            </li>
+            </li> */}
             <li className="nav-item">
               <NavLink className="nav-link" to={`/profile/${currentUser}`}>Profile</NavLink>
             </li>
@@ -37,28 +38,35 @@ function TopBar() {
             </li> */}
           </ul>
           {/* search option */}
-          {/* <form class="d-flex" role="search">
-          <input class="form-control me-2 col-md-1 col-2 col-1" type="search" placeholder="Search" aria-label="Search" />
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          {/* <form className="d-flex" role="search">
+          <input className="form-control me-2 col-md-1 col-2 col-1" 
+            type="text" 
+            placeholder="Search" 
+            aria-label="Search" 
+            id="search"
+            onChange={handleSearchChange}/>
+          <button className="btn btn-outline-success" type="submit">Search</button>
           </form> */}
 
+          <SearchBar />
+
           {/* social media */}
-          <ul className="navbar-nav ml-auto">
+          {/* <ul className="navbar-nav ml-auto">
             <div className='row'>
             <li className="nav-item col-2 col-md-1 col-1">
-            <i class="fa-brands fa-facebook px-2" aria-hidden="true"></i>
+            <i className="fa-brands fa-facebook px-2" aria-hidden="true"></i>
             </li>
             <li className="nav-item col-2 col-md-1 col-1">
-            <i class="fa-brands fa-instagram px-2" aria-hidden="true"></i>
+            <i className="fa-brands fa-instagram px-2" aria-hidden="true"></i>
             </li >
             <li className="nav-item col-2 col-md-1 col-1">
-            <i class="fa-brands fa-twitter px-2" aria-hidden="true"></i>
+            <i className="fa-brands fa-twitter px-2" aria-hidden="true"></i>
             </li >
             <li className="nav-item col-2 col-md-1 col-1">
-            <i class="fa-brands fa-pinterest px-2" aria-hidden="true"></i>
+            <i className="fa-brands fa-pinterest px-2" aria-hidden="true"></i>
             </li>
             </div>
-          </ul>
+          </ul> */}
         </div>
       </div>
     </nav>

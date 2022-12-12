@@ -23,7 +23,6 @@ const Sidebar = () => {
                 const response = await axiosPrivate.get(`/profile/${currentUser}`,
                 {withCredentials: true })
                 setUserData(response?.data)
-                console.log("sidebare:", response?.data)
             }
             getData()
         } catch (error) {
@@ -39,8 +38,14 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="sidebarItem">
       <span className="sidebarTitle">ABOUT ME</span>
+      
         <img src={PF + userData.image} alt="profile" className="img-fluid mb-3" />
-        <h3>{userData.username}</h3>
+        <div>
+          <Link to={`/profile/${userData.username}`}>
+          <h3>{userData.username}</h3>
+          </Link>
+        </div>
+        {/* <h3 onClick={`/profile/${userData.username}`}>{userData.username}</h3> */}
         {userData.aboutme ? (
             <p>{userData.aboutme.substring(0,100)+'...'}
             <a href={`/profile/${userData.username}`}>read more</a>

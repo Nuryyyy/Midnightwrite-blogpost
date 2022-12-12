@@ -3,121 +3,55 @@ import logo from '../images/logo_violet.png'
 
 const Footer = () => {
   return (
-  
-    <footer class="text-center text-lg-start bg-white text-muted">
+    <footer className="footer text-center text-lg-start">
+    
+    <div className="container p-4">
      
-      <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+      <div className="row">
+        
+        <div className="col-lg-6 col-md-12 mb-4 mb-md-0">
+          <h3 className="text-uppercase">ABOUT US</h3>
+  
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+            molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+            aliquam voluptatem veniam, est atque cumque eum delectus sint!
+          </p>
+        </div>
+        
+  
        
-        <div class="me-5 d-none d-lg-block" color="#827397">
-          <span>Get connected with us on social networks:</span>
-        </div>
-   
-        <div>
-          <a href="" class="me-4 link-secondary">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="" class="me-4 link-secondary">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="" class="me-4 link-secondary">
-            <i class="fab fa-google"></i>
-          </a>
-          <a href="" class="me-4 link-secondary">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="" class="me-4 link-secondary">
-            <i class="fab fa-linkedin"></i>
-          </a>
-          <a href="" class="me-4 link-secondary">
-            <i class="fab fa-github"></i>
-          </a>
+        <div className="col-lg-6 col-md-12 mb-4 mb-md-0">
+          <h3 className="text-uppercase">WRITE TO US</h3>
+  
+          <ul className="fa-ul" >
+            <li className="mb-3">
+              <span className="fa-li"><i className="fas fa-home"></i></span><span className="ms-2">Phillipines</span>
+            </li>
+            <li className="mb-3">
+              <span className="fa-li"><i className="fas fa-envelope"></i></span><span className="ms-2">info@midnightwrite.com</span>
+            </li>
+            <li className="mb-3">
+              <span className="fa-li"><i className="fas fa-phone"></i></span><span className="ms-2">+ 01 234 567 88</span>
+            </li>
+            <li className="mb-3">
+              <span className="fa-li"><i className="fas fa-print"></i></span><span className="ms-2">+ 01 234 567 89</span>
+            </li>
+          </ul>
         </div>
        
-      </section>
-    
-    
-      
-      <section class="">
-        <div class="container text-center text-md-start mt-5">
-          
-          <div class="row mt-3">
-            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4 align-items-center">
-           
-              <h6 class="text-uppercase fw-bold mb-4">
-                <i class="fas fa-gem me-3 text-secondary "></i>Midnightwrite
-              </h6>
-              <p>
-                Here you can use rows and columns to organize your footer content. Lorem ipsum
-                dolor sit amet, consectetur adipisicing elit.
-              </p>
-            </div>
-    
-           
-            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-             
-              <h6 class="text-uppercase fw-bold mb-4">
-                Products
-              </h6>
-              <p>
-                <a href="#!" class="text-reset">Angular</a>
-              </p>
-              <p>
-                <a href="#!" class="text-reset">React</a>
-              </p>
-              <p>
-                <a href="#!" class="text-reset">Vue</a>
-              </p>
-              <p>
-                <a href="#!" class="text-reset">Laravel</a>
-              </p>
-            </div>
-           
-    
-            
-            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-             
-              <h6 class="text-uppercase fw-bold mb-4">
-                Useful links
-              </h6>
-              <p>
-                <a href="#!" class="text-reset">Pricing</a>
-              </p>
-              <p>
-                <a href="#!" class="text-reset">Settings</a>
-              </p>
-              <p>
-                <a href="#!" class="text-reset">Orders</a>
-              </p>
-              <p>
-                <a href="#!" class="text-reset">Help</a>
-              </p>
-            </div>
-            
-    
-            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-             
-              <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-              <p><i class="fas fa-home me-3 text-secondary"></i> New York, NY 10012, US</p>
-              <p>
-                <i class="fas fa-envelope me-3 text-secondary"></i>
-                info@example.com
-              </p>
-              <p><i class="fas fa-phone me-3 text-secondary"></i> + 01 234 567 88</p>
-              <p><i class="fas fa-print me-3 text-secondary"></i> + 01 234 567 89</p>
-            </div>
-          </div>
-          
-        </div>
-      </section>
-      
-    
-      
-      <div class="text-center p-4">
-        © 2022 Copyright:
-        <a class="text-reset fw-bold" href="http://localhost:3000/midnightwrite"> midnightwrite.com</a>
       </div>
-      
-    </footer>
+     
+    </div>
+    
+  
+   
+    <div className="text-center p-3" >
+      © 2022 Copyright:
+      <a className="text-dark" href="http://localhost:3000/midnightwrite">midnightwrite.com</a>
+    </div>
+   
+  </footer>
   
   )
 }
