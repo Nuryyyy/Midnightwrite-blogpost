@@ -12,8 +12,7 @@ import PersistLogin from './component/PersistLogin/PersistLogin';
 import UpdateAccount from './component/ViewAccount/UpdateAccount';
 import SinglePost from './component/Post/SinglePost'
 import AllPostsByUser from './component/Post/AllPostsByUser';
-import Users from './component/ViewAccount/Users';
-import { AuthContext } from './context/AuthProvider';
+import ShowComment from './component/Comment/ShowComment';
 
 
 //add footer.js
@@ -27,19 +26,16 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/midnightwrite" element={<LandingPage />} />
     
-
-       {/* <TopBar /> */}
-
-      {/* Protected Routes */}
-      {/* <Route element={<RequireAuth />}> */}
+      
       <Route element={<PersistLogin />}>
-      <Route path="/about" element={<About />} />
+      {/* <Route path="/about" element={<About />} /> */}
       <Route path='/home' element={<Home />} />
       <Route path="/posts/create" element={<CreatePost />} />
       <Route path="/profile/:username" element={<ViewAccount />} />
       <Route path="/profile/:user_id/update" element={<UpdateAccount />} />
       <Route path="/post/:post_id" element={<SinglePost />} />
       <Route path="/post/allpost/:username" element={<AllPostsByUser />} />
+      <Route path="/comment/:postid" element={<ShowComment />} />
       </Route>
       
       {/* Error/missing page */}

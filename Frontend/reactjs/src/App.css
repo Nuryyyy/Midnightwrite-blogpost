@@ -92,6 +92,7 @@ body{
   font-family: 'tisasans_body';
 }
 
+
 header .intro {
   position: relative;
 }
@@ -108,6 +109,7 @@ header .intro .head h1 {
   font-family: "tisasans_title";
   color: #221F3B;
   font-weight:800px;
+  
 }
 
 header .intro .head h6 {
@@ -227,7 +229,7 @@ header .navbar .navbar-nav .nav-link.active {
 
 .blog .row .post a{
   font-size: 0.9rem;
-  color:#827397;
+  color:#6F4A8E;
   font-weight: bold;
   text-decoration: none;
   border-style: none;
@@ -240,6 +242,34 @@ header .navbar .navbar-nav .nav-link.active {
   height: 300px;
 }
 
+.sidebar .sidebarItem h2{
+  font-family: "tisasans_title";
+  color: black;
+  text-decoration: none;
+  border-style: none;
+  font-size: 19rem;
+}
+.sidebar .sidebarItem a{
+  /* font-family: "tisasans_title"; */
+  color: #6F4A8E;
+  text-decoration: none;
+  border-style: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.footer {
+  background-color: #827397;
+
+}
+
+.footer h3{
+  color: black;
+  font-family: "tisasans_title";
+}
+
+
+
+ 
 
 /* different */
 /* #navbar {
