@@ -9,9 +9,10 @@ import useDeleteAccount from "../../hooks/useDeleteAccount"
 import './ViewAccount.css'
 import UseUploadImage from '../../hooks/useUploadImage.js'
 import AboutMe from '../Modal/AboutMe'
-
 import SeeAllPost from '../Post/SeeAllPost'
+import Message from '../Modal/Message'
 
+import '../../App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera, faCameraRetro, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import {faMessage} from '@fortawesome/free-regular-svg-icons'
@@ -79,16 +80,17 @@ function ViewAccount() {
   
 
   return (
-    
+    <>
+     <header><TopBar /></header>
     <article>
-      <TopBar />
+      
 
       <section className="vh-100 gradient-custom-2">
         <div className="container-fluid py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col col-md-9 col-lg-7 col-xl-7 ">
               <div className="main card">
-                <div className="header rounded-top text-white d-flex flex-row align-items-center p-md-2 p-lg-4 p-xl-4 m" > 
+                <div className="headerCard rounded-top text-white d-flex flex-row align-items-center p-md-2 p-lg-4 p-xl-4 m" > 
                   <div className='flex-shrink-0 ms-5 mt-3 mb-3 ps-lg-3 ps-md-2' >
                     {usersData.image ? (
                   <img src={PF + usersData.image} alt="profile" className="profile img-fluid img-thumbnail "/>) :
@@ -115,18 +117,18 @@ function ViewAccount() {
                   </div>
                    
                 {/* modal call */}
-                <div className="modal fade" id="uploadimage" tabindex="-1" aria-labelledby="uploadimage" aria-hidden="true">
+                <div className="modal fade" id="uploadimage" tabIndex="-1" aria-labelledby="uploadimage" aria-hidden="true">
                 <div><UseUploadImage /> </div>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#description">
+                {/* <button type="button" classNameName="btn btn-primary" data-bs-toggle="modal" data-bs-target="#description">
             EDIT</button> */}
 
 
-                <div className="modal fade" id="description" tabindex="-1" aria-labelledby="description" aria-hidden="true">
+                <div className="modal fade" id="description" tabIndex="-1" aria-labelledby="description" aria-hidden="true">
                 <div><AboutMe /> </div>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
 
 
@@ -167,14 +169,27 @@ function ViewAccount() {
                   </div>
                   <SeeAllPost username={usersData.username}/>
                 </div>
+
+
+                <div>
+                <div className="text-center">
+                <div className="modal fade" data-toggle="modal" data-target="#message" tabIndex="-1" aria-hidden="true" role="dialog" id="message" aria-labelledby="message" >
+               
+
+                <Message sendToUser={usersData.email} username={usersData.username}/>
+                {/* <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button> */}
+                </div>
+              </div> </div>
               </div>
+
+
             </div>
           </div>
         </div>
       </section>
     </article>
-
-    //
+    </>
+    
     
   )
 }

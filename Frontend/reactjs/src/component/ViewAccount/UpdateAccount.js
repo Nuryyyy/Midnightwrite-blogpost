@@ -5,6 +5,7 @@ import { useAxiosPrivate } from "../../hooks/useAxiosPrivate"
 import { useNavigate, Link, useLocation, Navigate } from "react-router-dom"
 import TopBar from "../LayoutBar/TopBar"
 import { AuthContext } from '../../context/AuthProvider';
+import logo from '../images/logo_violet.png'
 
 import axios from '../../api/axios';
 
@@ -40,7 +41,7 @@ export default function UpdateAccount() {
   const [pwFocus, setPwFocus] = useState(false)
 
   const [description, setDescription] = useState("")
- 
+  const [aboutFocus, setAboutFocus] = useState("")
 
   //possible error and if success register
   const [errMsg, setErrMsg] = useState("")
@@ -119,13 +120,13 @@ useEffect(() => {
 
   return (
     <>
+     <header><TopBar /></header>
     { success ? (
      <Navigate to={`/profile/${currentUser}`} />
      
     ) 
     : (
-    <article>
-      <TopBar />
+    <div className='container'>
     <section >
         <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
       
@@ -134,9 +135,9 @@ useEffect(() => {
           <div className="modal-header text-center">
 
         <figure className="figure center">
-          {/* <img id="logoViolet" src={logo} alt="logo" className='rounded mx-auto d-block'></img> */}
+          <img id="logoViolet" src={logo} alt="logo" className='rounded mx-auto d-block m-1'></img>
           <figcaption className="figure-caption ">
-          <h5 className="modal-title"  id="modal-title">Update Account</h5>
+          <h3 className="modal-title align-items-center mb-3 text-black"  id="modal-title">Update Account</h3>
         </figcaption>
         </figure>
             {/* <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
@@ -187,7 +188,7 @@ useEffect(() => {
           <div className="form-floating mb-3">
           <textarea
           className="form-control validate" 
-          style={{height : "100px"}}
+          style={{height : "150px"}}
           placeholder='About me:' 
           type='text' 
           id="aboutme" 
@@ -196,8 +197,8 @@ useEffect(() => {
           autoComplete="off"
           value={(description)}
           onChange={(e)=>setDescription(e.target.value)}
-          onFocus={() => setUserFocus(true)}
-          onBlur={() => setUserFocus(false)}
+          onFocus={() => setAboutFocus(true)}
+          onBlur={() => setAboutFocus(false)}
           />
           <label htmlFor="aboutme" classname="form-label" data-error="wrong" data-success="right">About me:</label>
           </div>
@@ -263,7 +264,7 @@ useEffect(() => {
         </div>
     </section>
     
-    </article>
+    </div>
     )}
     </>
 

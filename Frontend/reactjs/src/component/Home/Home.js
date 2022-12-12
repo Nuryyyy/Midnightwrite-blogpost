@@ -5,9 +5,11 @@ import Sidebar from '../LayoutBar/Sidebar'
 import Footer from '../LayoutBar/Footer'
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
 import './Home.css'
-
+import SearchBar from '../Search/SearchBar'
+import ListSearch from '../Search/ListSearch'
 function Home() {
   const [posts, setPosts] = useState([])
+  const [searchResults, setSearchResults] = useState([])
   const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
@@ -35,6 +37,10 @@ function Home() {
       </div>
       <TopBar/>
     </header>
+    <div>
+    <SearchBar posts={posts} setSearchResults={setSearchResults} />
+      <ListSearch searchResults={searchResults} />
+    </div>
     <section className='blog container my-5'>
       <div className="row">
       <div className='post col-lg-8 col-md-8 col-12 col-xl-8 col-xxl-8' >

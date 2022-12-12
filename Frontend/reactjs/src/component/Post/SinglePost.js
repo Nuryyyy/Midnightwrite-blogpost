@@ -4,6 +4,9 @@ import { AuthContext } from "../../context/AuthProvider"
 import { useState, useContext, useEffect } from "react"
 import TopBar from "../LayoutBar/TopBar"
 import './Posts.css'
+import moment from "moment"
+import Sidebar from "../LayoutBar/Sidebar"
+import Comment from "../Comment/Comment"
 
 
 function SinglePost() {
@@ -14,11 +17,10 @@ function SinglePost() {
   const { currentUser, userID } = useContext(AuthContext)
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState("")
   const [updateMode, setUpdateMode] = useState(false);
   const PF = "http://localhost:8000/upload/";
-  const [ username, setUsername ] = useState("")
-  const [ userid, setUserid ] = useState("")
+  // const [ username, setUsername ] = useState("")
+  // const [ userid, setUserid ] = useState("")
  
   useEffect(() => {
     const getPost = async () => {
@@ -46,7 +48,6 @@ function SinglePost() {
   const handleUpdate = async () => {
     try {
       await axiosPrivate.put(`/post/${post.post_id}/edit`, {
-        // username: post.username,
         title,
         description,
         // datepost: new Date.now()
@@ -59,8 +60,9 @@ function SinglePost() {
     
     <>
     
-    <TopBar />
-    
+    <header><TopBar /></header>
+    <section className='blog container my-5'>
+    <div className="row">
     <div className="singlePost">
       <div className="singlePostWrapper">
         {post.image && (
@@ -100,7 +102,8 @@ function SinglePost() {
             </Link>
           </span>
           <span className="singlePostDate" >
-            {new Date(post.datepost).toDateString()}
+            {/* {new Date(post.datepost).toDateString()} */}
+            <p>Posted {moment(post.datepost).fromNow()}</p>
           </span>
         </div>
         {updateMode ? (
@@ -118,7 +121,15 @@ function SinglePost() {
           </button>
         )}
       </div>
+     </div>
+     <div className='sidebar col-lg-4 col-md-4 col-12 col-xl-4 col-xxl-4'>
+      <Sidebar />
+      </div>
     </div>
+    <Comment postid={post.post_id}/>
+    {/* <ShowComment postID={post.post_id} /> */}
+    </section>
+
     </>
     
   );

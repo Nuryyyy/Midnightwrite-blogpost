@@ -3,6 +3,9 @@ import { useLocation } from 'react-router-dom'
 import TopBar from '../LayoutBar/TopBar'
 import AllPost from '../Post/AllPost'
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
+import Sidebar from '../LayoutBar/Sidebar'
+import '../Home/Home.css'
+import Footer from '../LayoutBar/Footer'
 
 const AllPostsByUser = () => {
 
@@ -26,10 +29,20 @@ const AllPostsByUser = () => {
     
     return (
         <>
-        <TopBar/>
-        <div className='Home'>
+         <header><TopBar /></header>
+        <section className='blog container my-5'>
+        <div className="row">
+        <div className='post col-lg-8 col-md-8 col-12 col-xl-8 col-xxl-8' >
           <AllPost posts={posts} />
         </div>
+        <div className='sidebar col-lg-4 col-md-4 col-12 col-xl-4 col-xxl-4'>
+      <Sidebar />
+      </div>
+      </div>
+      </section>
+    <section className='footer'>
+    <Footer />
+    </section>
         </>
       )
     }

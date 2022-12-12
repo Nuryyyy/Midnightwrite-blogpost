@@ -1,10 +1,16 @@
-import React, {useState, useRef, useEffect} from 'react';
-// import axios from '../../api/axios';
+import React, {useState, useRef, useEffect } from 'react';
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
 import axios from '../../api/axios';
 import TopBar from '../LayoutBar/TopBar';
-import { Navigate, useNavigate } from 'react-router-dom';
-// import useUploadImage from '../../hooks/useUploadImage';
+import { Navigate, useNavigate, useHistory } from 'react-router-dom';
+import './Posts.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCirclePlus, faCameraRetro, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import {faCircle} from '@fortawesome/free-regular-svg-icons'
+
+
+import "react-quill/dist/quill.snow.css";
+import moment from "moment";
 
 const createpost_url = '/post/create'
 
@@ -16,6 +22,7 @@ export default function CreatePost() {
   const errRef = useRef()
 
   const navigate = useNavigate()
+  
 
 
   const [title, setTitle] = useState("")
@@ -27,9 +34,9 @@ export default function CreatePost() {
   const [success, setSuccess] = useState(false)
   // const  upload = useUploadImage()
 
-  useEffect(() => {
-    userRef.current.focus()
-  },[])
+  // useEffect(() => {
+  //   userRef.current.focus()
+  // },[])
 
   useEffect(() => {
     setErrMsg('')
@@ -58,15 +65,14 @@ export default function CreatePost() {
         JSON.stringify({
           title: title, 
           description: description,
-          image: file? imgURL : ""
+          image: file? imgURL : "",
         }),
         {
             withCredentials: true
         })
-        console.log("successpost")
-        console.log(JSON.stringify(response.data))
+        // console.log(JSON.stringify(response.data))
         setPostID(response.data.post_id)
-        console.log("postid:", response.data.post_id)
+        // console.log("postid:", response.data.post_id)
         setTitle("")
         setDescription("")
         setImage(null)
@@ -74,7 +80,7 @@ export default function CreatePost() {
         // window.location.replace("/post/" + response.data[0].post_id);
     } catch (error) {
       console.log(error)
-      errRef.current.focus();
+      // errRef.current.focus();
     } 
 
   }
@@ -83,62 +89,69 @@ export default function CreatePost() {
   
   return (
     <>
-    
+    <header><TopBar /></header>
     { success ? ( 
       <Navigate to={`/post/${postID}`} />
 
     ):(
-    <div>
-      <TopBar />
-      <section>
-
-        <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
-        <h1>Create your post</h1>
+   
+    
+    <section>
+    
+      
+      <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
+        <div className='write'>
         {file && (
-        <img className="writeImg" src={URL.createObjectURL(file)} alt="" />
-      )}
-          <form onSubmit={handleSubmit}>
-          <label htmlFor="file"> 
-            Add image
+        <img className="writeImg" src={URL.createObjectURL(file)} alt="" />)}
+          <form onSubmit={handleSubmit} className="writeForm">
+          <div className="writeFormGroup">
+          <label htmlFor="fileInput"> 
+          <FontAwesomeIcon icon={faCirclePlus} size='lg' className='writeIcon' />
           </label>
           <input
             type="file"
-            id="file"
+            id="fileInput"
             style={{ display: "none" }}
             onChange={(e) => setFile(e.target.files[0])}
           />
-          <br></br>
-            <label htmlFor="title">Title</label>
+          {/* <label htmlFor="title"/> */}
             <input 
-            required 
+            className="writeInput"
+            placeholder='Title'
             type='text' 
-            id='title' 
+            // id='title' 
             value={title} 
             onChange = {(e) => setTitle(e.target.value)}
             ref={userRef}
+            autoFocus={true}
             />
+         </div>
             
-            <label htmlFor="description">Description:</label>
+         <div className="writeFormGroup">
+            {/* <label htmlFor="description" /> */}
             <textarea 
-            required
+            className="writeInput writeText"
+            placeholder='Tell your story...'
+            type="text"
+            autoFocus={true}
             id="description" 
             value={description} 
             onChange = {(e) => setDescription(e.target.value)}
             ref={userRef}
             />
-
-            {/* <label for='markdown'>markdown</label>
-            <textarea name='markdown' nameClass='markdown'></textarea> */}
-            <a href='/home' className='btnOption btn-secondary'>Cancel</a>
-            <button type="submit">Submit</button>
+          </div>
+         
+            {/* <a href={}' className='btnOption btn-secondary'>Cancel</a> */}
+            <button type="submit" className="writeSubmit btn btn-outline-dark">Publish</button>
 
         </form>
         
-
+      </div>
       </section>
-    </div>
+    
+        
     )}
-    </>
+   </>
  
   )
 }
