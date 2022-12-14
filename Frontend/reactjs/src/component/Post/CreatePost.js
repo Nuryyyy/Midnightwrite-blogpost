@@ -66,12 +66,14 @@ export default function CreatePost() {
           title: title, 
           description: description,
           image: file? imgURL : "",
+          date : moment(Date.now()).format("YYYY-MM-DD hh:mm:ss")
         }),
         {
             withCredentials: true
         })
         // console.log(JSON.stringify(response.data))
         setPostID(response.data.post_id)
+        console.log(response.date)
         // console.log("postid:", response.data.post_id)
         setTitle("")
         setDescription("")
@@ -91,8 +93,8 @@ export default function CreatePost() {
     <>
     <header><TopBar /></header>
     { success ? ( 
-      <Navigate to={`/post/${postID}`} />
-
+      
+      window.location.replace(`/post/${postID}`)
     ):(
    
     

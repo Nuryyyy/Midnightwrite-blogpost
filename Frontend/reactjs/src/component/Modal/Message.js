@@ -45,7 +45,7 @@ const Message = ({sendToUser, username}) => {
         <form ref={form} onSubmit={sendEmail}>
 
         <div className="modal-body mx-3">
-        <div className="md-form mb-5">
+        <div className="md-form form-floating mb-3">
             {/* <i className="fa fa-user prefix grey-text"></i> */}
             <input 
             type="text" 
@@ -57,17 +57,18 @@ const Message = ({sendToUser, username}) => {
             <label data-error="wrong" data-success="right" htmlFor="username">Send to</label>
           </div>
   
-          <div className="md-form mb-5">
-            <i className="fa fa-user prefix grey-text"></i>
+          <div className="md-form form-floating mb-3">
+            {/* <i className="fa fa-user prefix grey-text"></i> */}
             <input 
+            placeholder='Your name:'
             type="text" 
             name="username" required
             className="form-control validate" />
             <label data-error="wrong" data-success="right" htmlFor="username">Your name</label>
           </div>
   
-          <div className="md-form mb-5">
-            <i className="fa fa-envelope prefix grey-text"></i>
+          <div className="md-form form-floating mb-3">
+            {/* <i className="fa fa-envelope prefix grey-text"></i> */}
             <input 
             type="email" 
             name="userEmail" required
@@ -77,21 +78,24 @@ const Message = ({sendToUser, username}) => {
             <label data-error="wrong" data-success="right" htmlFor="userEmail">Your email</label>
           </div>
   
-          <div className="md-form mb-5">
-            <i className="fa fa-tag prefix grey-text"></i>
+          <div className="md-form form-floating mb-3">
+            {/* <i className="fa fa-tag prefix grey-text"></i> */}
             <input 
+            placeholder='Subject'
             type="text" 
             name="subject" required
             className="form-control validate" />
             <label data-error="wrong" data-success="right" htmlFor="userSubject">Subject</label>
           </div>
   
-          <div className="md-form">
-            <i className="fa fa-pencil prefix grey-text"></i>
+          <div className="form-floating mb-3">
+            {/* <i className="fa fa-pencil prefix grey-text"></i> */}
             <textarea 
+            placeholder='Write your message'
+            style={{height : "150px"}}
             type="text" 
             name="message" 
-            className="md-textarea form-control" rows="4"></textarea>
+            className="form-control validate" rows="4"></textarea>
             <label data-error="wrong" data-success="right" htmlFor="userMessage">Your message</label>
           </div>
   

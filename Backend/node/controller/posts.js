@@ -36,14 +36,14 @@ export const createPost = async (req, res) => {
             title,
             description,
             image,
-            // date
+            date
         } = req.body 
         
         const user_id = req.user.user_id
         const username = req.user.username
 
-        const date = new Date()
-        console.log("date:", date)
+        // const date = new Date()
+        // console.log("date:", date)
     
         
         const newPost = await pool.query(`INSERT INTO createpost (post_id, user_id, title, description, datepost, image, username) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`, [uuidv4(), user_id, title, description, date, image, username])
