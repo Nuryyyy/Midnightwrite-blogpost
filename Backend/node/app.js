@@ -74,7 +74,7 @@ app.get('/api', verifyJWT, async (req, res) => {
     console.log(list.rows)
     
     } catch (error) {
-        console.error(err.message);
+        console.error(error.message);
         res.status(500).send({
             msg: "Unauthenticated"
         });
@@ -82,6 +82,22 @@ app.get('/api', verifyJWT, async (req, res) => {
 }
 )
 
+app.get('/api/:user_id', verifyJWT, async (req, res) => {
+    try{
+        const user_id =  req.params.user_id
+    const list = await pool.query(`SELECT * FROM public.user_info WHERE user_id = $1`, [user_id]) 
+    
+    res.json(list.rows)
+    console.log(list.rows)
+    
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send({
+            msg: "Unauthenticated"
+        });
+    }
+}
+)
 // app.post('/upload', upload.single("image"), (req, res) => {
 //     const image = req.file
 //     res.status(200).json(image.filename)

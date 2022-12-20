@@ -9,8 +9,9 @@ export const trialPost = (req, res) =>{
 }
 
 
-export const getAllPost = async (req, res) => {
+export const getAllPost1 = async (req, res) => {
     try{
+
         let lists = await pool.query(`SELECT * FROM public.createpost`) 
 
         res.status(200).json(
@@ -28,6 +29,20 @@ export const getAllPost = async (req, res) => {
         }
 }
 
+export const getAllPost = async (req, res) => {
+    try {
+
+        const category = req.query.category
+        const result = category ? await pool.query(`SELECT * FROM public.createpost WHERE category= $1`, [category]) : await pool.query(`SELECT * FROM public.createpost`)
+
+        console.log("catergory", category)
+
+       res.status(200).json(result.rows)
+       console.log("catagory send")
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export const createPost = async (req, res) => {
     try {
@@ -36,7 +51,8 @@ export const createPost = async (req, res) => {
             title,
             description,
             image,
-            date
+            date,
+            category,
         } = req.body 
         
         const user_id = req.user.user_id
@@ -46,7 +62,7 @@ export const createPost = async (req, res) => {
         // console.log("date:", date)
     
         
-        const newPost = await pool.query(`INSERT INTO createpost (post_id, user_id, title, description, datepost, image, username) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`, [uuidv4(), user_id, title, description, date, image, username])
+        const newPost = await pool.query(`INSERT INTO createpost (post_id, user_id, title, description, datepost, image, username, category) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`, [uuidv4(), user_id, title, description, date, image, username, category])
         
         console.log(newPost.rows[0])
         res.status(200).json(

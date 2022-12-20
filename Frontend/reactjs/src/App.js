@@ -14,6 +14,8 @@ import SinglePost from './component/Post/SinglePost'
 import AllPostsByUser from './component/Post/AllPostsByUser';
 import ShowComment from './component/Comment/ShowComment';
 
+import Write from './component/Post/CreatePost_v2';
+import Category from './component/Category/Category';
 
 //add footer.js
 
@@ -30,12 +32,15 @@ function App() {
       <Route element={<PersistLogin />}>
       {/* <Route path="/about" element={<About />} /> */}
       <Route path='/home' element={<Home />} />
-      <Route path="/posts/create" element={<CreatePost />} />
+      {/* <Route path="/posts/create" element={<CreatePost />} /> */}
       <Route path="/profile/:username" element={<ViewAccount />} />
       <Route path="/profile/:user_id/update" element={<UpdateAccount />} />
       <Route path="/post/:post_id" element={<SinglePost />} />
       <Route path="/post/allpost/:username" element={<AllPostsByUser />} />
       <Route path="/comment/:postid" element={<ShowComment />} />
+      <Route path="/posts/create" element={<CreatePost/>} />
+
+      <Route path="/post/allpost" element={<Category />} />
       </Route>
       
       {/* Error/missing page */}

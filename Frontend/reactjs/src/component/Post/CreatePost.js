@@ -6,7 +6,9 @@ import { Navigate, useNavigate, useHistory } from 'react-router-dom';
 import './Posts.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus, faCameraRetro, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import {faCircle} from '@fortawesome/free-regular-svg-icons'
+import MenuBar from '../LayoutBar/MenuBar';
+import './Posts.css'
+import '../LayoutBar/Topbar.css'
 
 
 import "react-quill/dist/quill.snow.css";
@@ -32,6 +34,7 @@ export default function CreatePost() {
   const [file, setFile] = useState(null)
   const [errMsg, setErrMsg] = useState("")
   const [success, setSuccess] = useState(false)
+  const [cat, setCat] = useState("");
   // const  upload = useUploadImage()
 
   // useEffect(() => {
@@ -66,7 +69,8 @@ export default function CreatePost() {
           title: title, 
           description: description,
           image: file? imgURL : "",
-          date : moment(Date.now()).format("YYYY-MM-DD hh:mm:ss")
+          date : moment(Date.now()).format("YYYY-MM-DD hh:mm:ss"),
+          category: cat
         }),
         {
             withCredentials: true
@@ -78,11 +82,12 @@ export default function CreatePost() {
         setTitle("")
         setDescription("")
         setImage(null)
+        setCat("")
         setSuccess(true)
         // window.location.replace("/post/" + response.data[0].post_id);
     } catch (error) {
       console.log(error)
-      // errRef.current.focus();
+      errRef.current.focus();
     } 
 
   }
@@ -93,18 +98,17 @@ export default function CreatePost() {
     <>
     <header><TopBar /></header>
     { success ? ( 
-      
       window.location.replace(`/post/${postID}`)
     ):(
-   
-    
-    <section>
-    
       
+    
+      <section className='blog container my-5'>
+        <div className="row">
       <p ref={(errRef)}  className={errMsg ? "errmsg": "offscreen"}>{errMsg}</p>
-        <div className='write'>
+        <div className='post col-lg-8 col-md-8 col-12 col-xl-8 col-xxl-8'>
+          <div className="writeWrapper">
         {file && (
-        <img className="writeImg" src={URL.createObjectURL(file)} alt="" />)}
+        <img className="singlePostImg" src={URL.createObjectURL(file)} alt="" />)}
           <form onSubmit={handleSubmit} className="writeForm">
           <div className="writeFormGroup">
           <label htmlFor="fileInput"> 
@@ -147,7 +151,11 @@ export default function CreatePost() {
             <button type="submit" className="writeSubmit btn btn-outline-dark">Publish</button>
 
         </form>
-        
+        </div>
+        </div>
+        <div className='col-lg-4 col-md-4 col-12 col-xl-4 col-xxl-4'>
+           <MenuBar setCat={setCat} cat={cat} />
+        </div>
       </div>
       </section>
     

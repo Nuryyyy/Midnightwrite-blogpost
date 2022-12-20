@@ -1,6 +1,10 @@
 .singlePost {
     flex: 9;
   }
+
+  .singlePost .a{
+    text-decoration: none;
+  }
   
   .singlePostWrapper {
     padding: 20px;
@@ -19,13 +23,13 @@
   .singlePostTitle {
     text-align: center;
     margin: 10px;
-    font-family: "Lora", serif;
+    font-family: "tisasans_header";
     font-size: 28px;
   }
   
   .singlePostTitleInput {
     margin: 10px;
-    font-family: "Lora", serif;
+    font-family: "tisasans_header";
     font-size: 28px;
     text-align: center;
     border: none;
@@ -48,11 +52,11 @@
   }
   
   .singlePostIcon:first-child {
-    color: teal;
+    color: #363062;
   }
   
   .singlePostIcon:last-child {
-    color: tomato;
+    color: red;
   }
   
   .singlePostInfo {
@@ -60,8 +64,8 @@
     display: flex;
     justify-content: space-between;
     font-size: 16px;
-    font-family: "Varela Round", sans-serif;
-    color: #b39656;
+    font-family: "tisasans_title";
+    color: #363062;
   }
   
   .singlePostDesc {
@@ -99,12 +103,23 @@
   }
 
 
-
+.link {
+  list-style-type: none;
+  text-decoration: none;
+  color: #363062;
+}
 
  /* Createpost */
  .write {
-  padding-top: 50px;
+  /* padding-top: 50px; */
+  flex: 9;
   
+}
+.writeWrapper {
+  padding: 20px;
+  padding-right: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .writeImg {
@@ -121,7 +136,7 @@
 }
 
 .writeFormGroup {
-  margin-left: 150px;
+  margin-left: 0px;
   display: flex;
   align-items: center;
 }

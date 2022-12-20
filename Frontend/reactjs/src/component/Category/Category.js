@@ -4,28 +4,29 @@ import AllPost from '../Post/AllPost'
 import Sidebar from '../LayoutBar/Sidebar'
 import Footer from '../LayoutBar/Footer'
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
-import './Home.css'
+import '../Home/Home.css'
 import SearchBar from '../Search/SearchBar'
 import ListSearch from '../Search/ListSearch'
 import { useLocation } from 'react-router-dom'
-function Home() {
+
+function Category() {
   const [posts, setPosts] = useState([])
   const [searchResults, setSearchResults] = useState([])
   const axiosPrivate = useAxiosPrivate()
 
-  const location = useLocation()
-  console.log(location)
+  const category = useLocation().search
+   
   useEffect(() => {
     const getPosts  = async () => {
       
-        const response = await axiosPrivate.get("/post/allpost", {withCredentials: true})
+        const response = await axiosPrivate.get(`/post/allpost${category}`, {withCredentials: true})
         // console.log("allposts:", response.data)
         setPosts(response?.data)
         // console.log(response?.data)
         setSearchResults(response?.data)
     }
     getPosts()
-  },[])
+  },[category])
   return (
     <>
     <header>
@@ -63,4 +64,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Category

@@ -4,9 +4,12 @@ import { NavLink } from 'react-router-dom'
 import logo from '../images/logo_white.png'
 import { AuthContext } from '../../context/AuthProvider';
 import SearchBar from '../Search/SearchBar';
+import ListSearch from '../Search/ListSearch';
 
-function TopBar() {
+function TopBar({posts, setSearchResults, searchResults}) {
     const { currentUser } = useContext(AuthContext)
+    // const [searchResults, setSearchResults] = useState([])
+
     // console.log("navbar:", currentUser)
     return (
         <nav id="navbar" className="navbar navbar-expand-lg mb-5" > 
@@ -27,15 +30,9 @@ function TopBar() {
             <li className="nav-item">
               <NavLink className="nav-link" to="/posts/create">Write</NavLink>
             </li>
-            {/* <li className="nav-item">
-              <NavLink className="nav-link" to="/about">About</NavLink>
-            </li> */}
             <li className="nav-item">
               <NavLink className="nav-link" to={`/profile/${currentUser}`}>Profile</NavLink>
             </li>
-            {/* <li className="nav-item">
-              <NavLink className="nav-link" to="/profile">{currentUser?.username}</NavLink> 
-            </li> */}
           </ul>
           {/* search option */}
           {/* <form className="d-flex" role="search">
@@ -48,8 +45,8 @@ function TopBar() {
           <button className="btn btn-outline-success" type="submit">Search</button>
           </form> */}
 
-          <SearchBar />
-
+          <SearchBar posts={posts} setSearchResults={setSearchResults} />
+          {/* <ListSearch searchResults={searchResults} /> */}
           {/* social media */}
           {/* <ul className="navbar-nav ml-auto">
             <div className='row'>

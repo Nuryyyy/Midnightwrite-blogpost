@@ -19,9 +19,10 @@ function SinglePost() {
   const [description, setDescription] = useState("");
   const [updateMode, setUpdateMode] = useState(false);
   const PF = "http://localhost:8000/upload/";
-  // const [ username, setUsername ] = useState("")
-  // const [ userid, setUserid ] = useState("")
- 
+  const [ usersData, setUsersData ] = useState("")
+  const [ userid, setUserid ] = useState("")
+  
+  console.log(location)
   useEffect(() => {
     const getPost = async () => {
       const res = await axiosPrivate.get("/post/" + path);
@@ -29,6 +30,7 @@ function SinglePost() {
       setPost(res.data[0]);
       setTitle(res.data[0].title);
       setDescription(res.data[0].description);
+      setUserid(res.data[0].user_id)
 
     };
     
@@ -53,9 +55,15 @@ function SinglePost() {
         // datepost: new Date.now()
       });
       setUpdateMode(false)
+      window.location.reload()
     } catch (err) {}
   };
 
+
+  const getText = (html) =>{
+    const doc = new DOMParser().parseFromString(html, "text/html")
+    return doc.body.textContent
+  }
   return (
     
     <>
@@ -79,7 +87,7 @@ function SinglePost() {
         ) : (
           <h1 className="singlePostTitle">
             {post.title}
-            {post.username === currentUser && (
+            {post.user_id === userID && (
               
               <div className="singlePostEdit">
                 <i
@@ -98,12 +106,17 @@ function SinglePost() {
           <span className="singlePostAuthor">
             Author:
             <Link to={`/profile/${post.username}`} className="link">
-              <b> {post.username}</b>
+              <b> {post.user_id === userID ? (currentUser) : (post.username)}</b>
             </Link>
+            <p className="text-muted">Category: 
+            <Link to={`/post/allpost?category=${post.category}`} className="link">
+              <b className="text-muted"> {post.category}</b>
+            </Link></p>
+            
           </span>
           <span className="singlePostDate" >
-            {/* {new Date(post.datepost).toDateString()} */}
-            <p>Posted {moment(post.datepost).fromNow()}</p>
+            {/* <p>{new Date(post.datepost).fromNow()}</p> */}
+            {post.datepost ? (<p>Posted {moment(post.datepost).fromNow()}</p>) : ("") }
           </span>
         </div>
         {updateMode ? (
@@ -113,13 +126,14 @@ function SinglePost() {
             onChange={(e) => setDescription(e.target.value)}
           />
         ) : (
-          <p className="singlePostDesc">{post.description}</p>
+          <p className="singlePostDesc">{getText(post.description)}</p>
         )}
         {updateMode && (
           <button className="singlePostButton" onClick={handleUpdate}>
             Update
           </button>
         )}
+        
       </div>
      </div>
      <div className='sidebar col-lg-4 col-md-4 col-12 col-xl-4 col-xxl-4'>
@@ -127,7 +141,6 @@ function SinglePost() {
       </div>
     </div>
     <Comment postid={post.post_id}/>
-    {/* <ShowComment postID={post.post_id} /> */}
     </section>
 
     </>

@@ -111,8 +111,7 @@ export default function Register() {
   return (
     <>
     { success ? (
-     <Navigate to={`/profile/${currentUser}`} />
-     
+      window.location.replace(`/profile/${currentUser}`)
     ) 
     : (
 
@@ -221,9 +220,10 @@ export default function Register() {
           /> 
            <label htmlFor="password" data-error="wrong" data-success="right">Password:</label>
           </div>
-          <div class="modal-footer d-flex justify-content-end"></div>
+          <div class="modal-footer d-flex justify-content-end">
           <button type="submit" id="btnOption" className="btn btn-primary">Sign Up</button>
           {errMsg && <p>{errMsg}</p>}
+          </div>
         </form>
         <div className='persistCheck'>
           <input

@@ -56,35 +56,35 @@ const Sidebar = () => {
         
     </div>
     <div className="sidebarItem">
-    <span className="sidebarTitle"><h4>CATEGORIES</h4></span>
+    <span className="sidebarTitle">CATEGORIES</span>
       <ul className="sidebarList">
         <li className="sidebarListItem">
-          <Link className="link" to="/posts?cat=Life">
+          <Link className="link" to="/post/allpost?category=life">
             Life
           </Link>
         </li>
         <li className="sidebarListItem">
-          <Link className="link" to="/posts?cat=Music">
+          <Link className="link" to="/post/allpost?category=music">
             Music
           </Link>
         </li>
         <li className="sidebarListItem">
-          <Link className="link" to="/posts?cat=Sport">
-            Sport
+          <Link className="link" to="/post/allpost?category=science">
+            Science
           </Link>
         </li>
         <li className="sidebarListItem">
-          <Link className="link" to="/posts?cat=Style">
-            Style
+          <Link className="link" to="/post/allpost?category=art">
+            Art
           </Link>
         </li>
         <li className="sidebarListItem">
-          <Link className="link" to="/posts?cat=Tech">
+          <Link className="link" to="/post/allpost?category=technology">
             Tech
           </Link>
         </li>
         <li className="sidebarListItem">
-          <Link className="link" to="/posts?cat=Cinema">
+          <Link className="link" to="/post/allpost?category=cinema">
             Cinema
           </Link>
         </li>

@@ -48,7 +48,7 @@ const AboutMe = () => {
             <div className="modal-body mx-1">
             <form>
                 <div className="form-group">
-                <label htmlFor="description"><h6 className="modal-title mb-2"  id="modal-title">Tell us something about yourself.</h6></label>
+                <label htmlFor="description"><h3 className="modal-title mb-2"  id="modal-title">Tell us something about yourself.</h3></label>
                 <textarea className="form-control" id="description" rows="3"
                 value={description}
                 onChange={(e)=>setDescription(e.target.value)}

@@ -3,14 +3,21 @@ import { Link } from 'react-router-dom';
 import axios from '../../api/axios'
 
 const Post = ({post}) => {
+  
   const PF = "http://localhost:8000/upload/";
+
+  //to elminate problem with displaying 
+  const getText = (html) =>{
+    const doc = new DOMParser().parseFromString(html, "text/html")
+    return doc.body.textContent
+  }
   return (
    
-    <div ><article>
+    <article>
     {post.image && <img className="img-fluid pb-3" src={PF + post.image} alt="" />}
     <h3>{post.title}</h3>
     <p className="text-secondary">{new Date(post.datepost).toDateString()}</p>
-    <p>{post.description.substring(0, 200)+'....'}
+    <p>{getText(post.description.substring(0, 200)+'....')}
     <a href={`/post/${post.post_id}`}>read more</a>
     </p>
 
@@ -29,7 +36,7 @@ const Post = ({post}) => {
     </div> */}
 
 </article>
-  </div>
+  
  
   )
 }

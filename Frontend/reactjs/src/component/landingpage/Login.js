@@ -153,9 +153,11 @@ import logo from '../images/logo_violet.png'
           <label htmlFor="password" data-error="wrong" data-success="right">Password:</label>
       </div>
 
-      <div className="modal-footer d-flex justify-content-end" ></div>
+      <div className="modal-footer d-flex justify-content-end m-0" >
           <button data-target="#login" type="submit" id="btnOption" className="btn btn-primary">Sign In</button>
           {err && <p>{err}</p>}
+         
+        </div>
         </form>
         <div className='persistCheck'>
           <input
@@ -164,8 +166,8 @@ import logo from '../images/logo_violet.png'
           onChange={togglePersist}
           checked={persist}
           />
-          <label htmlFor="persist">Trust this device!</label>
-        </div>
+          <label htmlFor="persist" className=''>Trust this device!</label>
+          </div>
             <a href="">Forgot password?</a>
       </div>
       </div>

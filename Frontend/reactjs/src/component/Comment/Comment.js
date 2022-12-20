@@ -33,7 +33,7 @@ function Comment({postid}) {
 
         }
         getData()
-    },[currentUser])
+    },[])
 
 
     const handleSubmit = async(e) => {
