@@ -69,6 +69,7 @@ useEffect(() => {
     setlastname(res.data.lastname)
     setEmail(res.data.email)
     setDescription(res.data?.aboutme)
+    
   }
   profile()
 },[currentUser])
@@ -98,7 +99,7 @@ useEffect(() => {
         })
         console.log(JSON.stringify(response?.data))
         console.log("Updated!")
-        setCurrentUser(response.data.username)
+        setCurrentUser(response.data?.username)
         setSuccess(true)
 
         //clear input fields

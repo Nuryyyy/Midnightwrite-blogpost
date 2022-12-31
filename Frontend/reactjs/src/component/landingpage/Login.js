@@ -153,8 +153,8 @@ import logo from '../images/logo_violet.png'
           <label htmlFor="password" data-error="wrong" data-success="right">Password:</label>
       </div>
 
-      <div className="modal-footer d-flex justify-content-end m-0" >
-          <button data-target="#login" type="submit" id="btnOption" className="btn btn-primary">Sign In</button>
+      <div className="modal-footer justify-content-between" >
+          <button data-target="#login" type="submit" id="btnOption" className="btn btn-primary btn-login">Sign In</button>
           {err && <p>{err}</p>}
          
         </div>
@@ -166,9 +166,9 @@ import logo from '../images/logo_violet.png'
           onChange={togglePersist}
           checked={persist}
           />
-          <label htmlFor="persist" className=''>Trust this device!</label>
+          <label htmlFor="persist" className=''><p className="m-1">Trust this device!</p> </label>
           </div>
-            <a href="">Forgot password?</a>
+            {/* <a href="">Forgot password?</a> */}
       </div>
       </div>
       </div>

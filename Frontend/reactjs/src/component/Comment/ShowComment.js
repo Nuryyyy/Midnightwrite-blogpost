@@ -19,7 +19,7 @@ function ShowComment({postID}) {
         const getComment = async () =>{
             try {
                 const response = await axiosPrivate.get(`/comment/${postID}`)
-                setComments(response?.data)
+                setComments(response.data)
                 console.log("comment:", response.data)
                 // setSuccess(true)
 

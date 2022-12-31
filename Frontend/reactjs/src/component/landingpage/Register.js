@@ -220,8 +220,8 @@ export default function Register() {
           /> 
            <label htmlFor="password" data-error="wrong" data-success="right">Password:</label>
           </div>
-          <div class="modal-footer d-flex justify-content-end">
-          <button type="submit" id="btnOption" className="btn btn-primary">Sign Up</button>
+          <div class="modal-footer justify-content-between">
+          <button data-target="#register" type="submit" id="btnOption" className="btn btn-primary btn-register ">Sign Up</button>
           {errMsg && <p>{errMsg}</p>}
           </div>
         </form>
@@ -232,7 +232,7 @@ export default function Register() {
           onChange={togglePersist}
           checked={persist}
           />
-          <label htmlFor="persist">Trust this device!</label>
+          <label htmlFor="persist" className='persist'><p className="m-1">Trust this device!</p></label>
         </div>
         </div>
         </div>
