@@ -5,6 +5,9 @@
     align-items: center;
 }
 
+
+  
+
 .col-7 {
     background-color: var(--c-brand);
     color: var(--c-light);
@@ -58,7 +61,7 @@
 }
 
 #content {
-    /* padding-top: 20%; */
+    padding-top: 20%;
     font-family: "tisasans_title";
     color: var(--c-brand)
 }

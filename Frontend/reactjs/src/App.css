@@ -33,15 +33,28 @@
 
 /* GLOBAL */
 
-*{
+* {
   margin: 0;
   padding: 0;
+  outline: none;
+  border: none;
   box-sizing: border-box;
 }
+
+html {
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  margin-top: -20px;
+}
+
 
 h1{
   font-size: 6.5vw;
   font-family: 'tisasans_header';
+  /* margin: 0; */
+  /* margin-top: 0; */
+  
 }
 
 h3{
@@ -90,8 +103,17 @@ hr{
 /* body section */
 body{
   font-family: 'tisasans_body';
+  /* margin:0;
+  padding:0;
+  height:100%;
+  width:100%; */
 }
 
+header{
+  margin: 0px;
+  padding: 0px;
+  overflow: auto;
+}
 
 header .intro {
   position: relative;

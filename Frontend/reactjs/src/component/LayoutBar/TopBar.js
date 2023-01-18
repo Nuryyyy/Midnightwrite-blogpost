@@ -34,36 +34,9 @@ function TopBar({posts, setSearchResults, searchResults}) {
               <NavLink className="nav-link" to={`/profile/${currentUser}`}>Profile</NavLink>
             </li>
           </ul>
-          {/* search option */}
-          {/* <form className="d-flex" role="search">
-          <input className="form-control me-2 col-md-1 col-2 col-1" 
-            type="text" 
-            placeholder="Search" 
-            aria-label="Search" 
-            id="search"
-            onChange={handleSearchChange}/>
-          <button className="btn btn-outline-success" type="submit">Search</button>
-          </form> */}
-
+         
           <SearchBar posts={posts} setSearchResults={setSearchResults} />
-          {/* <ListSearch searchResults={searchResults} /> */}
-          {/* social media */}
-          {/* <ul className="navbar-nav ml-auto">
-            <div className='row'>
-            <li className="nav-item col-2 col-md-1 col-1">
-            <i className="fa-brands fa-facebook px-2" aria-hidden="true"></i>
-            </li>
-            <li className="nav-item col-2 col-md-1 col-1">
-            <i className="fa-brands fa-instagram px-2" aria-hidden="true"></i>
-            </li >
-            <li className="nav-item col-2 col-md-1 col-1">
-            <i className="fa-brands fa-twitter px-2" aria-hidden="true"></i>
-            </li >
-            <li className="nav-item col-2 col-md-1 col-1">
-            <i className="fa-brands fa-pinterest px-2" aria-hidden="true"></i>
-            </li>
-            </div>
-          </ul> */}
+
         </div>
       </div>
     </nav>

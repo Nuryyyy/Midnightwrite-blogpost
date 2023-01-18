@@ -14,7 +14,6 @@ import SinglePost from './component/Post/SinglePost'
 import AllPostsByUser from './component/Post/AllPostsByUser';
 import ShowComment from './component/Comment/ShowComment';
 
-import Write from './component/Post/CreatePost_v2';
 import Category from './component/Category/Category';
 
 //add footer.js
