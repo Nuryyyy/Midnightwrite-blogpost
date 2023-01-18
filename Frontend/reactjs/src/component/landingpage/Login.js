@@ -28,7 +28,7 @@ import logo from '../images/logo_violet.png'
   const [success, setSuccess] = useState(false)
 
   //option 2 for err
-  const [err, setErr] =  useState(null)
+  // const [err, setErr] =  useState(null)
 
   const capitalized = str => str.charAt(0).toUpperCase() + str.slice(1)
 
@@ -71,17 +71,18 @@ import logo from '../images/logo_violet.png'
 
         //clear input fields
     } catch (error) {
-      if (!err?.response) {
+      if (!error?.response) {
         // setErrMsg('No Server Response');
-        setErr('No Server Response');
-    } else if (err.response?.status === 401) {
+        setErrMsg('No Server Response');
+    } else if (error.response?.status === 401) {
         // setErrMsg('Username Taken');
-        setErr('Wrong password or username');
+        setErrMsg('Wrong password or username');
     } else {
         // setErrMsg('Registration Failed')
-        setErr('Login Failed')
+        setErrMsg('Login Failed')
     }
       errRef.current.focus();
+
     } 
 
   }
@@ -155,7 +156,7 @@ import logo from '../images/logo_violet.png'
 
       <div className="modal-footer justify-content-between" >
           <button data-target="#login" type="submit" id="btnOption" className="btn btn-primary btn-login">Sign In</button>
-          {err && <p>{err}</p>}
+          {errMsg && <p>{errMsg}</p>}
          
         </div>
         </form>
