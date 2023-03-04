@@ -1,10 +1,10 @@
 import React, {useState, useRef, useEffect, useContext} from 'react';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../hooks/useAuth';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
-import axios from '../../api/axios';
-import { AuthContext } from '../../context/AuthProvider';
-import './landingpage.css'
-import logo from '../images/logo_violet.png'
+import axios from '../api/axios';
+import { AuthContext } from '../context/AuthProvider';
+import '../page/style/landingpage.css'
+import logo from '../assets/logo_violet.png'
 
   const login_url = '/login' 
   

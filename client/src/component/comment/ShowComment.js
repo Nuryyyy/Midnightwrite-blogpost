@@ -1,7 +1,6 @@
 import './Comment.css'
-import React, {useState, useContext, useEffect, useRef } from 'react';
+import React, {useState, useEffect } from 'react';
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
-import { AuthContext } from "../../context/AuthProvider"
 import moment from "moment"
 
 function ShowComment({postID}) {

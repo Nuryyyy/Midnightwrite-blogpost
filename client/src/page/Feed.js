@@ -1,5 +1,5 @@
 import React from 'react'
-import SinglePost from '../Post/SinglePost'
+import SinglePost from '../component/post/SinglePost'
 
 const Feed = ({posts}) => {
   return (

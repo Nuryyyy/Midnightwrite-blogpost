@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import TopBar from '../LayoutBar/TopBar'
-import AllPost from '../Post/AllPost'
-import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
-import Sidebar from '../LayoutBar/Sidebar'
-import '../Home/Home.css'
-import Footer from '../LayoutBar/Footer'
+import TopBar from '../component/navbars/TopBar'
+import AllPost from '../component/post/AllPost'
+import { useAxiosPrivate } from '../hooks/useAxiosPrivate'
+import Sidebar from '../component/navbars/Sidebar'
+import './style/Home.css'
+import Footer from '../component/navbars/Footer'
 
 const AllPostsByUser = () => {
 

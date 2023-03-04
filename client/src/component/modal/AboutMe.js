@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react'
-import logo from '../../component/images/logo_violet.png'
+import React, {useState} from 'react'
+import logo from '../../assets/logo_violet.png'
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
 
 const AboutMe = () => {

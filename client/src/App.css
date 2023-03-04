@@ -2,21 +2,21 @@
 /* Font for header */
 @font-face { 
   font-family: 'tisasans_header';
-  src: url('./bootstrap_design/fonts/header_TisaSansPro-BlackItalic.woff'); 
+  src: url('./assets/bootstrap_design/fonts/header_TisaSansPro-BlackItalic.woff')
   /* font-weight: normal;
   font-style: normal; */
 }
 /* title font */
 @font-face {
   font-family: 'tisasans_title';
-  src: url('./bootstrap_design/fonts/title_TisaSansPro-Bold.woff'); 
+  src: url('./assets/bootstrap_design//fonts/title_TisaSansPro-Bold.woff'); 
   
 }
 
 /* body font */
 @font-face {
   font-family: 'tisasans_body';
-  src: url('./bootstrap_design/fonts/body_TisaSansPro-Regular.woff'); 
+  src: url('./assets/bootstrap_design/fonts/body_TisaSansPro-Regular.woff'); 
 }
 /* end of imported fonts */
 

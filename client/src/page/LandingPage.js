@@ -1,8 +1,8 @@
 import React from 'react';
-import './landingpage.css'
-import Register from './Register';
-import Login from './Login';
-import logo from '../images/logo_white.png'
+import './style/landingpage.css'
+import Register from '../component/Register';
+import Login from '../component/Login';
+import logo from '../assets/logo_white.png'
 
 
 export default function LandingPage() {

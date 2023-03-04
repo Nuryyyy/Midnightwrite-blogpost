@@ -1,18 +1,17 @@
 import ReactDOM from 'react-dom'
 import { useState, useEffect, useContext } from "react"
-import { useAxiosPrivate } from "../../hooks/useAxiosPrivate"
-import TopBar from "../LayoutBar/TopBar"
-import useLogout from "../../hooks/useLogout.js"
+import { useAxiosPrivate } from "../hooks/useAxiosPrivate"
+import TopBar from "../component/navbars/TopBar"
+import useLogout from "../hooks/useLogout.js"
 import { useNavigate, Link, useLocation } from "react-router-dom"
-import { AuthContext } from "../../context/AuthProvider"
-import useDeleteAccount from "../../hooks/useDeleteAccount"
-import './ViewAccount.css'
-import UseUploadImage from '../../hooks/useUploadImage.js'
-import AboutMe from '../Modal/AboutMe'
-import SeeAllPost from '../Post/SeeAllPost'
-import Message from '../Modal/Message'
-
-import '../../App.css'
+import { AuthContext } from "../context/AuthProvider"
+import useDeleteAccount from "../hooks/useDeleteAccount"
+import './style/ViewAccount.css'
+import UseUploadImage from '../hooks/useUploadImage.js'
+import AboutMe from '../component/modal/AboutMe'
+import SeeAllPost from '../component/post/SeeAllPost'
+import Message from '../component/modal/Message'
+import '../App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera, faCameraRetro, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import {faMessage} from '@fortawesome/free-regular-svg-icons'

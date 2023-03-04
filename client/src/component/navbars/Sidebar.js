@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { useRouteLoaderData } from 'react-router-dom'
 import { AuthContext } from "../../context/AuthProvider"
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
 import { useLocation, Link } from 'react-router-dom'

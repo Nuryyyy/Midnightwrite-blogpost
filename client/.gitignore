@@ -1,8 +1,8 @@
 #dependecies
 /node_modules
 
-//extrapage
-/src/page/Home.js
+#extrapage
 /src/component/Users.js
 /src/component/navbars/Navbar.js
+/src/component/navbars/SearchBar.js
 App_v2.css

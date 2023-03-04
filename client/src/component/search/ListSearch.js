@@ -1,8 +1,6 @@
-import SinglePost from "../Post/SinglePost";
-import Post from "../Post/Post";
-
+import Post from "../post/Post";
 import React from 'react'
-import AllPost from "../Post/AllPost";
+
 
 const ListSearch = ({searchResults, posts}) => {
     // const result = searchResults.map(post => <Post key={post.post_id} post={post} />)

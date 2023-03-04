@@ -1,13 +1,11 @@
 // import React, { useInsertionEffect } from 'react';
 import React from 'react';
 import {useState, useEffect, useRef, useContext } from 'react';
-import { useAxiosPrivate } from "../../hooks/useAxiosPrivate"
-import { useNavigate, Link, useLocation, Navigate } from "react-router-dom"
-import TopBar from "../LayoutBar/TopBar"
-import { AuthContext } from '../../context/AuthProvider';
-import logo from '../images/logo_violet.png'
-
-import axios from '../../api/axios';
+import { useAxiosPrivate } from "../hooks/useAxiosPrivate"
+import { useNavigate, useLocation, Navigate } from "react-router-dom"
+import TopBar from "../component/navbars/TopBar"
+import { AuthContext } from '../context/AuthProvider';
+import logo from '../assets/logo_violet.png'
 
 //Requirements or validation for creating usernmame and pasword
 // const user_REGEX = /^[A-z][A-z0-9-_]{3,23}$/; //4-24char

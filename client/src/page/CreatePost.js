@@ -1,14 +1,13 @@
 import React, {useState, useRef, useEffect } from 'react';
-import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
-import axios from '../../api/axios';
-import TopBar from '../LayoutBar/TopBar';
-import { Navigate, useNavigate, useHistory } from 'react-router-dom';
-import './Posts.css'
+import { useAxiosPrivate } from '../hooks/useAxiosPrivate'
+import axios from '../api/axios';
+import TopBar from '../component/navbars/TopBar'
+import '../component/post/Posts.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus, faCameraRetro, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import MenuBar from '../LayoutBar/MenuBar';
-import './Posts.css'
-import '../LayoutBar/Topbar.css'
+import MenuBar from '../component/navbars/MenuBar'
+import '../component/post/Posts.css'
+import '../component/navbars/Topbar.css'
 
 
 import "react-quill/dist/quill.snow.css";
@@ -23,8 +22,6 @@ export default function CreatePost() {
   const userRef = useRef()
   const errRef = useRef()
 
-  const navigate = useNavigate()
-  
 
 
   const [title, setTitle] = useState("")

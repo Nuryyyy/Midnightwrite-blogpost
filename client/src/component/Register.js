@@ -1,14 +1,12 @@
 // import React, { useInsertionEffect } from 'react';
 import React from 'react';
 import {useState, useEffect, useRef, useContext } from 'react';
-import axios from '../../api/axios';
-import useAuth from '../../hooks/useAuth';
-import { useNavigate, Navigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthProvider';
-
-import { Link } from 'react-router-dom';
-import './landingpage.css'
-import logo from '../images/logo_violet.png'
+import axios from '../api/axios';
+import useAuth from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthProvider';
+import '../page/style/landingpage.css'
+import logo from '../assets/logo_violet.png'
 
 const register_url = '/register' 
 

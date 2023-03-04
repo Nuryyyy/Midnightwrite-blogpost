@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import TopBar from '../LayoutBar/TopBar'
+import TopBar from '../navbars/TopBar'
 import SearchBar from './SearchBar'
 import ListSearch from './ListSearch'
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
-import Sidebar from '../LayoutBar/Sidebar'
-import '../Home/Home.css'
-import Footer from '../LayoutBar/Footer'
+import Sidebar from '../navbars/Sidebar'
+import '../../page/style/Home.css'
+import Footer from '../navbars/Footer'
 
 const ResultPage = () => {
 

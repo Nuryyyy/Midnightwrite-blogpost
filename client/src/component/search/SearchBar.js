@@ -1,7 +1,5 @@
-import React,{useState, useEffect} from 'react'
-import { axiosPrivate } from '../../api/axios'
-import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
-import ListSearch from './ListSearch'
+import React from 'react'
+
 
 function SearchBar({ posts, setSearchResults}) {
 

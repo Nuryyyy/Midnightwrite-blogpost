@@ -1,12 +1,12 @@
-import { useAxiosPrivate } from "../../hooks/useAxiosPrivate"
+import { useAxiosPrivate } from "../hooks/useAxiosPrivate"
 import { Link, useLocation } from "react-router-dom"
-import { AuthContext } from "../../context/AuthProvider"
+import { AuthContext } from "../context/AuthProvider"
 import { useState, useContext, useEffect } from "react"
-import TopBar from "../LayoutBar/TopBar"
-import './Posts.css'
+import TopBar from "../component/navbars/TopBar"
+import '../component/post/Posts.css'
 import moment from "moment"
-import Sidebar from "../LayoutBar/Sidebar"
-import Comment from "../Comment/Comment"
+import Sidebar from "../component/navbars/Sidebar"
+import Comment from "../component/comment/Comment"
 
 
 function SinglePost() {

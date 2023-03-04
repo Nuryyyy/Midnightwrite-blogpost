@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import TopBar from './navbars/TopBar'
-import Sidebar from './navbars/Sidebar'
-import Footer from './navbars/Footer'
+import TopBar from '../component/navbars/TopBar'
+import Sidebar from '../component/navbars/Sidebar'
+import Footer from '../component/navbars/Footer'
 import { useAxiosPrivate } from '../hooks/useAxiosPrivate'
-import '../page/style/Home.css'
-import ListSearch from './search/ListSearch'
+import './style/Home.css'
+import ListSearch from '../component/search/ListSearch'
 import { useLocation } from 'react-router-dom'
 
-function Category() {
+function Home() {
   const [posts, setPosts] = useState([])
   const [searchResults, setSearchResults] = useState([])
   const axiosPrivate = useAxiosPrivate()
-  const category = useLocation().search
-   
+
+  const location = useLocation()
+  console.log(location)
   useEffect(() => {
     const getPosts  = async () => {
       
-        const response = await axiosPrivate.get(`/post/allpost${category}`, {withCredentials: true})
+        const response = await axiosPrivate.get("/post/allpost", {withCredentials: true})
+        // console.log("allposts:", response.data)
         setPosts(response?.data)
+        // console.log(response?.data)
         setSearchResults(response?.data)
     }
     getPosts()
-  },[category])
+  },[])
   return (
     <>
     <header>
@@ -59,4 +62,4 @@ function Category() {
   )
 }
 
-export default Category
+export default Home

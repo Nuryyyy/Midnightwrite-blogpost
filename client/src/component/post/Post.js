@@ -1,6 +1,4 @@
 //post na e display sa home
-import { Link } from 'react-router-dom';
-import axios from '../../api/axios'
 
 const Post = ({post}) => {
   

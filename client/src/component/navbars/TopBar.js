@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom'
-// import './Topbar.css';
-import logo from '../images/logo_white.png'
+import logo from '../../assets/logo_white.png'
 import { AuthContext } from '../../context/AuthProvider';
-import SearchBar from '../Search/SearchBar';
-import ListSearch from '../Search/ListSearch';
+import SearchBar from './SearchBar';
+
 
 function TopBar({posts, setSearchResults, searchResults}) {
     const { currentUser } = useContext(AuthContext)
