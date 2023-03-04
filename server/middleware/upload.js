@@ -3,7 +3,8 @@ import path from "path"
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, '../../Frontend/reactjs/public/upload')
+      // cb(null, '../../Frontend/reactjs/public/upload')
+    cb(null, '../client/public/upload')
     },
     filename: (req, file, cb)  => {
       console.log(file)

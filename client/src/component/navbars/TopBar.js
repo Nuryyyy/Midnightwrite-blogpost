@@ -2,7 +2,9 @@ import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom'
 import logo from '../../assets/logo_white.png'
 import { AuthContext } from '../../context/AuthProvider';
-import SearchBar from './SearchBar';
+// import SearchBar from './SearchBar';
+import SearchBar from '../search/SearchBar';
+
 
 
 function TopBar({posts, setSearchResults, searchResults}) {

@@ -33,7 +33,8 @@ app.use(express.json())
 app.use(cors(corsOptions))
 app.use(cookieParser())  //middleware for cookies
 // app.use(credentials)
-app.use("/upload", express.static("../../Frontend/reactjs/public/upload")); //requestfile
+// app.use("/upload", express.static("../../Frontend/reactjs/public/upload")); 
+app.use("/upload", express.static("../client/public/upload")); //requestfile
 
 //use of routers
 app.use('', userSessionRouter)
