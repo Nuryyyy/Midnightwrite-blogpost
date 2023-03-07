@@ -5,8 +5,12 @@ import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AxiosError } from 'axios';
 import '../page/style/landingpage.css'
 import logo from '../assets/logo_violet.png'
+
 
 const register_url = '/register' 
 
@@ -14,16 +18,19 @@ const register_url = '/register'
 // const user_REGEX = /^[A-z][A-z0-9-_]{3,23}$/; //4-24char
 // const password_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-export default function Register() {
+
+  export default function Register() {
 
   const { setAuth, setCurrentUser, setUserID ,persist, setPersist } = useAuth();
   const navigate = useNavigate()
   const { currentUser } = useContext(AuthContext)
+  
 
     //user input, error reference
   const userRef = useRef()
   const errRef = useRef();
-    
+  
+  const [confirmPassword, setconfirmPassword] = useState("")
   const [firstname, setfirstname] = useState("")
   const [fnFocus, setFnFocus] = useState(false)
 
@@ -55,16 +62,55 @@ export default function Register() {
     userRef.current.focus()
   }, [])
 
-  useEffect(() => {
-    setErrMsg('');
-}, [firstname, lastname, username, email, password])
+    const toastOptions= {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+  }
 
+    const handleValidation = () => {
+
+      if (password !== confirmPassword) {
+        toast.error("Password did not match", toastOptions
+        )
+        return false;
+
+      }
+      else if (password.length < 7) {
+        toast.error("Password should have at least 8 characters", toastOptions)
+        return false
+      }
+      else if (username.length < 4) {
+        toast.error("Username should be greater than 5 characters", toastOptions)
+        return false
+      }
+      else if (email === "") {
+        toast.error("Email is required", toastOptions)
+        return false
+      }
+      else if (firstname === "") {
+        toast.error("Firstname is required", toastOptions)
+        return false
+      }
+      else if (lastname === "") {
+        toast.error("Lastname is required", toastOptions)
+        return false
+      }  
+      else {
+        return true
+      }
+    }
   const handleSubmit = async(e) => {
     e.preventDefault()
-    console.log("handlesumbit")
     
-    try {
-      const response = await axios.post(register_url,
+    if (handleValidation()) {
+      try {
+        const response = await axios.post(register_url,
         JSON.stringify({
           firstname: firstname, 
           lastname: lastname, 
@@ -79,9 +125,7 @@ export default function Register() {
           },
             withCredentials: true
         })
-        console.log(JSON.stringify(response?.data))
         const accessToken = response?.data?.accessToken 
-        console.log("data.AccessToken:", accessToken)
         setAuth({username, password, accessToken})
         setCurrentUser(response.data.username)
         setUserID(response?.data?.user_id)
@@ -89,11 +133,17 @@ export default function Register() {
         setPassword('')
         setSuccess(true)
         //clear input fields
-    } catch (error) {
-      console.log(error)
-      errRef.current.focus();
-      setErrMsg(error.response.data)
+
+          } catch (error) {
+        if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.msg || "Invalid credentials", toastOptions)
+      } else {
+        toast.error(error.message, toastOptions)
+      }
     } 
+    }
+    
+
 
 
   }
@@ -218,11 +268,26 @@ export default function Register() {
           /> 
            <label htmlFor="password" data-error="wrong" data-success="right">Password:</label>
           </div>
+                    
+          <div class="md-form form-floating mb-3">
+          <input 
+          className='form-control validate'
+          placeholder='Confirm Password'
+          type="password" 
+          id="confirmPassword" 
+          value={confirmPassword} 
+          onChange={(e)=>setconfirmPassword(e.target.value)} 
+          onFocus={() => setPwFocus(true)}
+          onBlur={() => setPwFocus(false)}
+          />
+          <label htmlFor="confirmPassword" data-error="wrong" data-success="right">Confirm Password:</label>            
+          </div>
           <div class="modal-footer justify-content-between">
           <button data-target="#register" type="submit" id="btnOption" className="btn btn-primary btn-register ">Sign Up</button>
           {errMsg && <p>{errMsg}</p>}
           </div>
-        </form>
+                  </form>
+          <ToastContainer />
         <div className='persistCheck'>
           <input
           type="checkbox"
@@ -240,5 +305,5 @@ export default function Register() {
     )}
     </>
 
-  )
+   )
 }

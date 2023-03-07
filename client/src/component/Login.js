@@ -5,6 +5,9 @@ import axios from '../api/axios';
 import { AuthContext } from '../context/AuthProvider';
 import '../page/style/landingpage.css'
 import logo from '../assets/logo_violet.png'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AxiosError } from 'axios';
 
   const login_url = '/login' 
   
@@ -36,16 +39,46 @@ import logo from '../assets/logo_violet.png'
     userRef.current.focus()
   },[])
 
-  useEffect(() => {
-    setErrMsg('')
-  }, [username, password])
+  // useEffect(() => {
+  //   setErrMsg('')
+  // }, [username, password])
+    
+  const toastOptions= {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+  }
 
+  
+    const handleValidation = () => {
+
+      if (password === "") {
+          toast.error("Username and Password is required", toastOptions)
+          return false
+      }
+      else if (username.length === "") {
+          toast.error("Username and Password is required", toastOptions)
+          return false
+      }
+      
+      else {
+          return true 
+      }
+      
+      
+      
+  }
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    console.log("handlesumbit")
-
-    try {
+    
+    if (handleValidation()) {
+      try {
       const response = await axios.post(login_url,
         JSON.stringify({
           username, 
@@ -71,19 +104,16 @@ import logo from '../assets/logo_violet.png'
 
         //clear input fields
     } catch (error) {
-      if (!error?.response) {
-        // setErrMsg('No Server Response');
-        setErrMsg('No Server Response');
-    } else if (error.response?.status === 401) {
-        // setErrMsg('Username Taken');
-        setErrMsg('Wrong password or username');
-    } else {
-        // setErrMsg('Registration Failed')
-        setErrMsg('Login Failed')
-    }
-      errRef.current.focus();
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.msg || "Invalid credentials", toastOptions)
+      } else {
+        toast.error(error.message, toastOptions)
+      }
 
     } 
+    }
+
+    
 
   }
 
@@ -174,7 +204,7 @@ import logo from '../assets/logo_violet.png'
       </div>
       </div>
       
-      
+       <ToastContainer />
     </section>
     )}
     </>

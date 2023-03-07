@@ -15,7 +15,7 @@ export const trialRegister = (req,res) => {
 
 
 // create account for new user
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
     try {
         //take the username and password from the req.body
         const {
@@ -29,9 +29,14 @@ export const register = async (req, res) => {
 
         //Check if the user is already existing
         const user = await pool.query(`SELECT * FROM public.user_info WHERE username = $1`, [username])
+        const useremail = await pool.query(`SELECT * FROM public.user_info WHERE username = $1`, [email])
 
         if (user.rows.length > 0) {
-            res.status(401).send("Username is already taken")
+            res.status(401).json({msg: "Username is already taken"})
+        }
+
+         if (useremail.rows.length > 0) {
+            res.status(401).json({msg: "Email already in use"})
         }
 
         //Setup Bcrypt for password hashing
@@ -71,17 +76,14 @@ export const register = async (req, res) => {
         console.log("success register")
         
     } catch (error) {
-        console.error(error.message);
-        res.status(500).send({
-            msg: "Unauthenticated"
-        });
+        next(error)
     }
 
 }
 
 
 //login user
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
         try {
 
         //take the username and password from the req.body
@@ -95,14 +97,14 @@ export const login = async (req, res) => {
 
         if (user.rows.length <= 0) {
             console.log("failed login")
-            return res.status(401).send({error: "User does not exists"})
+            return res.status(401).json({msg: "User does not exists"})
         }
 
         //Check if the password matches using bcrypt
         const validPassword = await bcrypt.compare(password, user.rows[0].password)
         if (!validPassword) {
             console.log("failed login")
-            return res.status(401).send({error: "Password is incorrect."})
+            return res.status(401).json({msg: "Password is incorrect."})
             
         }
     
@@ -127,10 +129,7 @@ export const login = async (req, res) => {
         console.log("success login")
 
     } catch (error) {
-        console.error(error.message);
-        res.status(500).send({
-            msg: "Unauthenticated"
-        });
+        next(error)
     }
 }
 

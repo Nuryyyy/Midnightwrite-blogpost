@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { ToastContainer } from 'react-toastify'
 import logo from '../../assets/logo_violet.png'
 import { useAxiosPrivate } from '../../hooks/useAxiosPrivate'
 
@@ -58,6 +59,7 @@ const AboutMe = () => {
             <button type="submit" className="btn btn-primary btn-sm" onClick={handleSubmit}>Save</button>
             </div>
             </form>
+            <ToastContainer />
             
             </div>
             
