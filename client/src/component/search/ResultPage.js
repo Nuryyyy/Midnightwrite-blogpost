@@ -17,7 +17,6 @@ const ResultPage = () => {
         const getPosts  = async () => {
           
             const response = await axiosPrivate.get("/post/allpost", {withCredentials: true})
-            // console.log("allposts:", response.data)
             setPosts(response?.data)
             setSearchResults(response?.data)
             

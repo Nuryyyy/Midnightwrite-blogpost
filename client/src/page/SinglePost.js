@@ -22,11 +22,9 @@ function SinglePost() {
   const [ usersData, setUsersData ] = useState("")
   const [ userid, setUserid ] = useState("")
   
-  console.log(location)
   useEffect(() => {
     const getPost = async () => {
       const res = await axiosPrivate.get("/post/" + path);
-      console.log("path:", path)
       setPost(res.data[0]);
       setTitle(res.data[0].title);
       setDescription(res.data[0].description);

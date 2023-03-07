@@ -14,13 +14,13 @@ const AllPostsByUser = () => {
 
     const location = useLocation()
     const username = location.pathname.split("/")[3]
-    console.log(username)
+
 
     useEffect(() => {
         const getAllPost =  async () => {
             const response = await axiosPrivate.get(`/post/allpost/${username}`,
             {withCredentials: true })
-            // console.log("userposts", response.data)
+    
             setPosts(response.data)
         }
 

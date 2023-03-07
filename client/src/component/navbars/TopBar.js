@@ -9,9 +9,6 @@ import SearchBar from '../search/SearchBar';
 
 function TopBar({posts, setSearchResults, searchResults}) {
     const { currentUser } = useContext(AuthContext)
-    // const [searchResults, setSearchResults] = useState([])
-
-    // console.log("navbar:", currentUser)
     return (
         <nav id="navbar" className="navbar navbar-expand-lg mb-5" > 
          <div className="container">

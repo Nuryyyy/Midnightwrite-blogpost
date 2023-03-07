@@ -38,7 +38,6 @@ function Comment({postid}) {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        console.log("handlesubmit")
         try {
            const response = await axiosPrivate.post('/comment',
            JSON.stringify({
@@ -51,8 +50,6 @@ function Comment({postid}) {
             withCredentials: true
             }
            )
-           console.log(response?.data)
-           console.log("postid:",postid)
            setComment("")
            setSuccess(true)
         

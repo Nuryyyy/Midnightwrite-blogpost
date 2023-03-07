@@ -48,7 +48,6 @@ export default function CreatePost() {
       const formData = new FormData();
       formData.append("image", file);
       const res = await axios.post("/upload", formData)
-      console.log("resdata:", res.data)
       return res.data;
     } catch (err) {
       console.log(err);
@@ -58,7 +57,6 @@ export default function CreatePost() {
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    console.log("handlesubmit")
     const imgURL = await upload()
     try {
       const response = await axiosPrivate.post(createpost_url,
@@ -72,10 +70,7 @@ export default function CreatePost() {
         {
             withCredentials: true
         })
-        // console.log(JSON.stringify(response.data))
         setPostID(response.data.post_id)
-        console.log(response.date)
-        // console.log("postid:", response.data.post_id)
         setTitle("")
         setDescription("")
         setImage(null)

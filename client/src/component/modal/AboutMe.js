@@ -23,8 +23,7 @@ const AboutMe = () => {
                 },
                   withCredentials: true
             })
-            console.log(JSON.stringify(response?.data))
-            console.log("updated description")
+
             // setDescription(response.data.aboutme)
             setSuccess(true)
         } catch (error) {
@@ -59,7 +58,7 @@ const AboutMe = () => {
             <button type="submit" className="btn btn-primary btn-sm" onClick={handleSubmit}>Save</button>
             </div>
             </form>
-            <ToastContainer />
+           
             
             </div>
             

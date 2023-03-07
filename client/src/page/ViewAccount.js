@@ -44,7 +44,6 @@ function ViewAccount() {
           signal: controller.signal
         }
         )
-        console.log(response.data)
         isMounted && setUsersData(response.data)
       } catch (error) {
         console.log(error)

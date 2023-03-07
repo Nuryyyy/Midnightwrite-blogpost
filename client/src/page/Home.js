@@ -13,14 +13,11 @@ function Home() {
   const axiosPrivate = useAxiosPrivate()
 
   const location = useLocation()
-  console.log(location)
   useEffect(() => {
     const getPosts  = async () => {
       
         const response = await axiosPrivate.get("/post/allpost", {withCredentials: true})
-        // console.log("allposts:", response.data)
         setPosts(response?.data)
-        // console.log(response?.data)
         setSearchResults(response?.data)
     }
     getPosts()

@@ -17,8 +17,7 @@ function UseUploadImage() {
     const formData = new FormData();
     formData.append("image", file);
     const res = await axios.post("/upload", formData)
-    
-    console.log("Resdata:", res) 
+
     return res.data;
 
   } catch (err) {

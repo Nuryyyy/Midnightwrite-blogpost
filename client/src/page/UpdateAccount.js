@@ -62,7 +62,6 @@ export default function UpdateAccount() {
 useEffect(() => {
   const profile = async () => {
     const res = await axiosPrivate.get(`/profile/${currentUser}`)
-    console.log("profile:", res.data)
     setfirstname(res.data.firstname)
     setlastname(res.data.lastname)
     setEmail(res.data.email)
@@ -77,7 +76,6 @@ useEffect(() => {
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    console.log("handlesumbit")
     // const dataProfile = await getProfile()
     try {
       const response = await axiosPrivate.put(`/profile/${userID}/update`,
@@ -95,8 +93,6 @@ useEffect(() => {
           },
             withCredentials: true
         })
-        console.log(JSON.stringify(response?.data))
-        console.log("Updated!")
         setCurrentUser(response.data?.username)
         setSuccess(true)
 

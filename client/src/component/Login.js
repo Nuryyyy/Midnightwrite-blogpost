@@ -90,7 +90,6 @@ import { AxiosError } from 'axios';
             withCredentials: true
           
         })
-        console.log(JSON.stringify(response?.data))
         const accessToken = response?.data?.accessToken 
         setAuth({username, password, accessToken})
         setCurrentUser(response?.data?.username)
